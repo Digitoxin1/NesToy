@@ -29,34 +29,22 @@ const
   null8=#0+#0+#0+#0+#0+#0+#0+#0;
   hdrstring='NES'+#26;
   dbasefile='ROMDBASE.DAT';
-  version='1.5b';
+  version='1.6b';
   maxsize:Word = 3000;
   SortType:updown = ascending;
-  FCCount=11;
-  FC:array[1..FCCount] of string[8]=('25df361f', {Magmax (U)          32kb  32kb}
-                                     '3fdec942', {Clu Clu Land (U)    16kb  16kb}
-                                     '5a9824e0', {Xenophobe (U)      128kb 128kb}
-                                     '787b41cc', {Ring King (U)       64kb 128kb}
-                                     '7889f720', {RBI Baseball 2 (U) 128kb 128kb}
-                                     '7950b715', {Sqoon (U)           32kb  16kb}
-                                     '7d9d214b', {Chubby Cherub (U)   32kb  16kb}
-                                     'ae6d99c7', {Volleyball (U)      32kb  16kb}
-                                     'c7347bc0', {Karnov (U)         128kb 128kb}
-                                     'df64963b', {Infiltrator (U)    128kb 128kb}
-                                     'fd65afff');{Roller Ball (U)    128kb 128kb}
-  FCPrg:array[1..FCCount] of byte=(2,1,8,4,8,2,2,2,8,8,8);
-  FCChr:array[1..FCCount] of byte=(1,1,4,8,8,1,1,1,8,8,4);
 
 var
   hdcsum:boolean;
   csumdbase:array[1..2500] of record
                                 str:string[8];
                                 flag:boolean;
+                                resize:integer;
                               end;
   dirarray:array[1..3000] of pchar;
+  FCPrg,FCChr:array[1..100] of byte;
   path:array[1..12] of string;
   clf:array[1..12] of string;
-  dbasecount,numpaths:integer;
+  dbasecount,FCCount,numpaths:integer;
   cpath,progpath:string;
 
 Procedure swap(Var a,b : dataptr);  { Swap the Pointers }
@@ -412,6 +400,11 @@ begin
   for counter:=1 to count do
     readln(f,ts);
   p:=pos(';',ts); delete(ts,1,p);
+  if csumdbase[count].resize>0 then
+    begin
+      p:=pos(';',ts); delete(ts,1,p);
+      p:=pos(';',ts); delete(ts,1,p);
+    end;
   p:=pos(';',ts);
   if p=0 then fname:=ts else
     begin
@@ -678,9 +671,11 @@ end;
 procedure loaddbase;
 var
   f:text;
-  s:string[8];
+  s:string;
+  p,code:integer;
 begin
   dbasecount:=0;
+  FCCount:=0;
   assign(f,progpath+dbasefile);
   {$I-}
   reset(f);
@@ -694,8 +689,17 @@ begin
     begin
       dbasecount:=dbasecount+1;
       readln(f,s);
-      csumdbase[dbasecount].str:=s;
+      csumdbase[dbasecount].str:=copy(s,1,8);
       csumdbase[dbasecount].flag:=false;
+      csumdbase[dbasecount].resize:=0;
+      if s[9]='*' then
+        begin
+          fccount:=fccount+1;
+          csumdbase[dbasecount].resize:=fccount;
+          p:=pos(';',s); delete(s,1,p);
+          p:=pos(';',s); val(copy(s,1,p-1),FCPrg[fccount],code); delete(s,1,p);
+          p:=pos(';',s); val(copy(s,1,p-1),FCChr[fccount],code); delete(s,1,p);
+        end;
     end;
   close(f);
 end;
@@ -733,6 +737,7 @@ begin
   if rflag=3 then out:=out+'x ';
   if rflag=4 then out:=out+'n ';
   if rflag=5 then out:=out+'d ';
+  if rflag=6 then out:=out+'b ';
   out:=out+justify(fname,l,'L',true);
   out:=out+' '+justify(ns,3,'R',False)+' ';
   if minfo.mirror=0 then out:=out+'H' else out:=out+'V';
@@ -852,6 +857,7 @@ var
   f,f2:text;
   io,io2,c,p,x,code,acount:integer;
   counter:integer;
+  badcount:integer;
   byte7,byte8:byte;
   ts,ts2,fn,out,out2:string;
   dbaseinfo:neshdr;
@@ -861,6 +867,7 @@ var
   volinfo:tvolinfo;
 begin
   acount:=0;
+  badcount:=0;
   getvolumeinformation(copy(cpath,1,3),volinfo);
   if volinfo.FSName='CDFS' then assign(f2,progpath+'\MISSING.TXT')
                            else assign(f2,cpath+'\MISSING.TXT');
@@ -881,9 +888,9 @@ begin
       for c:=1 to dbasecount do
         begin
           readln(f,ts);
-          if csumdbase[c].flag=false then
+          if csumdbase[c].resize>0 then badcount:=badcount+1;
+          if (csumdbase[c].flag=false) and (csumdbase[c].resize=0) then
             begin
-              acount:=acount+1;
               p:=pos(';',ts); csum:=copy(ts,1,p-1); delete(ts,1,p);
               p:=pos(';',ts);
               if p=0 then fn:=ts else
@@ -891,28 +898,33 @@ begin
                   fn:=copy(ts,1,p-1);
                   delete(ts,1,p);
                 end;
-              p:=pos(';',ts); ts2:=copy(ts,1,p-1); delete(ts,1,p); val(ts2,x,code); byte7:=x;
-              p:=pos(';',ts); ts2:=copy(ts,1,p-1); delete(ts,1,p); val(ts2,x,code); byte8:=x;
-              p:=pos(';',ts); ts2:=copy(ts,1,p-1); delete(ts,1,p); val(ts2,x,code); dbaseinfo.prg:=x;
-              p:=pos(';',ts); ts2:=copy(ts,1,p-1); delete(ts,1,p); val(ts2,x,code); dbaseinfo.chr:=x;
-              p:=pos(';',ts); if p=0 then ts2:=ts else begin ts2:=copy(ts,1,p-1); delete(ts,1,p); end;
-              dbaseinfo.country:=countrys2i(ts2);
-              p:=pos(';',ts); if p=0 then ts2:=ts else begin ts2:=copy(ts,1,p-1); delete(ts,1,p); end;
-              dbaseinfo.company:=ts2;
-              dbaseinfo.mirror:=byte7 mod 2;
-              dbaseinfo.sram:=byte7 div 2 mod 2;
-              dbaseinfo.trainer:=byte7 div 4 mod 2;
-              dbaseinfo.fourscr:=byte7 div 8 mod 2;
-              dbaseinfo.mapper:=byte7 div 16+byte8 div 16*16;
-              dbaseinfo.vs:=byte8 mod 2;
-              dbaseinfo.pc10:=byte8 div 2 mod 2;
-              dbaseinfo.hdr:=hdrstring;
-              dbaseinfo.other:=null8;
-              out:=formatoutput(fn,dbaseinfo,true,csum,0,41,false);
-              delete(out,1,2);
-              for counter:=1 to length(out) do charout[counter-1]:=out[counter];
-              charout[counter]:=#0;
-              dbasearray[acount]:=strnew(charout);
+              if pos('(Bad Dump)',fn)>0 then badcount:=badcount+1;
+              if pos('(Bad Dump)',fn)=0 then
+                begin
+                  acount:=acount+1;
+                  p:=pos(';',ts); ts2:=copy(ts,1,p-1); delete(ts,1,p); val(ts2,x,code); byte7:=x;
+                  p:=pos(';',ts); ts2:=copy(ts,1,p-1); delete(ts,1,p); val(ts2,x,code); byte8:=x;
+                  p:=pos(';',ts); ts2:=copy(ts,1,p-1); delete(ts,1,p); val(ts2,x,code); dbaseinfo.prg:=x;
+                  p:=pos(';',ts); ts2:=copy(ts,1,p-1); delete(ts,1,p); val(ts2,x,code); dbaseinfo.chr:=x;
+                  p:=pos(';',ts); if p=0 then ts2:=ts else begin ts2:=copy(ts,1,p-1); delete(ts,1,p); end;
+                  dbaseinfo.country:=countrys2i(ts2);
+                  p:=pos(';',ts); if p=0 then ts2:=ts else begin ts2:=copy(ts,1,p-1); delete(ts,1,p); end;
+                  dbaseinfo.company:=ts2;
+                  dbaseinfo.mirror:=byte7 mod 2;
+                  dbaseinfo.sram:=byte7 div 2 mod 2;
+                  dbaseinfo.trainer:=byte7 div 4 mod 2;
+                  dbaseinfo.fourscr:=byte7 div 8 mod 2;
+                  dbaseinfo.mapper:=byte7 div 16+byte8 div 16*16;
+                  dbaseinfo.vs:=byte8 mod 2;
+                  dbaseinfo.pc10:=byte8 div 2 mod 2;
+                  dbaseinfo.hdr:=hdrstring;
+                  dbaseinfo.other:=null8;
+                  out:=formatoutput(fn,dbaseinfo,true,csum,0,41,false);
+                  delete(out,1,2);
+                  for counter:=1 to length(out) do charout[counter-1]:=out[counter];
+                  charout[counter]:=#0;
+                  dbasearray[acount]:=strnew(charout);
+                end;
             end;
         end;
       quicksort(dbasearray,1,acount);
@@ -924,7 +936,7 @@ begin
           if out2<>'' then writeln(f2,out2);
         end;
       writeln(f2);
-      writeln(f2,acount,' missing roms out of ',dbasecount);
+      writeln(f2,acount,' missing roms out of ',dbasecount-badcount);
       close(f);
       close(f2);
       for c:=acount downto 1 do
@@ -1021,7 +1033,7 @@ var
   docsum,show,show_h,show_v,show_b,show_4,show_t,view_bl,outfile,extout,unknown:boolean;
   rname,namematch,dbase,repair,cmp,abort,dbasemissing,garbage,sort:boolean;
   uscore,ccode,remspace,dupe,notrenamed,notrepaired,cropped,resize:boolean;
-  booltemp:boolean;
+  booltemp,badrom:boolean;
   result,rtmp:string;
   key:char;
   out,out2:string;
@@ -1160,7 +1172,7 @@ begin
   searchps('-missing',sps,result);
   if sps>0 then begin dbasemissing:=true; docsum:=true end;
   searchps('-sort',sps,result);
-  if sps>0 then begin sort:=true; end;
+  if sps>0 then begin sort:=true; docsum:=true end;
   searchps('-doall',sps,result);
   if sps>0 then begin
                   docsum:=true; rname:=true; repair:=true; resize:=true; extout:=true;
@@ -1207,6 +1219,7 @@ begin
             notrenamed:=false;
             notrepaired:=false;
             cropped:=false;
+            badrom:=false;
             fcpos:=0;
             if copy(Name,length(Name)-3,4)='.ne~' then show:=false;
             if copy(Name,length(Name)-3,4)='.ba~' then show:=false;
@@ -1223,24 +1236,39 @@ begin
               begin
                 getcrc(Name,csum,garbage);
                 searchdbase(csum,dbpos);
-                if (dbpos=0) and (resize=true) then
+                if resize=true then
                   begin
-                    for ctr:=1 to FCCount do
-                      if FC[ctr]=csum then FCPos:=ctr;
-                    if FCPos=0 then checkbanks(Name,nes.prg,nes.chr,newprg,newchr);
-                    if FCPos>0 then begin newprg:=fcprg[fcpos]; newchr:=fcchr[fcpos]; end;
-                    if (nes.prg<>newprg) or (nes.chr<>newchr) then
+                    if (dbpos>0) and (csumdbase[dbpos].resize>0) then
                       begin
-                        oldnes:=nes;
-                        CropRom(Name,nes,nes.prg,nes.chr,newprg,newchr,errcode);
-                        if errcode=0 then
+                        fcpos:=csumdbase[dbpos].resize;
+                        dbpos:=0;
+                      end;
+                    if dbpos=0 then
+                      begin
+                        if FCPos=0 then checkbanks(Name,nes.prg,nes.chr,newprg,newchr);
+                        if FCPos>0 then begin newprg:=fcprg[fcpos]; newchr:=fcchr[fcpos]; end;
+                        if (nes.prg<>newprg) or (nes.chr<>newchr) then
                           begin
-                            rscount:=rscount+1;
-                            cropped:=true;
-                            getcrc(Name,csum,garbage);
-                            searchdbase(csum,dbpos);
+                            oldnes:=nes;
+                            CropRom(Name,nes,nes.prg,nes.chr,newprg,newchr,errcode);
+                            if errcode=0 then
+                              begin
+                                rscount:=rscount+1;
+                                cropped:=true;
+                                getcrc(Name,csum,garbage);
+                                searchdbase(csum,dbpos);
+                              end;
                           end;
                       end;
+                  end;
+                if dbpos=0 then
+                  begin
+                    if (nes.prg<>0) and (nes.prg<>1) and (nes.prg<>2) and (nes.prg<>4) and
+                       (nes.prg<>8) and (nes.prg<>16) and (nes.prg<>32) and (nes.prg<>40) and
+                       (nes.prg<>64) and (nes.prg<>96) and (nes.prg<>128) then badrom:=true;
+                    if (nes.chr<>0) and (nes.chr<>1) and (nes.chr<>2) and (nes.chr<>4) and
+                       (nes.chr<>8) and (nes.chr<>16) and (nes.chr<>32) and (nes.chr<>64) and
+                       (nes.chr<>128) then badrom:=true;
                   end;
                 if dbpos>0 then
                   begin
@@ -1254,11 +1282,13 @@ begin
               begin
                 if docsum=true then rflag:=1 else rflag:=-1;
                 romcount:=romcount+1;
+                if (dbpos=0) and (badrom=true) then rflag:=6;
                 if (dbpos>0) and (dbase=false) then
                   begin
                     rflag:=2;
                     matchcount:=matchcount+1;
                     getdbaseinfo(dbpos,result,resulthdr);
+                    if pos('(Bad Dump)',result)>0 then badrom:=true;
                     if (resulthdr.vs=1) and (resulthdr.pc10=1) then
                       begin
                         writeln('ERROR IN DATABASE 01 -- ',csumdbase[dbpos].str,' ',result); {Has both VS and PC10 bits set}
@@ -1280,6 +1310,7 @@ begin
                         if spcvt(rtmp,1)+'.nes'=name then namematch:=true else
                         if spcvt(rtmp,2)+'.nes'=name then namematch:=true;
                       end;
+                    if badrom=true then rflag:=6;
                     if namematch=false then rflag:=4;
                     if (cmp=false) or (garbage=true) then rflag:=3;
                     if dupe=true then rflag:=5;
@@ -1391,6 +1422,7 @@ begin
                     if nes.country=97 then sortdir:='Unlicensed\';
                     if (nes.country=99) or (nes.pc10=1) then sortdir:='Playchoice 10\';
                     if (nes.country=98) or (nes.vs=1) then sortdir:='VS\';
+                    if badrom=true then sortdir:='Bad\';
                     LFNMove(name,sortdir,errcode);
                   end;
               end;
