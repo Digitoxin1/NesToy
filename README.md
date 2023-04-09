@@ -4,6 +4,7 @@ I recently discovered the source code for NesToy on an old floppy disk and decid
 
 Below is an excerpt from the documentation included with the latest public release of NesToy (v3.02) from April 3, 2000 which is also available under Releases.  Many thanks to Zophar's Domain (https://www.zophar.net/) for keeping the archive online for all these years.  
 
+-------------------------------------------------------------------------------------------------------
 
 NesToy is a NES ROM management utility for your .NES Nintendo/Famicom
 ROMs.  This program started out as a header information utility, but now,
