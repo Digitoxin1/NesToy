@@ -37,7 +37,7 @@ const
   cfgfile='NESTOY.CFG';
   outputfile='OUTPUT.TXT';
   logfile='NESTOY.LOG';
-  version='2.9';
+  version='3.02';
   SortType:updown = ascending;
   missingfile:string='MISSING.TXT';
   extparamst:string='';
@@ -61,6 +61,7 @@ const
   dir_unlicensed:string='Unlicensed\';
   dir_usa:string='USA\';
   dir_vs:string='VS Unisystem\';
+  dir_savestates:string='';
   move_bad:boolean=true;
   move_hacked:boolean=true;
   move_pirate:boolean=true;
@@ -69,6 +70,8 @@ const
   missing_hacked:boolean=true;
   missing_pirate:boolean=true;
   missing_trans:boolean=false;
+  shortname:boolean=false;
+  win2000:boolean=false;
   badchr:string=' (Bad CHR';
 
 var
@@ -720,7 +723,7 @@ begin
                    destpath:=destpath+i2s(ctr,0);
                  end;
               until existb=false;
-              if upcasestr(sp)=upcasestr(dp) then
+              if upcasestr(copy(sp,1,2))=upcasestr(copy(dp,1,2)) then
                 begin
                   LFNRename(sourcepath,destpath);
                   errcode:=dos7error;
@@ -742,7 +745,15 @@ begin
                   LFNCloseFile(sf);
                 end;
             end;
-        end else errcode:=100;
+        end else
+        begin
+          errcode:=100;
+          if sn<>dn then
+            begin
+              LFNRename(sourcepath,destpath);
+              errcode:=dos7error;
+            end;
+        end;
     end;
   if (errcode>0) and (errcode<>100) and (logging=true) then
     begin
@@ -754,6 +765,29 @@ begin
       if (sptemp<>dptemp) and (sn=dn) then logoutput('Unable to move '+sn+' from '+sp+' to '+dp+'.');
       if (sptemp<>dptemp) and (sn<>dn) then logoutput('Unable to move '+sp+sn+' to '+dp+dn+'.');
     end;
+end;
+
+procedure renamesaves(result,name:string);
+var
+  f:word;
+  dirinfo:tfinddata;
+  tempstr,tempres:string;
+begin
+  if copy(name,length(name)-3,1)='.' then
+    name:=copy(name,1,length(name)-4);
+  f:=LFNFindFirst(dir_savestates+name+'.*',FA_NORMAL,FA_NORMAL,dirinfo);
+  while dos7error=0 do
+    begin
+      tempstr:=dirinfo.name;
+      tempstr:=copy(tempstr,length(tempstr)-3,4);
+      if (upcasestr(tempstr)='.SAV') or (upcasestr(copy(tempstr,1,3))='.ST') then
+        begin
+          tempres:=result+tempstr;
+          lfnrename(dir_savestates+dirinfo.name,dir_savestates+tempres);
+        end;
+      LFNFindNext(f,dirinfo);
+    end;
+  LFNFindClose(f);
 end;
 
 procedure GetNesHdr(var nh:neshdr;hdr:string);
@@ -1141,6 +1175,7 @@ begin
   dir_unlicensed:=expandwork(dir_unlicensed,true);
   dir_usa:=expandwork(dir_usa,true);
   dir_vs:=expandwork(dir_vs,true);
+  if dir_savestates<>'' then dir_savestates:=expandwork(dir_savestates,true);
 end;
 
 procedure loadcfgfile;
@@ -1177,18 +1212,21 @@ begin
       writeln(f,'DIR_UNLICENSED = ',dir_unlicensed);
       writeln(f,'DIR_USA = ',dir_usa);
       writeln(f,'DIR_VS = ',dir_vs);
+      writeln(f,'DIR_SAVESTATES = ',dir_savestates);
       writeln(f);
       writeln(f,'MOVE_BAD = ',move_bad);
       writeln(f,'MOVE_HACKED = ',move_hacked);
       writeln(f,'MOVE_PIRATE = ',move_pirate);
-      writeln(f);
-      writeln(f,'FILE_MISSING = ',missingfile);
       writeln(f);
       writeln(f,'MISSING_BAD = ',missing_bad);
       writeln(f,'MISSING_GAMEHACKS = ',missing_gamehacks);
       writeln(f,'MISSING_HACKED = ',missing_hacked);
       writeln(f,'MISSING_PIRATE = ',missing_pirate);
       writeln(f,'MISSING_TRANS = ',missing_trans);
+      writeln(f);
+      writeln(f,'FILE_MISSING = ',missingfile);
+      writeln(f,'SHORT_NAMES = ',shortname);
+      writeln(f,'WIN2000 = ',win2000);
       writeln(f);
       writeln(f,'CMDLINE =');
       close(f);
@@ -1228,7 +1266,12 @@ begin
               if s='DIR_UNLICENSED' then dir_unlicensed:=s2;
               if s='DIR_USA' then dir_usa:=s2;
               if s='DIR_VS' then dir_vs:=s2;
+              if s='DIR_SAVESTATES' then dir_savestates:=s2;
               if s='FILE_MISSING' then missingfile:=s2;
+              if s='SHORT_NAMES' then if upcasestr(s2)='FALSE' then shortname:=false else
+                if upcasestr(s2)='TRUE' then shortname:=true;
+              if s='WIN2000' then if upcasestr(s2)='FALSE' then win2000:=false else
+                if upcasestr(s2)='TRUE' then win2000:=true;
               if s='MOVE_BAD' then if upcasestr(s2)='FALSE' then move_bad:=false else
                 if upcasestr(s2)='TRUE' then move_bad:=true;
               if s='MOVE_HACKED' then if upcasestr(s2)='FALSE' then move_hacked:=false else
@@ -1635,8 +1678,8 @@ end;
 
 procedure usage(t:byte);
 begin
-  writeln('NesToy ',version,' - (c)2000, D-Tox Software  (BETA Software, Use At Own Risk)');
-  writeln;
+writeln('NesToy ',version,' - (c)2000, D-Tox Software  (BETA Software, Use At Own Risk)');
+writeln;
 if (t=0) or (t=1) then
   begin
     writeln('usage: NesToy [parameters] pathname1 [pathname2] [pathname3] ...');
@@ -1661,14 +1704,13 @@ if t=1 then
     writeln('                     instead of at the end.');
     writeln('                  p- Use periods in appropriate ROM names (Warning: Nesticle');
     writeln('                     will not load ROMs with extra periods in them.');
-    writeln('-sn            Use shorter names for some game titles');
     writeln('-rep,-repair   Repairs ROM headers with those found in database (enables -c)');
     writeln('-res,-resize   Automatically resizes ROMs if they contain duplicate or');
     writeln('               unused banks of data.');
     writeln('-sort[m]       Sorts ROMs into directories by country or type');
     writeln('                  m- Sorts ROMs by mapper # as well');
-    pause;
     writeln('-m#            Filter listing by mapper #');
+    pause;
     writeln('-f[hvbt4]      Filter listing by mapper data');
     writeln('                  h- Horizontal Mirroring     t- Trainer Present');
     writeln('                  v- Vertical Mirroring       4- 4 Screen Buffer');
@@ -1692,12 +1734,16 @@ if t=1 then
     writeln;
     writeln('Filename can include wildcards (*,?) anywhere inside the filename.  Long');
     writeln('file names are allowed.  If no filename is given, (*.nes) is assumed.');
-    pause;
   end;
 if t=2 then
   begin
-    writeln('NesToy only runs under Windows 95/98.');
+    writeln('NesToy only runs under Windows 95/98/2000.');
     writeln;
+    writeln('To run NesToy under Windows 2000, set WIN2000 in ',cfgfile,' to TRUE.');
+    writeln;
+    writeln('Warning: Setting WIN2000 to TRUE and then trying to run NesToy under DOS');
+    writeln('         or under Windows NT will not work.  At the very least, NesToy may');
+    writeln('         corrupt your precious ROMs.');
   end;
   dbaseclose;
   halt;
@@ -1706,6 +1752,7 @@ end;
 var
   f,f2:word;
   dirinfo:tfinddata;
+  attrib:word;
   h,ns,csum,prgcsum:string;
   clfname,pathname,sortdir:string;
   arraytemp:charstr;
@@ -1719,7 +1766,7 @@ var
   docsum,show,show_h,show_v,show_b,show_4,show_t,view_bl,outfile,extout,unknown:boolean;
   rname,namematch,dbase,extdbase,repair,cmp,abort,dbasemissing,garbage,sort,sortmapper:boolean;
   mthe,uscore,ccode,remspace,notrenamed,notrepaired,cropped,resize,sorted:boolean;
-  booltemp,dupe,shortname,allmissing,missingsort,lowcasename,subdir:boolean;
+  booltemp,dupe,allmissing,missingsort,lowcasename,subdir:boolean;
   nobackup,badrom,mhackedrom,ghackedrom,hackedrom,piraterom,prgfound,remperiod:boolean;
   result,rtmp,rtmp2,ralt:string;
   key:char;
@@ -1738,12 +1785,12 @@ var
 
 begin
   checkbreak:=false;
-  if IsDOS70=false then usage(2);
   cfgparam:='';
   progpath:=paramstr(0);
   while copy(progpath,length(progpath),1)<>'\' do
     delete(progpath,length(progpath),1);
   loadcfgfile;
+  if (IsDOS70=false) and (win2000=false) then usage(2);
   loaddbase;
   extparamst:=paramstrparse;
   cpath:=getfullpathname('.\',false);
@@ -1783,7 +1830,6 @@ begin
   sort:=false;
   sortmapper:=false;
   dupe:=false;
-  shortname:=false;
   allmissing:=true;
   missingsort:=false;
   lowcasename:=false;
@@ -1872,8 +1918,6 @@ begin
       if pos('T',result)>0 then mthe:=true;
       if pos('P',result)>0 then remperiod:=false;
     end;
-  searchps('-sn',sps,result);
-  if sps>0 then shortname:=true;
   searchps('-o*',sps,result);
   if sps>0 then
     begin
@@ -2018,6 +2062,12 @@ begin
             prgfound:=false;
             fcpos:=0;
             h:=ReadNesHdr(Name);
+            attrib:=LFNGetAttrib(Name);
+            if (attrib and fa_rdonly)=1 then
+              begin
+                if attrib<32 then attrib:=attrib+32;
+                LFNSetAttrib(Name,attrib-1);
+              end;
             getneshdr(nes,h);
             if nes.hdr<>hdrstring then show:=false;
             if msearch>-1 then if nes.mapper<>msearch then show:=false;
@@ -2309,7 +2359,7 @@ begin
                           begin
                             writeln(ofile,out);
                             if out2<>'' then writeln(ofile,out2);
-                            writeln(ofile);
+                            if quiet=false then writeln(ofile);
                           end;
                       end;
                   end;
@@ -2333,6 +2383,8 @@ begin
                     end else LFNMove(name,dir_dupes,'','',errcode);
                 if (dbpos>0) and (flagrom=true) and (prgfound=false)
                   then csumdbase[dbpos].flag:=true;
+                if (dir_savestates<>'') and (rname=true) and (notrenamed=false) then
+                  if result+'.nes'<>name then renamesaves(result,name);
               end;
           end;
         LFNChDir(cpath);
@@ -2342,7 +2394,7 @@ begin
   patharrayclear(numpaths);
   gettime(hour,min,sec,hund);
   fullendtime:=sec+min*60+hour*3600;
-  if fullendtime<fullstarttime then fullendtime:=fullendtime+86400;
+  if fullendtime<fullstarttime then fullendtime:=fullendtime+82800;
   difftime:=fullendtime-fullstarttime;
   hour:=difftime div 3600;
   difftime:=difftime mod 3600;
