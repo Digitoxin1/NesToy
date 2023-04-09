@@ -32,7 +32,7 @@ const
   dbasefile='ROMDBASE.DAT';
   cfgfile='NESTOY.CFG';
   missingfile='MISSING.TXT';
-  version='1.8b';
+  version='1.9b';
   maxsize:Word = 3000;
   SortType:updown = ascending;
   extparamst:string='';
@@ -48,6 +48,12 @@ const
   dir_pc10:string='Playchoice 10\';
   dir_dupes:string='Dupes\';
   dir_repair:string='Repair\';
+  dir_trans:string='Translated\';
+  dir_hacked:string='Hacked\';
+  dir_pirate:string='Pirate\';
+  move_bad:boolean=true;
+  move_hacked:boolean=true;
+  move_pirate:boolean=true;
 
 var
   hdcsum:boolean;
@@ -119,11 +125,24 @@ begin
   clreol;
 end;
 
+function removecomment(instr:string):string;
+var
+  p1,p2:integer;
+begin
+  repeat
+    p1:=pos('{',instr);
+    p2:=pos('}',instr);
+    if (p1>0) and (p2>0) and (p1<p2) then
+      delete(instr,p1,p2-p1+1);
+  until (p1=0) or (p2=0) or (p1>p2);
+  removecomment:=instr;
+end;
+
 function removespaces(instr:string;rp:boolean):string;
 begin
-  while instr[1]=' ' do delete(instr,1,1);
-  while instr[length(instr)]=' ' do delete(instr,length(instr),1);
-  if rp=true then
+  while (instr[1]=' ') and (length(instr)>0) do delete(instr,1,1);
+  while (instr[length(instr)]=' ') and (length(instr)>0) do delete(instr,length(instr),1);
+  if (rp=true) and (length(instr)>1) then
     if instr[1]='"' then
       begin
         delete(instr,1,1);
@@ -288,6 +307,7 @@ begin
   if s='JUE' then temp:=7;
   if s='S' then temp:=8;
   if s='C' then temp:=16;
+  if s='T' then temp:=96;
   if s='X' then temp:=97;
   if s='V' then temp:=98;
   if s='P' then temp:=99;
@@ -388,6 +408,8 @@ function getsortdir(code:integer):string;
 begin
   getsortdir:='';
   case code of
+   -3:getsortdir:=dir_pirate;
+   -2:getsortdir:=dir_hacked;
    -1:getsortdir:=dir_bad;
     0:getsortdir:=dir_unknown;
     1,5:getsortdir:=dir_japan;
@@ -395,6 +417,7 @@ begin
     4:getsortdir:=dir_europe;
     8:getsortdir:=dir_sweden;
     16:getsortdir:=dir_canada;
+    96:getsortdir:=dir_trans;
     97:getsortdir:=dir_unlicensed;
     98:getsortdir:=dir_vs;
     99:getsortdir:=dir_pc10;
@@ -452,7 +475,6 @@ begin
   if upcasestr(sp)<>upcasestr(dp) then
     begin
       if dn='' then dn:=sn;
-      if copy(dn,length(dn)-3,4)='.ne~' then dn[length(dn)]:='s';
       sourcepath:=sp+sn;
       destpath:=dp+dn;
       if crc<>'' then
@@ -801,13 +823,19 @@ begin
       writeln(f,'DIR_CANADA = ',dir_canada);
       writeln(f,'DIR_DUPLICATES = ',dir_dupes);
       writeln(f,'DIR_EUROPE = ',dir_europe);
+      writeln(f,'DIR_HACKED = ',dir_hacked);
       writeln(f,'DIR_JAPAN = ',dir_japan);
       writeln(f,'DIR_PC10 = ',dir_pc10);
+      writeln(f,'DIR_PIRATE = ',dir_pirate);
       writeln(f,'DIR_SWEDEN = ',dir_sweden);
+      writeln(f,'DIR_TRANS = ',dir_trans);
       writeln(f,'DIR_UNKNOWN = ',dir_unknown);
       writeln(f,'DIR_UNLICENSED = ',dir_unlicensed);
       writeln(f,'DIR_USA = ',dir_usa);
       writeln(f,'DIR_VS = ',dir_vs);
+      writeln(f,'MOVE_BAD = ',move_bad);
+      writeln(f,'MOVE_HACKED = ',move_hacked);
+      writeln(f,'MOVE_PIRATE = ',move_pirate);
       writeln(f);
       writeln(f,'CMDLINE =');
       close(f);
@@ -816,6 +844,7 @@ begin
       while not eof(f) do
         begin
           readln(f,s);
+          s:=removecomment(s);
           p:=pos('=',s);
           if p>0 then
             begin
@@ -826,18 +855,27 @@ begin
               if s='CMDLINE' then rp:=false;
               s2:=removespaces(s2,rp);
               if copy(s,1,4)='DIR_' then
-                if s2[length(s2)]<>'\' then s2:=s2+'\';
+                begin
+                  if s2='' then s2:='.\';
+                  if s2[length(s2)]<>'\' then s2:=s2+'\';
+                end;
               if s='DIR_BAD' then dir_bad:=s2;
               if s='DIR_CANADA' then dir_canada:=s2;
               if s='DIR_DUPLICATES' then dir_dupes:=s2;
               if s='DIR_EUROPE' then dir_europe:=s2;
+              if s='DIR_HACKED' then dir_hacked:=s2;
               if s='DIR_JAPAN' then dir_japan:=s2;
               if s='DIR_PC10' then dir_pc10:=s2;
+              if s='DIR_PIRATE' then dir_pirate:=s2;
               if s='DIR_SWEDEN' then dir_sweden:=s2;
+              if s='DIR_TRANS' then dir_trans:=s2;
               if s='DIR_UNKNOWN' then dir_unknown:=s2;
               if s='DIR_UNLICENSED' then dir_unlicensed:=s2;
               if s='DIR_USA' then dir_usa:=s2;
               if s='DIR_VS' then dir_vs:=s2;
+              if s='MOVE_BAD' then if upcasestr(s2)='FALSE' then move_bad:=false;
+              if s='MOVE_HACKED' then if upcasestr(s2)='FALSE' then move_hacked:=false;
+              if s='MOVE_PIRATE' then if upcasestr(s2)='FALSE' then move_pirate:=false;
               if s='CMDLINE' then cfgparam:=s2;
             end;
         end;
@@ -952,6 +990,7 @@ begin
       if minfo.country=7 then out:=out+' '+'JUE';
       if minfo.country=8 then out:=out+' '+'  S';
       if minfo.country=16 then out:=out+' '+' C ';
+      if minfo.country=96 then out:=out+' '+'TR ';
       if minfo.country=97 then out:=out+' '+'Unl';
       if minfo.country=98 then out:=out+' '+'VS ';
       if minfo.country=99 then out:=out+' '+'P10';
@@ -992,26 +1031,6 @@ begin
   if rh.pc10<>dh.pc10 then tbool:=false;
   if rh.other<>dh.other then tbool:=false;
   comparehdrs:=tbool;
-end;
-
-procedure cleanrn(rn:integer);
-var
-  f:word;
-  DirInfo:SearchRec;
-  s,ps,fs:string;
-  errcode:byte;
-begin
-  if rn>0 then
-    begin
-      findfirst('*.ne~',Archive,DirInfo);
-      while DosError = 0 do
-        begin
-          s:=getlongpathname(dirinfo.name,false);
-          s:=copy(s,1,length(s)-4)+'.nes';
-          LFNRename(DirInfo.name,s);
-          FindNext(DirInfo);
-        end;
-    end;
 end;
 
 procedure parsemissing(missingpath:string);
@@ -1090,13 +1109,15 @@ var
   volinfo:tvolinfo;
   missingpath:string;
   country:string[3];
+  skipflag:boolean;
 
 begin
   acount:=0;
   badcount:=0;
   getvolumeinformation(copy(cpath,1,3),volinfo);
-  if volinfo.FSName='CDFS' then missingpath:=progpath+missingfile
-                           else missingpath:=cpath+missingfile;
+  if volinfo.FSName='CDFS' then missingpath:=progpath
+                           else missingpath:=getshortpathname(cpath,false);
+  missingpath:=missingpath+missingfile;
   assign(f2,missingpath);
   {$I-}
   reset(f2);
@@ -1127,8 +1148,11 @@ begin
                   delete(ts,1,p);
                 end;
               fn:=shortparse(fn,false);
-              if pos('(Bad Dump)',fn)>0 then badcount:=badcount+1;
-              if pos('(Bad Dump)',fn)=0 then
+              skipflag:=false;
+              if pos('(Bad Dump',fn)>0 then skipflag:=true;
+              if (pos('(Translated',fn)>0) or (pos('Translated)',fn)>0) then skipflag:=true;
+              if skipflag=true then badcount:=badcount+1;
+              if skipflag=false then
                 begin
                   acount:=acount+1;
                   p:=pos(';',ts); ts2:=copy(ts,1,p-1); delete(ts,1,p); val(ts2,x,code); byte7:=x;
@@ -1283,7 +1307,8 @@ var
   docsum,show,show_h,show_v,show_b,show_4,show_t,view_bl,outfile,extout,unknown:boolean;
   rname,namematch,dbase,repair,cmp,abort,dbasemissing,garbage,sort:boolean;
   uscore,ccode,remspace,notrenamed,notrepaired,cropped,resize,sorted:boolean;
-  booltemp,badrom,dupe,shortname,allmissing,missingsort,lowcasename:boolean;
+  booltemp,dupe,shortname,allmissing,missingsort,lowcasename:boolean;
+  badrom,hackedrom,piraterom:boolean;
   result,rtmp:string;
   key:char;
   out,out2:string;
@@ -1399,17 +1424,16 @@ begin
       outfile:=true;
       if result='' then result:='OUTPUT.TXT';
       getvolumeinformation(copy(cpath,1,3),volinfo);
-      if volinfo.FSName='CDFS' then assign(ofile,progpath+result)
-                               else assign(ofile,cpath+result);
+      if volinfo.FSName='CDFS' then result:=progpath+result
+                               else result:=getshortpathname(cpath,false)+result;
+      assign(ofile,result);
       {$I-}
       reset(ofile);
       io:=ioresult;
       if io>0 then rewrite(ofile) else append(ofile);
       if ioresult>0 then
         begin
-          write('Error: Cannot create ');
-          if volinfo.FSName='CDFS' then writeln(progpath,result)
-                                   else writeln(cpath,result);
+          write('Error: Cannot create ',result);
           halt;
         end;
       {$I+}
@@ -1478,7 +1502,7 @@ begin
             if keypressed=true then
               begin
                 key:=readkey;
-                if key=#3 then abort:=true;
+                if key=#27 then abort:=true;
               end;
             show:=true;
             garbage:=false;
@@ -1487,10 +1511,10 @@ begin
             notrepaired:=false;
             cropped:=false;
             badrom:=false;
+            hackedrom:=false;
+            piraterom:=false;
             sorted:=false;
             fcpos:=0;
-            if copy(Name,length(Name)-3,4)='.ne~' then show:=false;
-            if copy(Name,length(Name)-3,4)='.ba~' then show:=false;
             h:=ReadNesHdr(Name);
             getneshdr(nes,h);
             if nes.hdr<>hdrstring then show:=false;
@@ -1561,7 +1585,9 @@ begin
                     matchcount:=matchcount+1;
                     getdbaseinfo(dbpos,result,resulthdr);
                     result:=shortparse(result,shortname);
-                    if pos('(Bad Dump)',result)>0 then badrom:=true;
+                    if pos('(Bad Dump',result)>0 then badrom:=true;
+                    if (pos('(Hack',result)>0) or (pos('Hack)',result)>0) then hackedrom:=true;
+                    if (pos('(Pirate',result)>0) or (pos('Pirate)',result)>0) then piraterom:=true;
                     if (resulthdr.vs=1) and (resulthdr.pc10=1) then
                       begin
                         writeln('ERROR IN DATABASE 01 -- ',csumdbase[dbpos].str,' ',result); {Has both VS and PC10 bits set}
@@ -1625,7 +1651,9 @@ begin
                       out:=out+';'+i2s(nes.chr);
                     end;
                 sortcode:=nes.country;
-                if badrom=true then sortcode:=-1;
+                if (badrom=true) and (move_bad=true) then sortcode:=-1;
+                if (hackedrom=true) and (move_hacked=true) then sortcode:=-2;
+                if (piraterom=true) and (move_pirate=true) then sortcode:=-3;
                 writeln(out);
                 if out2<>'' then writeln(out2);
                 if outfile=true then
@@ -1651,17 +1679,17 @@ begin
                         begin
                           booltemp:=false;
                           if upcasestr(result+'.nes')=upcasestr(name) then booltemp:=true;
-                          if ((exist(result+'.nes')) or (exist(result+'.ne~'))) and (booltemp=false) then
+                          if (exist(result+'.nes')) and (booltemp=false) then
                             begin
-                              LFNRename(name,result+countryi2s(nes.country)+'.ne~');
+                              LFNRename(name,result+countryi2s(nes.country)+'.nes');
                               errcode:=dos7error;
-                              if errcode=0 then name:=result+countryi2s(nes.country)+'.ne~';
+                              if errcode=0 then name:=result+countryi2s(nes.country)+'.nes';
                             end
                           else
                             begin
-                              LFNRename(name,result+'.ne~');
+                              LFNRename(name,result+'.nes');
                               errcode:=dos7error;
-                              if errcode=0 then name:=result+'.ne~';
+                              if errcode=0 then name:=result+'.nes';
                             end;
                           if errcode=0 then rncount:=rncount+1 else notrenamed:=true;
                         end;
@@ -1683,7 +1711,7 @@ begin
                         if cmp=false then outm[10]:='H';
                         if nes.other<>null8 then outm[11]:='G';
                         if (nes.vs=1) and (nes.pc10=1) then outm[11]:='G';
-                        if garbage=true then outm[12]:=+'F';
+                        if garbage=true then outm[12]:='T';
                         if (rname=true) and (namematch=false) then
                           if notrenamed=false then outm:='      Renamed'
                                               else outm:=' Can''t Rename';
@@ -1716,7 +1744,6 @@ begin
                   end;
               end;
           end;
-        if rncount>0 then cleanrn(rncount);
         LFNChDir(cpath);
       end;
       readdirclose(f);
