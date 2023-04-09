@@ -37,7 +37,7 @@ const
   cfgfile='NESTOY.CFG';
   outputfile='OUTPUT.TXT';
   logfile='NESTOY.LOG';
-  version='2.6b';
+  version='2.7';
   SortType:updown = ascending;
   missingfile:string='MISSING.TXT';
   extparamst:string='';
@@ -209,11 +209,13 @@ begin
   removespaces:=instr;
 end;
 
-function I2S(i: longint): string;
+function I2S(i: longint;pad:integer): string;
 var
-  s:string[11];
+  s:string[15];
 begin
   str(i,s);
+  if pad>0 then
+    while length(s)<pad do s:='0'+s;
   I2S:=s;
 end;
 
@@ -525,6 +527,18 @@ begin
   getsortdir:=tempdir;
 end;
 
+function romsize(fname:string):integer;
+var
+  fsfile:file;
+  fs:integer;
+begin
+  assign(fsfile,getshortpathname(fname,false));
+  reset(fsfile,8192);
+  fs:=filesize(fsfile);
+  close(fsfile);
+  romsize:=fs;
+end;
+
 procedure getcrc(fname:string;var retcrc,retprgcrc:string;var garbage:boolean;prg:byte);
 var
   crc,prgcrc:longint;
@@ -595,17 +609,36 @@ end;
 
 function LFNMD(newdir:string):word;
 var
+  dir2:string;
+  d:char;
   f,err:word;
   dirinfo:tfinddata;
 begin
+  dir2:=newdir;
   f:=LFNFindFirst(newdir,FA_DIR,FA_DIR,dirinfo);
   err:=dos7error;
+  LFNFindClose(f);
   if (err=2) or (err=3) then
     begin
       LFNMkDir(newdir);
       err:=dos7error;
+      if err>0 then
+        begin
+          if pos('\',dir2)>0 then
+            begin
+              repeat
+                d:=dir2[length(dir2)];
+                delete(dir2,length(dir2),1);
+              until d='\';
+              f:=LFNFindFirst(dir2,FA_DIR,FA_DIR,dirinfo);
+              err:=dos7error;
+              LFNFindClose(f);
+              if (err=2) or (err=3) then LFNMkDir(dir2);
+            end;
+          LFNMkDir(newdir);
+          err:=dos7error;
+        end;
     end;
-  LFNFindClose(f);
   LFNMD:=err;
 end;
 
@@ -683,7 +716,7 @@ begin
                   begin
                     if ctr<10 then delete(destpath,length(destpath),1);
                     if ctr>=10 then delete(destpath,length(destpath)-1,2);
-                   destpath:=destpath+i2s(ctr);
+                   destpath:=destpath+i2s(ctr,0);
                  end;
               until existb=false;
               if upcasestr(sp)=upcasestr(dp) then
@@ -1073,7 +1106,7 @@ function expandwork(pn:string):string;
 var
   tp,tf:string;
 begin
-  if (copy(pn,length(pn),1)='\') and (copy(pn,length(pn)-1,2)<>'.\')
+  if (copy(pn,length(pn),1)='\') and (copy(pn,length(pn)-1,2)<>'.\') and (copy(pn,length(pn)-1,2)<>':\')
     then delete(pn,length(pn),1);
   splitpath(pn,tf,tp);
   tp:=getfullpathname(tp,false);
@@ -1241,7 +1274,7 @@ begin
       csumdbase[dbasecount].str:=strnew(cs);
       csumdbase[dbasecount].flag:=false;
       csumdbase[dbasecount].resize:=0;
-      strpcopy(csprg,copy(s,10,8)+i2s(dbasecount));
+      strpcopy(csprg,copy(s,10,8)+i2s(dbasecount,0));
       prgdbase[dbasecount]:=strnew(csprg);
       if s[18]='*' then
         begin
@@ -1428,6 +1461,21 @@ begin
   shortparse:=name;
 end;
 
+function fixperiod(name:string):string;
+var
+  p:integer;
+begin
+  p:=pos('.',name);
+  while p>0 do
+    begin
+      if (copy(name,p+1,1)<'0') or (copy(name,p+1,1)>'9')
+        then delete(name,p,1)
+        else name[p]:='_';
+      p:=pos('.',name);
+    end;
+  fixperiod:=name;
+end;
+
 procedure listmissing(showall,csort:boolean);
 var
   f,f2:text;
@@ -1593,27 +1641,30 @@ if (t=0) or (t=1) then
 if t=1 then
   begin
     writeln('Parameters:');
-    writeln('-b             Display ROM and VROM by # of blocks instead of kB');
+    writeln('-b             Display PRG and CHR banks by # of blocks instead of kB');
     writeln('-c             Calculate Checksums (CRC 32)');
     writeln('-hc            Calculate Checksums with header');
     writeln('-i             Outputs extended info if header or name are not correct');
     writeln('-o[file]       Sends output to file (DOS 8.3 filenames for now)');
-    writeln('-ren[usclt]    Renames ROMs to names stored in database (enables -c)');
+    writeln('-ren[uscltp]   Renames ROMs to names stored in database (enables -c)');
     writeln('                  u- Replace spaces with underscores');
     writeln('                  s- Remove spaces completely from filename');
     writeln('                  c- Attach country codes to end of filenames');
     writeln('                  l- Convert ROMs to all lowercase names');
     writeln('                  t- Places the word "The" at the beginning of ROM names');
     writeln('                     instead of at the end.');
+    writeln('                  p- Use periods in appropriate ROM names (Warning: Nesticle');
+    writeln('                     will not load ROMs with extra periods in them.');
     writeln('-sn            Use shorter names for some game titles');
     writeln('-rep,-repair   Repairs ROM headers with those found in database (enables -c)');
-    writeln('-res,-resize   Automatically resizes ROMs if they contain duplicate banks');
-    writeln('               of data.');
-    writeln('-sort          Sorts ROMs into directories by country or type');
+    writeln('-res,-resize   Automatically resizes ROMs if they contain duplicate or');
+    writeln('               unused banks of data.');
+    writeln('-sort[m]       Sorts ROMs into directories by country or type');
+    writeln('                  m- Sorts ROMs by mapper # as well');
+    pause;
     writeln('-m#            Filter listing by mapper #');
     writeln('-f[hvbt4]      Filter listing by mapper data');
     writeln('                  h- Horizontal Mirroring     t- Trainer Present');
-    pause;
     writeln('                  v- Vertical Mirroring       4- 4 Screen Buffer');
     writeln('                  b- Contains SRAM (Battery backup)');
     writeln('-u             Only display unknown ROMs (enables -c)');
@@ -1656,11 +1707,11 @@ var
   dbpos,io,pc:integer;
   fcpos:integer;
   docsum,show,show_h,show_v,show_b,show_4,show_t,view_bl,outfile,extout,unknown:boolean;
-  rname,namematch,dbase,extdbase,repair,cmp,abort,dbasemissing,garbage,sort:boolean;
+  rname,namematch,dbase,extdbase,repair,cmp,abort,dbasemissing,garbage,sort,sortmapper:boolean;
   mthe,uscore,ccode,remspace,notrenamed,notrepaired,cropped,resize,sorted:boolean;
   booltemp,dupe,shortname,allmissing,missingsort,lowcasename,subdir:boolean;
-  nobackup,badrom,mhackedrom,ghackedrom,hackedrom,piraterom,prgfound:boolean;
-  result,rtmp:string;
+  nobackup,badrom,mhackedrom,ghackedrom,hackedrom,piraterom,prgfound,remperiod:boolean;
+  result,rtmp,rtmp2,ralt:string;
   key:char;
   out,out2:string;
   outm:string[13];
@@ -1673,6 +1724,7 @@ var
   hour,min,sec,hund:word;
   Year,Month,Day,DOW:word;
   fullstarttime,fullendtime,difftime,temptime:longint;
+  fs:integer;
 
 begin
   checkbreak:=false;
@@ -1710,6 +1762,7 @@ begin
   uscore:=false;
   ccode:=false;
   remspace:=false;
+  remperiod:=true;
   unknown:=false;
   dbase:=false;
   extdbase:=false;
@@ -1718,6 +1771,7 @@ begin
   abort:=false;
   dbasemissing:=false;
   sort:=false;
+  sortmapper:=false;
   dupe:=false;
   shortname:=false;
   allmissing:=true;
@@ -1737,9 +1791,12 @@ begin
   if sps>0 then usage(1);
   searchps('-sub',sps,result);
   if sps>0 then subdir:=true;
-  for pc:=1 to extparamcount do
+  for pc:=1 to extparamcount+1 do
     begin
-      clfname:=extparamstr(pc);
+      if pc>extparamcount then
+        begin
+          if numpaths=0 then clfname:='*.nes' else clfname:='-';
+        end else clfname:=extparamstr(pc);
       if (clfname[1]<>'-') and (numpaths<maxpathnames) then
         begin
           splitpath(clfname,clfname,pathname);
@@ -1771,14 +1828,6 @@ begin
           path[numpaths]:=strnew(arraytemp);
         end;
     end;
-  if numpaths=0 then
-    begin
-      numpaths:=1;
-      str2chr('*.nes',arraytemp);
-      clf[numpaths]:=strnew(arraytemp);
-      str2chr(cpath,arraytemp);
-      path[numpaths]:=strnew(arraytemp);
-    end;
   searchps('-c',sps,result);
   if sps>0 then docsum:=true;
   searchps('-hc',sps,result);
@@ -1809,6 +1858,7 @@ begin
       if pos('C',result)>0 then ccode:=true;
       if pos('L',result)>0 then lowcasename:=true;
       if pos('T',result)>0 then mthe:=true;
+      if pos('P',result)>0 then remperiod:=false;
     end;
   searchps('-sn',sps,result);
   if sps>0 then shortname:=true;
@@ -1876,8 +1926,12 @@ begin
       if pos('B',result)>0 then allmissing:=false;
       if pos('N',result)>0 then overwritemissing:=true;
     end;
-  searchps('-sort',sps,result);
-  if sps>0 then begin sort:=true; docsum:=true; end;
+  searchps('-sort*',sps,result);
+  if sps>0 then
+    begin
+      sort:=true; docsum:=true;
+      if pos('M',result)>0 then sortmapper:=true;
+    end;
   searchps('-doall',sps,result);
   if sps>0 then begin
                   docsum:=true; rname:=true; repair:=true; resize:=true; extout:=true;
@@ -1965,9 +2019,10 @@ begin
                       end;
                     if dbpos=0 then
                       begin
+                        fs:=romsize(name);
                         if FCPos=0 then checkbanks(Name,nes.prg,nes.chr,newprg,newchr);
                         if FCPos>0 then begin newprg:=fcprg[fcpos]; newchr:=fcchr[fcpos]; end;
-                        if (nes.prg<>newprg) or (nes.chr<>newchr) then
+                        if (nes.prg<>newprg) or (nes.chr<>newchr) or (fs>nes.prg*2+nes.chr) then
                           begin
                             oldnes:=nes;
                             CropRom(Name,nes,nes.prg,nes.chr,newprg,newchr,errcode);
@@ -2046,30 +2101,48 @@ begin
                     if nes.country mod 8192 div 4096=1 then ghackedrom:=true;
                     if nes.country mod 16384 div 8192=1 then hackedrom:=true;
                     if nes.country div 16384=1 then badrom:=true;
+                    if mthe=true then result:=movethe(result);
                     if ccode=true then result:=result+countryi2s(nes.country);
                     if lowcasename=true then result:=lowcasestr(result);
                     if remspace=true then result:=spcvt(result,2);
                     if uscore=true then result:=spcvt(result,1);
-                    if mthe=true then result:=movethe(result);
+                    if remperiod=true
+                     then begin
+                            ralt:=result;
+                            result:=fixperiod(result);
+                          end else ralt:=fixperiod(result);
                     cmp:=comparehdrs(nes,resulthdr);
                     if result+'.nes'<>name then namematch:=false else namematch:=true;
                     if (namematch=false) and (rname=false) then
                       begin
                         rtmp:=result;
+                        if rtmp[length(rtmp)]='.' then rtmp:=rtmp+'nes' else rtmp:=rtmp+'.nes';
+                        rtmp2:=ralt;
+                        if rtmp2[length(rtmp2)]='.' then rtmp2:=rtmp2+'nes' else rtmp2:=rtmp2+'.nes';
                         if mthe=false then
-                          if lowcasestr(copy(name,1,3))='the' then rtmp:=movethe(result);
-                        if name=lowcasestr(name) then rtmp:=lowcasestr(rtmp);
-                        if rtmp+'.nes'=name then namematch:=true else
-                        if spcvt(rtmp,1)+'.nes'=name then namematch:=true else
-                        if spcvt(rtmp,2)+'.nes'=name then namematch:=true else
+                          if lowcasestr(copy(name,1,3))='the' then
+                            begin rtmp:=movethe(rtmp); rtmp2:=movethe(rtmp2); end;
+                        if name=lowcasestr(name) then
+                          begin rtmp:=lowcasestr(rtmp); rtmp2:=lowcasestr(rtmp2); end;
+                        if (rtmp=name) or (rtmp2=name) then namematch:=true else
+                        if (spcvt(rtmp,1)=name) or (spcvt(rtmp2,1)=name) then namematch:=true else
+                        if (spcvt(rtmp,2)=name) or (spcvt(rtmp2,2)=name) then namematch:=true else
                           begin
                             rtmp:=result+countryi2s(nes.country);
-                            if name=lowcasestr(name) then rtmp:=lowcasestr(rtmp);
-                            if rtmp+'.nes'=name then namematch:=true else
-                            if spcvt(rtmp,1)+'.nes'=name then namematch:=true else
-                            if spcvt(rtmp,2)+'.nes'=name then namematch:=true
+                            if rtmp[length(rtmp)]='.' then rtmp:=rtmp+'nes' else rtmp:=rtmp+'.nes';
+                            rtmp2:=ralt+countryi2s(nes.country);
+                            if rtmp2[length(rtmp2)]='.' then rtmp2:=rtmp2+'nes' else rtmp2:=rtmp2+'.nes';
+                            if mthe=false then
+                              if lowcasestr(copy(name,1,3))='the' then
+                                begin rtmp:=movethe(rtmp); rtmp2:=movethe(rtmp2); end;
+                            if name=lowcasestr(name) then
+                              begin rtmp:=lowcasestr(rtmp); rtmp2:=lowcasestr(rtmp2); end;
+                            if (rtmp=name) or (rtmp2=name) then namematch:=true else
+                            if (spcvt(rtmp,1)=name) or (spcvt(rtmp2,1)=name) then namematch:=true else
+                            if (spcvt(rtmp,2)=name) or (spcvt(rtmp2,2)=name) then namematch:=true
                           end;
                       end;
+                    if result[length(result)]='.' then delete(result,length(result),1);
                     if badrom=true then rflag:=6;
                     if namematch=false then rflag:=4;
                     if (cmp=false) or (garbage=true) then rflag:=3;
@@ -2100,23 +2173,23 @@ begin
                         if copy(out,length(out)-3,1)='.' then out:=copy(out,1,length(out)-4);
                         byte7:=nes.mirror+nes.sram*2+nes.trainer*4+nes.fourscr*8+nes.mapper mod 16*16;
                         byte8:=nes.vs+nes.pc10*2+nes.mapper div 16*16;
-                        out:=out+';'+i2s(byte7);
-                        out:=out+';'+i2s(byte8);
-                        out:=out+';'+i2s(nes.prg);
-                        out:=out+';'+i2s(nes.chr);
+                        out:=out+';'+i2s(byte7,0);
+                        out:=out+';'+i2s(byte8,0);
+                        out:=out+';'+i2s(nes.prg,0);
+                        out:=out+';'+i2s(nes.chr,0);
                       end else
                       begin
                         out:=out+'"'+csum+'","'+name;
                         if copy(out,length(out)-3,1)='.' then out:=copy(out,1,length(out)-4);
                         out:=out+'"';
-                        out:=out+','+i2s(nes.mapper)+',';
-                        out:=out+i2s(nes.mirror)+','+i2s(nes.sram)+',';
-                        out:=out+i2s(nes.trainer)+','+i2s(nes.fourscr)+',"';
+                        out:=out+','+i2s(nes.mapper,0)+',';
+                        out:=out+i2s(nes.mirror,0)+','+i2s(nes.sram,0)+',';
+                        out:=out+i2s(nes.trainer,0)+','+i2s(nes.fourscr,0)+',"';
                         if nes.mirror=1 then out:=out+'V' else out:=out+'H';
                         if nes.sram=1 then out:=out+'B' else out:=out+'.';
                         if nes.trainer=1 then out:=out+'T' else out:=out+'.';
                         if nes.fourscr=1 then out:=out+'4' else out:=out+'.';
-                        out:=out+'",'+i2s(nes.prg)+','+i2s(nes.chr);
+                        out:=out+'",'+i2s(nes.prg,0)+','+i2s(nes.chr,0);
                       end;
                 sortcode:=nes.country;
                 if (piraterom=true) and (move_pirate=true) then sortcode:=-5;
@@ -2153,6 +2226,7 @@ begin
                             begin
                               sorted:=true;
                               sortdir:=getsortdir(sortcode);
+                              if sortmapper=true then sortdir:=sortdir+i2s(resulthdr.mapper,3)+'\';
                               if notrepaired=true then sortdir:=dir_repair;
                             end else sortdir:='.\';
                           LFNMove(name,sortdir+result+'.nes',csum,countryi2s(nes.country),errcode);
@@ -2191,6 +2265,11 @@ begin
                 if (sort=true) and (dupe=false) and (sorted=false) then
                   begin
                     sortdir:=getsortdir(sortcode);
+                    if sortmapper=true then
+                      begin
+                        if dbpos>0 then sortdir:=sortdir+i2s(resulthdr.mapper,3)+'\'
+                                   else sortdir:=sortdir+i2s(nes.mapper,3)+'\';
+                      end;
                     if notrepaired=true then sortdir:=dir_repair;
                     LFNMove(name,sortdir,csum,countryi2s(nes.country),errcode);
                     if (errcode>0) and (errcode<>100) then nomove:=nomove+1;
