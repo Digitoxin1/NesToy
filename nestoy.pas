@@ -29,7 +29,7 @@ const
   null8=#0+#0+#0+#0+#0+#0+#0+#0;
   hdrstring='NES'+#26;
   dbasefile='ROMDBASE.DAT';
-  version='1.2b';
+  version='1.3b';
   maxsize:Word = 3000;
   SortType:updown = ascending;
 
@@ -821,7 +821,7 @@ if t=1 then
     pause;
     writeln('Filename can include wildcards (*,?) anywhere inside the filename.  Long');
     writeln('file names are allowed.  If no filename is given, (*.nes) is assumed.');
-    writeln('Up to 8 different pathnames may be specified.');
+    writeln('Up to 12 different pathnames may be specified.');
   end;
 if t=2 then
   begin
