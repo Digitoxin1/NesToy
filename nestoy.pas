@@ -1,6 +1,7 @@
 program NesToy;
+{$X+}
 uses
-  dos,dos70,crc32c,crt;
+  dos,dos70,crc32c,crt,strings;
 
 type
   neshdr=record
@@ -18,21 +19,75 @@ type
            country:byte;       {Country Code (Not in header)}
            company:string[25]; {Company (Not in header)}
          end;
+  updown   = (ascending,descending);
+  dataType = array[0..255] of char;     { the Type of data to be sorted }
+  dataptr  = ^dataType;
+  ptrArray = Array[1..3000] of dataptr;
+  Arrayptr = ^ptrArray;
 
 const
   null8=#0+#0+#0+#0+#0+#0+#0+#0;
   hdrstring='NES'+#26;
   dbasefile='ROMDBASE.DAT';
-  version='1.0b';
+  version='1.2b';
+  maxsize:Word = 3000;
+  SortType:updown = ascending;
 
 var
   hdcsum:boolean;
-  csumdbase:array[1..2500] of string[8];
-  csumflags:array[1..2500] of boolean;
+  csumdbase:array[1..2500] of record
+                                str:string[8];
+                                flag:boolean;
+                              end;
+  dirarray:array[1..3000] of pchar;
   path:array[1..12] of string;
   clf:array[1..12] of string;
   dbasecount,numpaths:integer;
   cpath,progpath:string;
+
+Procedure swap(Var a,b : dataptr);  { Swap the Pointers }
+Var  t:dataptr;
+begin
+  t:=a;
+  a:=b;
+  b:=t;
+end;
+
+Procedure QuickSort(Var da; left,right:Word);
+Var
+  d     :ptrArray Absolute da;
+  pivot :datatype;
+  lower,
+  upper,
+  middle: Word;
+  t,counter:integer;
+  P:longint;
+begin
+  lower:=left;
+  upper:=right;
+  middle:=(left + right) div 2;
+  pivot:=d[middle]^;
+  Repeat
+    Case SortType of
+    ascending :begin
+                 While strcomp(d[lower]^,pivot)<0 do inc(lower);
+                 While strcomp(pivot,d[upper]^)<0 do dec(upper);
+               end;
+    descending:begin
+                 While strcomp(d[lower]^,pivot)>0 do inc(lower);
+                 While strcomp(pivot,d[upper]^)>0 do dec(upper);
+               end;
+    end; { Case}
+    if lower <= upper then begin
+      { swap the Pointers not the data }
+      swap(d[lower],d[upper]);
+      inc(lower);
+      dec(upper);
+    end;
+  Until lower > upper;
+  if left < upper then QuickSort(d,left,upper);
+  if lower < right then QuickSort(d,lower,right);
+end;  { QuickSort }
 
 procedure pause;
 var
@@ -161,6 +216,7 @@ begin
   if s='JUE' then temp:=7;
   if s='S' then temp:=8;
   if s='C' then temp:=16;
+  if s='X' then temp:=97;
   if s='V' then temp:=98;
   if s='P' then temp:=99;
   countrys2i:=temp;
@@ -181,6 +237,7 @@ begin
     7: temp:=' (JUE)';
     8: temp:=' (S)';
     9: temp:=' (C)';
+    97: temp:=' (UNL)';
     98: temp:=' (VS)';
     99: temp:=' (PC10)';
   end;
@@ -255,6 +312,7 @@ begin
   splitpath(sourcepath,sn,sp);
   splitpath(destpath,dn,dp);
   if dn='' then dn:=sn;
+  if copy(dn,length(dn)-3,4)='.ne~' then dn[length(dn)]:='s';
   sourcepath:=sp+sn;
   destpath:=dp+dn;
   f:=LFNFindFirst(dp,FA_DIR,FA_DIR,dirinfo);
@@ -273,11 +331,7 @@ begin
 end;
 
 procedure GetNesHdr(var nh:neshdr;hdr:string);
-var
-  counter:integer;
-  garbage:boolean;
 begin
-  garbage:=false;
   nh.hdr:=copy(hdr,1,4);
   nh.prg:=ord(hdr[5]);
   nh.chr:=ord(hdr[6]);
@@ -289,10 +343,6 @@ begin
   nh.other:=copy(hdr,9,8);
   nh.vs:=ord(hdr[8]) mod 2;
   nh.pc10:=ord(hdr[8]) div 2 mod 2;
-  if ord(hdr[8]) div 4 mod 2>0 then garbage:=true;
-  if ord(hdr[8]) div 8 mod 2>0 then garbage:=true;
-  for counter:=1 to 8 do
-    if ord(hdr[counter+8])>0 then garbage:=true;
   nh.country:=0;
   nh.company:='';
 end;
@@ -365,8 +415,8 @@ begin
     begin
       low2:=low;
       mid:=(high-low) div 2+low;
-      if csumdbase[mid]=cs then found:=true
-        else if csumdbase[mid]>cs then high:=mid
+      if csumdbase[mid].str=cs then found:=true
+        else if csumdbase[mid].str>cs then high:=mid
           else low:=mid;
     end;
   if found=true then fnd:=mid;
@@ -388,6 +438,7 @@ begin
   repeat
     result:=lfnblockread(f,buf,sizeof(buf));
     g:=result mod 8192;
+    if g=512 then g:=0;
     if g>0 then garbage:=true;
     for ctr:=1 to result-g do crc:=crc32(buf[ctr],crc);
   until result=0;
@@ -429,11 +480,45 @@ begin
   repeat
     result2:=lfnblockread(f2,buf,sizeof(buf));
     g:=result2 mod 8192;
+    if g=512 then g:=0;
     if g>0 then result2:=result2-g;
     result:=lfnblockwrite(f,buf,result2);
   until (result2=0) or (result<>result2);
   LFNCloseFile(f);
   LFNCloseFile(f2);
+end;
+
+function readdir(pathname:string):word;
+var
+  count,counter,len:integer;
+  dirinfo:tfinddata;
+  f:word;
+  strtemp:string;
+  arraytemp:array[0..255] of char;
+begin
+  count:=0;
+  f:=lfnfindfirst(pathname,FA_NORMAL,FA_NORMAL,dirinfo);
+  while (dos7error=0) and (count<3000) do
+    begin
+      count:=count+1;
+      strtemp:=dirinfo.name;
+      len:=length(strtemp);
+      for counter:=1 to len do arraytemp[counter-1]:=strtemp[counter];
+        arraytemp[len]:=#0;
+      dirarray[count]:=strnew(arraytemp);
+      lfnfindnext(f,dirinfo);
+    end;
+  lfnfindclose(f);
+  readdir:=count;
+  quicksort(dirarray,1,count);
+end;
+
+procedure readdirclose(count:word);
+var
+  counter:integer;
+begin
+  for counter:=count downto 1 do
+    strdispose(dirarray[counter]);
 end;
 
 procedure loaddbase;
@@ -455,8 +540,8 @@ begin
     begin
       dbasecount:=dbasecount+1;
       readln(f,s);
-      csumdbase[dbasecount]:=s;
-      csumflags[dbasecount]:=false;
+      csumdbase[dbasecount].str:=s;
+      csumdbase[dbasecount].flag:=false;
     end;
   close(f);
 end;
@@ -492,6 +577,8 @@ begin
   if rflag=1 then out:=out+'? ';
   if rflag=2 then out:=out+'* ';
   if rflag=3 then out:=out+'x ';
+  if rflag=4 then out:=out+'n ';
+  if rflag=5 then out:=out+'d ';
   out:=out+justify(fname,l,'L',true);
   out:=out+' '+justify(ns,3,'R',False)+' ';
   if minfo.mirror=0 then out:=out+'H' else out:=out+'V';
@@ -531,6 +618,7 @@ begin
           if minfo.country=7 then out:=out+' '+'JUE';
           if minfo.country=8 then out:=out+' '+'  S';
           if minfo.country=16 then out:=out+' '+' C ';
+          if minfo.country=97 then out:=out+' '+'Unl';
         end;
       if (minfo.country=98) or (minfo.vs=1) then out:=out+' '+'VS ';
       if (minfo.country=99) or (minfo.pc10=1) then out:=out+' '+'P10';
@@ -577,7 +665,8 @@ procedure cleanrn(rn,rp:integer);
 var
   f:word;
   DirInfo:SearchRec;
-  s:string;
+  s,ps,fs:string;
+  errcode:byte;
 begin
   if rn>0 then
     begin
@@ -597,7 +686,8 @@ begin
         begin
           s:=getlongpathname(dirinfo.name,false);
           s:=copy(s,1,length(s)-4)+'.bak';
-          LFNRename(DirInfo.name,s);
+          splitpath(s,fs,ps);
+          LFNMove(DirInfo.name,'Backup\'+fs,errcode);
           FindNext(DirInfo);
         end;
     end;
@@ -606,13 +696,16 @@ end;
 procedure listmissing;
 var
   f,f2:text;
-  io,c,p,x,code:integer;
+  io,c,p,x,code,acount:integer;
+  counter:integer;
   byte7,byte8:byte;
   ts,ts2,fn,out,out2:string;
   dbaseinfo:neshdr;
   csum:string[8];
-
+  dbasearray:array[1..2500] of pchar;
+  charout:array[0..255] of char;
 begin
+  acount:=0;
   assign(f2,cpath+'\MISSING.TXT');
   {$I-}
   reset(f2);
@@ -626,42 +719,56 @@ begin
   assign(f,progpath+dbasefile);
   reset(f);
   for c:=1 to dbasecount do
-  begin
-    readln(f,ts);
-    if csumflags[c]=false then
-      begin
-        p:=pos(';',ts); csum:=copy(ts,1,p-1); delete(ts,1,p);
-        p:=pos(';',ts);
-        if p=0 then fn:=ts else
-          begin
-            fn:=copy(ts,1,p-1);
-            delete(ts,1,p);
-          end;
-        p:=pos(';',ts); ts2:=copy(ts,1,p-1); delete(ts,1,p); val(ts2,x,code); byte7:=x;
-        p:=pos(';',ts); ts2:=copy(ts,1,p-1); delete(ts,1,p); val(ts2,x,code); byte8:=x;
-        p:=pos(';',ts); ts2:=copy(ts,1,p-1); delete(ts,1,p); val(ts2,x,code); dbaseinfo.prg:=x;
-        p:=pos(';',ts); ts2:=copy(ts,1,p-1); delete(ts,1,p); val(ts2,x,code); dbaseinfo.chr:=x;
-        p:=pos(';',ts); if p=0 then ts2:=ts else begin ts2:=copy(ts,1,p-1); delete(ts,1,p); end;
-        dbaseinfo.country:=countrys2i(ts2);
-        p:=pos(';',ts); if p=0 then ts2:=ts else begin ts2:=copy(ts,1,p-1); delete(ts,1,p); end;
-        dbaseinfo.company:=ts2;
-        dbaseinfo.mirror:=byte7 mod 2;
-        dbaseinfo.sram:=byte7 div 2 mod 2;
-        dbaseinfo.trainer:=byte7 div 4 mod 2;
-        dbaseinfo.fourscr:=byte7 div 8 mod 2;
-        dbaseinfo.mapper:=byte7 div 16+byte8 div 16*16;
-        dbaseinfo.vs:=byte8 mod 2;
-        dbaseinfo.pc10:=byte8 div 2 mod 2;
-        dbaseinfo.hdr:=hdrstring;
-        dbaseinfo.other:=null8;
-        out:=formatoutput(fn,dbaseinfo,true,csum,0,41,false);
-        checksplit(out,out2);
-        writeln(f2,out);
-        if out2<>'' then writeln(f2,out2);
-      end;
-  end;
+    begin
+      readln(f,ts);
+      if csumdbase[c].flag=false then
+        begin
+          acount:=acount+1;
+          p:=pos(';',ts); csum:=copy(ts,1,p-1); delete(ts,1,p);
+          p:=pos(';',ts);
+          if p=0 then fn:=ts else
+            begin
+              fn:=copy(ts,1,p-1);
+              delete(ts,1,p);
+            end;
+          p:=pos(';',ts); ts2:=copy(ts,1,p-1); delete(ts,1,p); val(ts2,x,code); byte7:=x;
+          p:=pos(';',ts); ts2:=copy(ts,1,p-1); delete(ts,1,p); val(ts2,x,code); byte8:=x;
+          p:=pos(';',ts); ts2:=copy(ts,1,p-1); delete(ts,1,p); val(ts2,x,code); dbaseinfo.prg:=x;
+          p:=pos(';',ts); ts2:=copy(ts,1,p-1); delete(ts,1,p); val(ts2,x,code); dbaseinfo.chr:=x;
+          p:=pos(';',ts); if p=0 then ts2:=ts else begin ts2:=copy(ts,1,p-1); delete(ts,1,p); end;
+          dbaseinfo.country:=countrys2i(ts2);
+          p:=pos(';',ts); if p=0 then ts2:=ts else begin ts2:=copy(ts,1,p-1); delete(ts,1,p); end;
+          dbaseinfo.company:=ts2;
+          dbaseinfo.mirror:=byte7 mod 2;
+          dbaseinfo.sram:=byte7 div 2 mod 2;
+          dbaseinfo.trainer:=byte7 div 4 mod 2;
+          dbaseinfo.fourscr:=byte7 div 8 mod 2;
+          dbaseinfo.mapper:=byte7 div 16+byte8 div 16*16;
+          dbaseinfo.vs:=byte8 mod 2;
+          dbaseinfo.pc10:=byte8 div 2 mod 2;
+          dbaseinfo.hdr:=hdrstring;
+          dbaseinfo.other:=null8;
+          out:=formatoutput(fn,dbaseinfo,true,csum,0,41,false);
+          delete(out,1,2);
+          for counter:=1 to length(out) do charout[counter-1]:=out[counter];
+          charout[counter]:=#0;
+          dbasearray[acount]:=strnew(charout);
+        end;
+    end;
+  quicksort(dbasearray,1,acount);
+  for c:=1 to acount do
+    begin
+      out:=strpas(dbasearray[c]);
+      checksplit(out,out2);
+      writeln(f2,out);
+      if out2<>'' then writeln(f2,out2);
+    end;
+  writeln(f2);
+  writeln(f2,acount,' missing roms out of ',dbasecount);
   close(f);
   close(f2);
+  for c:=acount downto 1 do
+     strdispose(dbasearray[c]);
 end;
 
 
@@ -707,6 +814,8 @@ if t=1 then
     writeln('                  v- Vertical Mirroring       4- 4 Screen Buffer');
     writeln('                  b- Contains SRAM (Battery backup)');
     writeln('-u             Only display unknown roms (enables -c)');
+    writeln('-missing       Creates a list of missing roms in MISSING.TXT');
+    writeln('-sort          Sorts ROMS into directories by country or type');
     writeln('-h,-?,-help    Displays this screen');
     writeln;
     pause;
@@ -719,31 +828,38 @@ if t=2 then
     writeln('error: You must specify a filename!');
     writeln;
   end;
+if t=3 then
+  begin
+    writeln('NesToy only runs under Windows 95/98.');
+    writeln;
+  end;
   halt;
 end;
 
 var
-  DirInfo: TFindData;
   f:word;
   h,ns,csum:string;
   clfname,pathname,sortdir:string;
   nes,resulthdr:NesHdr;
   byte7,byte8:byte;
   l,ctr,csumpos,sps,err:integer;
-  msearch,rflag:integer;
+  msearch,rflag,counter:integer;
   romcount,matchcount,rncount,rpcount:integer;
   dbpos,io,pc:integer;
   docsum,show,show_h,show_v,show_b,show_4,show_t,view_bl,outfile,extout,unknown:boolean;
   rname,namematch,dbase,repair,cmp,abort,dbasemissing,garbage,sort:boolean;
-  uscore,ccode,remspace:boolean;
+  uscore,ccode,remspace,dupe:boolean;
   result,rtmp:string;
   key:char;
   out,out2:string;
   outm:string[13];
   ofile:text;
   errcode:byte;
+  name:string;
+
 begin
   checkbreak:=false;
+  if IsDOS70=false then usage(3);
   progpath:=paramstr(0);
   while copy(progpath,length(progpath),1)<>'\' do
     delete(progpath,length(progpath),1);
@@ -776,6 +892,7 @@ begin
   abort:=false;
   dbasemissing:=false;
   sort:=false;
+  dupe:=false;
   msearch:=-1;
   if extparamcount=0 then usage(0);
   searchps('-h',sps,result);
@@ -875,9 +992,11 @@ begin
       begin
         writeln;
         if outfile=true then writeln(ofile);
-        f:=LFNFindFirst(clfname,FA_Normal,FA_Normal,DirInfo);
-        while (Dos7Error = 0) and (abort=false) do
+        f:=readdir(clfname);
+        for counter:=1 to f do
+          if abort=false then
           begin
+            name:=strpas(dirarray[counter]);
             out:='';
             if keypressed=true then
               begin
@@ -886,9 +1005,10 @@ begin
               end;
             show:=true;
             garbage:=false;
-            if copy(DirInfo.Name,length(DirInfo.Name)-3,4)='.ne~' then show:=false;
-            if copy(DirInfo.Name,length(DirInfo.Name)-3,4)='.ba~' then show:=false;
-            h:=ReadNesHdr(DirInfo.Name);
+            dupe:=false;
+            if copy(Name,length(Name)-3,4)='.ne~' then show:=false;
+            if copy(Name,length(Name)-3,4)='.ba~' then show:=false;
+            h:=ReadNesHdr(Name);
             getneshdr(nes,h);
             if nes.hdr<>hdrstring then show:=false;
             if msearch>-1 then if nes.mapper<>msearch then show:=false;
@@ -899,9 +1019,13 @@ begin
             if (show_4=true) and (nes.fourscr=0) then show:=false;
             if (docsum=true) and (show=true) then
               begin
-                getcrc(DirInfo.Name,csum,garbage);
+                getcrc(Name,csum,garbage);
                 searchdbase(csum,dbpos);
-                if dbpos>0 then csumflags[dbpos]:=true;
+                if dbpos>0 then
+                  begin
+                    if csumdbase[dbpos].flag=true then dupe:=true;
+                    csumdbase[dbpos].flag:=true;
+                  end;
                 if unknown=true then show:=false;
                 if (unknown=true) and (dbpos=0) then show:=true;
               end;
@@ -916,7 +1040,7 @@ begin
                     getdbaseinfo(dbpos,result,resulthdr);
                     if (resulthdr.vs=1) and (resulthdr.pc10=1) then
                       begin
-                        writeln('ERROR IN DATABASE 01 -- ',csumdbase[dbpos],' ',result); {Has both VS and PC10 bits set}
+                        writeln('ERROR IN DATABASE 01 -- ',csumdbase[dbpos].str,' ',result); {Has both VS and PC10 bits set}
                         halt;
                       end;
                     nes.country:=resulthdr.country;
@@ -925,27 +1049,29 @@ begin
                     if remspace=true then result:=spcvt(result,2);
                     if uscore=true then result:=spcvt(result,1);
                     cmp:=comparehdrs(nes,resulthdr);
-                    if result+'.nes'<>dirinfo.name then namematch:=false else namematch:=true;
+                    if result+'.nes'<>name then namematch:=false else namematch:=true;
                     if (namematch=false) and (rname=false) then
                       begin
                         rtmp:=result+countryi2s(nes.country);
-                        if spcvt(result,1)+'.nes'=dirinfo.name then namematch:=true else
-                        if spcvt(result,2)+'.nes'=dirinfo.name then namematch:=true else
-                        if rtmp+'.nes'=dirinfo.name then namematch:=true else
-                        if spcvt(rtmp,1)+'.nes'=dirinfo.name then namematch:=true else
-                        if spcvt(rtmp,2)+'.nes'=dirinfo.name then namematch:=true;
+                        if spcvt(result,1)+'.nes'=name then namematch:=true else
+                        if spcvt(result,2)+'.nes'=name then namematch:=true else
+                        if rtmp+'.nes'=name then namematch:=true else
+                        if spcvt(rtmp,1)+'.nes'=name then namematch:=true else
+                        if spcvt(rtmp,2)+'.nes'=name then namematch:=true;
                       end;
-                    if (namematch=false) or (cmp=false) or (garbage=true) then rflag:=3;
+                    if namematch=false then rflag:=4;
+                    if (cmp=false) or (garbage=true) then rflag:=3;
+                    if dupe=true then rflag:=5;
                   end;
                 if dbase=false
                   then
                     begin
-                      out:=formatoutput(dirinfo.name,nes,docsum,csum,rflag,l,view_bl);
+                      out:=formatoutput(name,nes,docsum,csum,rflag,l,view_bl);
                       checksplit(out,out2);
                     end
                   else
                     begin
-                      out:=out+csum+';'+dirinfo.name;
+                      out:=out+csum+';'+name;
                       if copy(out,length(out)-3,1)='.' then out:=copy(out,1,length(out)-4);
                       byte7:=nes.mirror+nes.sram*2+nes.trainer*4+nes.fourscr*8+nes.mapper mod 16*16;
                       byte8:=nes.vs+nes.pc10*2+nes.mapper div 16*16;
@@ -966,13 +1092,14 @@ begin
                     if (repair=true) and ((cmp=false) or (garbage=true)) then
                       begin
                         rpcount:=rpcount+1;
-                        WriteNesHdr(dirinfo.name,resulthdr);
+                        WriteNesHdr(name,resulthdr);
                       end;
-                    if rname=true then
-                      if result+'.nes'<>dirinfo.name then
+                    if (rname=true) and (dupe=false) then
+                      if result+'.nes'<>name then
                         begin
                           rncount:=rncount+1;
-                          LFNRename(dirinfo.name,result+'.ne~');
+                          LFNRename(name,result+'.ne~');
+                          name:=result+'.ne~';
                         end;
                     if (extout=true) and ((cmp=false) or (namematch=false) or (garbage=true)) then
                       begin
@@ -997,28 +1124,30 @@ begin
                             writeln(ofile);
                           end;
                       end;
-                    if sort=true then
-                      begin
-                        sortdir:='';
-                        if (nes.country=1) or (nes.country=5) then sortdir:='Japan\';
-                        if (nes.country=2) or (nes.country=3) or
-                           (nes.country=6) or (nes.country=7) then sortdir:='USA\';
-                        if nes.country=4 then sortdir:='Europe\';
-                        if nes.country=16 then sortdir:='Canada\';
-                        if nes.country=8 then sortdir:='Sweden\';
-                        if nes.country=0 then sortdir:='Unknown\';
-                        if (nes.country=99) or (nes.pc10=1) then sortdir:='Playchoice 10\';
-                        if (nes.country=98) or (nes.vs=1) then sortdir:='VS\';
-                        LFNMove(dirinfo.name,sortdir,errcode);
-                      end;
+                  end;
+                if dupe=true then
+                  LFNMove(name,'Dupes\',errcode);
+                if (sort=true) and (dupe=false) then
+                  begin
+                    sortdir:='';
+                    if (nes.country=1) or (nes.country=5) then sortdir:='Japan\';
+                    if (nes.country=2) or (nes.country=3) or
+                       (nes.country=6) or (nes.country=7) then sortdir:='USA\';
+                    if nes.country=4 then sortdir:='Europe\';
+                    if nes.country=16 then sortdir:='Canada\';
+                    if nes.country=8 then sortdir:='Sweden\';
+                    if nes.country=0 then sortdir:='Unknown\';
+                    if nes.country=97 then sortdir:='Unlicensed\';
+                    if (nes.country=99) or (nes.pc10=1) then sortdir:='Playchoice 10\';
+                    if (nes.country=98) or (nes.vs=1) then sortdir:='VS\';
+                    LFNMove(name,sortdir,errcode);
                   end;
               end;
-            LFNFindNext(f,DirInfo);
           end;
-        LFNFindClose(f);
         if (rname=true) or (repair=true) then cleanrn(rncount,rpcount);
         LFNChDir(cpath);
       end;
+      readdirclose(f);
     end;
   if romcount=0 then writeln('No roms found') else begin writeln; writeln(romcount,' roms found'); end;
   if matchcount>0 then writeln(matchcount,' roms found in database');
