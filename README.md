@@ -1,5 +1,7 @@
 NesToy is a program I developed between October of 1999 and April of 2000.  As of today, it is over 23 years old.  It is written in Turbo Pascal and is an MS-DOS application.
 
+NesToy predates ROM managers such as Clrmamepro and Romcenter and, as far as I know, is one of the first of its kind.
+
 I recently discovered the source code for NesToy on an old floppy disk and decided to upload it here for preservation.  I kept every revision of NesToy so I committed each revision as I would have if Github was a thing back then.
 
 Below is an excerpt from the documentation included with the latest public release of NesToy (v3.02) from April 3, 2000 which is also available under Releases.  Many thanks to Zophar's Domain (https://www.zophar.net/) for keeping the archive online for all these years.  
