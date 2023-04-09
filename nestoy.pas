@@ -29,9 +29,23 @@ const
   null8=#0+#0+#0+#0+#0+#0+#0+#0;
   hdrstring='NES'+#26;
   dbasefile='ROMDBASE.DAT';
-  version='1.4b';
+  version='1.5b';
   maxsize:Word = 3000;
   SortType:updown = ascending;
+  FCCount=11;
+  FC:array[1..FCCount] of string[8]=('25df361f', {Magmax (U)          32kb  32kb}
+                                     '3fdec942', {Clu Clu Land (U)    16kb  16kb}
+                                     '5a9824e0', {Xenophobe (U)      128kb 128kb}
+                                     '787b41cc', {Ring King (U)       64kb 128kb}
+                                     '7889f720', {RBI Baseball 2 (U) 128kb 128kb}
+                                     '7950b715', {Sqoon (U)           32kb  16kb}
+                                     '7d9d214b', {Chubby Cherub (U)   32kb  16kb}
+                                     'ae6d99c7', {Volleyball (U)      32kb  16kb}
+                                     'c7347bc0', {Karnov (U)         128kb 128kb}
+                                     'df64963b', {Infiltrator (U)    128kb 128kb}
+                                     'fd65afff');{Roller Ball (U)    128kb 128kb}
+  FCPrg:array[1..FCCount] of byte=(2,1,8,4,8,2,2,2,8,8,8);
+  FCChr:array[1..FCCount] of byte=(1,1,4,8,8,1,1,1,8,8,4);
 
 var
   hdcsum:boolean;
@@ -964,6 +978,7 @@ if t=1 then
     writeln('-rep,-repair   Repairs rom headers with those found in database (enables -c)');
     writeln('-res,-resize   Automatically resizes roms if they contain duplicate banks');
     writeln('               of data.');
+    writeln('-sort          Sorts ROMS into directories by country or type');
     writeln('-m#            Filter listing by mapper #');
     writeln('-f[hvbt4]      Filter listing by mapper data');
     writeln('                  h- Horizontal Mirroring     t- Trainer Present');
@@ -971,8 +986,8 @@ if t=1 then
     writeln('                  b- Contains SRAM (Battery backup)');
     writeln('-u             Only display unknown roms (enables -c)');
     writeln('-missing       Creates a list of missing roms in MISSING.TXT');
-    writeln('-sort          Sorts ROMS into directories by country or type');
     pause;
+    writeln('-doall         Enables -c,-i,-ren,-repair,-resize,-sort, and -missing');
     writeln('-h,-?,-help    Displays this screen');
     writeln;
     writeln('Filename can include wildcards (*,?) anywhere inside the filename.  Long');
@@ -1002,9 +1017,11 @@ var
   msearch,rflag,counter:integer;
   romcount,matchcount,rncount,rpcount,rscount:integer;
   dbpos,io,pc:integer;
+  fcpos:integer;
   docsum,show,show_h,show_v,show_b,show_4,show_t,view_bl,outfile,extout,unknown:boolean;
   rname,namematch,dbase,repair,cmp,abort,dbasemissing,garbage,sort:boolean;
   uscore,ccode,remspace,dupe,notrenamed,notrepaired,cropped,resize:boolean;
+  booltemp:boolean;
   result,rtmp:string;
   key:char;
   out,out2:string;
@@ -1140,12 +1157,20 @@ begin
   if sps>0 then begin extout:=true; docsum:=true; end;
   searchps('-u',sps,result);
   if sps>0 then begin unknown:=true; docsum:=true; end;
-  searchps('-dbase',sps,result);
-  if sps>0 then begin dbase:=true; docsum:=true; extout:=false; end;
   searchps('-missing',sps,result);
-  if sps>0 then begin dbasemissing:=true; end;
+  if sps>0 then begin dbasemissing:=true; docsum:=true end;
   searchps('-sort',sps,result);
   if sps>0 then begin sort:=true; end;
+  searchps('-doall',sps,result);
+  if sps>0 then begin
+                  docsum:=true; rname:=true; repair:=true; resize:=true; extout:=true;
+                  dbasemissing:=true; sort:=true;
+                end;
+  searchps('-dbase',sps,result);
+  if sps>0 then begin
+                  dbase:=true; docsum:=true; extout:=false; sort:=false; unknown:=false;
+                  rname:=false; repair:=false; resize:=false; dbasemissing:=false;
+                end;
   if docsum=false then l:=55 else l:=40;
   for pc:=1 to numpaths do
     begin
@@ -1182,6 +1207,7 @@ begin
             notrenamed:=false;
             notrepaired:=false;
             cropped:=false;
+            fcpos:=0;
             if copy(Name,length(Name)-3,4)='.ne~' then show:=false;
             if copy(Name,length(Name)-3,4)='.ba~' then show:=false;
             h:=ReadNesHdr(Name);
@@ -1199,7 +1225,10 @@ begin
                 searchdbase(csum,dbpos);
                 if (dbpos=0) and (resize=true) then
                   begin
-                    checkbanks(Name,nes.prg,nes.chr,newprg,newchr);
+                    for ctr:=1 to FCCount do
+                      if FC[ctr]=csum then FCPos:=ctr;
+                    if FCPos=0 then checkbanks(Name,nes.prg,nes.chr,newprg,newchr);
+                    if FCPos>0 then begin newprg:=fcprg[fcpos]; newchr:=fcchr[fcpos]; end;
                     if (nes.prg<>newprg) or (nes.chr<>newchr) then
                       begin
                         oldnes:=nes;
@@ -1302,7 +1331,9 @@ begin
                     if (rname=true) and (dupe=false) then
                       if result+'.nes'<>name then
                         begin
-                          if (exist(result+'.nes')) or (exist(result+'.ne~')) then
+                          booltemp:=false;
+                          if upcasestr(result+'.nes')=upcasestr(name) then booltemp:=true;
+                          if ((exist(result+'.nes')) or (exist(result+'.ne~'))) and (booltemp=false) then
                             begin
                               LFNRename(name,result+countryi2s(nes.country)+'.ne~');
                               errcode:=dos7error;
