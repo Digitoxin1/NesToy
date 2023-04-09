@@ -1,0 +1,316 @@
+Revision History
+----------------
+(Database updates happen with every release of NesToy.)
+
+Version 3.02 - Some database updates and a massive amount of japanese spelling
+               corrections.
+             - All translations are now named by the language they are
+               translated into instead of just (Translated).
+
+Version 3.01 - Enabled Windows 2000 support.  If you have any problems
+               running NesToy under Windows 2000, or any bugs show up that
+               weren't there before.  Let me know.
+
+Version 3.0  - "Midnight Scan" bug should be fixed for good now.
+             - Added SHORT_NAMES to nestoy.cfg.  This replaces the (-sn)
+               parameter which has been removed.
+             - If a ROM has the read-only attribute set, NesToy will remove
+               it before scanning it.  This fixes the Runtime Error 005
+               error some people have been getting.
+             - Fixed a bug where NesToy was unable to rename a ROM if the
+               filename was the same, but the case was different.
+             - Added DIR_SAVESTATES to nestoy.cfg.  When renaming ROMs,
+               NesToy will now automatically rename any matching .SAV and
+               .ST* files it finds in this directory.
+             - Large amount of spelling corrections in the database.  More
+               coming soon.
+
+Version 2.9  - Added DIR_BASE to nestoy.cfg.  This sets the base directory
+               all the other directories will fall under.  If this is left
+               blank, NesToy will behave as it did before and use the
+               current directory as the base directory.  This is explained
+               in detail in the documentation.
+             - The maximum number of files per directory has been increased
+               back up to 3500.
+             - Fixed a bug where if NesToy began a scan before midnight, but
+               finished after midnight, the time it took would display
+               incorrectly at the end of the scan.
+             - if (-q) is used in conjunction with (-i), NesToy will
+               work in quiet mode, but will display information on any ROMs
+               that need repairing or renaming.
+             - Added the [o] option to (-q).  This will suppress output to
+               the output file as well.
+             - Removed the alternate (-quiet) option.  Only (-q) works now.
+
+Version 2.82 - Massive database update.
+
+Version 2.81 - Database update.  Please read the section in nestoy.txt under
+               Mapper Information for new information concerning some mapper
+               4 to 118 changes to several games.
+
+Version 2.8  - Added (-q,-quiet) options to prevent NesToy from sending any
+               output to the screen.
+
+Version 2.7  - (-sub) now works correctly if you do not specify a directory
+               on the command line. (It will scan the current directory and
+               all directories under it.)
+             - (-res) Now detects and resizes ROMs with extra, unused banks
+               at the end of the ROM. (In other words, if the ROM header
+               specifies that there are 8 PRG banks and 8 CHR banks, but the
+               ROM contains 17 banks total, the extra banks will now be
+               removed.)
+             - (-ren) now has the option of placing periods in appropriate
+               ROM names.  Example: Dr Mario.nes would be named
+               Dr. Mario.nes.  Also periods will be used instead of
+               underscores in the version #'s.  This naming scheme was
+               purposely left out of earlier versions because Nesticle will
+               not load a ROM if the filename has more than one '.' in it.
+               This feature is enabled through (-ren[p]).
+             - Fixed a bug where (-ren[t]) would do nothing if used with
+               several of the other renaming options.
+             - (-sort) now has a new command line option (m), which will
+               sort the ROMs by mapper # under the appropriate country or
+               type.
+
+Version 2.6b - NesToy now uses date checking to insure a ROM doesn't get
+               flagged as a duplicate if for some reason the same file gets
+               scanned twice.
+             - The entire database format has changed.  NesToy can now detect
+               ROMS with bad CHR banks that are not in the database as long
+               as a good dump of the ROM does exist in the database.
+             - Removed ROMS with bad CHR banks from the database that are
+               now identified automatically by NesToy.  Because of the
+               database change, there are some bad dumps that were previously
+               identified by NesToy that may not be now.  These will be
+               added back into NesToy sometime in the future.
+             - Temporarily reduced the maximum number of files per directory
+               back down to 3000.  If there are more than 3000 files in one
+               directory, NesToy will only scan 3000 of them.  After NesToy
+               has sorted the directory, you can run NesToy again to finish
+               up the rest of the ROMs.
+             - Fixed a bug where NesToy would crash when creating a missing
+               list if no ROMs are missing.
+
+Version 2.5b - Massive database update
+             - Finally fixed a moving/renaming problem that was causing
+               extensions of (.ne1,.ne2, etc.) to appear on some files.
+               You will still see these in the duplicate directory and the
+               backup directory though.  This is normal.
+             - Addad a (-log) option to log any problems NesToy encounters
+               when renaming, sorting, or repairing ROMs.
+             - NesToy now defaults to scanning the current directory if no
+               pathname is specified on the command line.
+
+Version 2.4b - Added a (-nobackup) option to suppress the creaton of backups
+               when ROMs are repaired or resized.
+             - NesToy can now resize some ROMs that are too small, but just
+               need to be padded with empty space to repair them.
+             - Fixed a bug where under certain circumstances, NesToy would
+               be unable to perform a rename on ROMs if the were already
+               sorted into the directories defined in nestoy.cfg.
+             - Implemented a work-around to prevent NesToy from scanning the
+               same ROM twice when (-sub) is used.  This caused NesToy to
+               think the ROM was a duplicate and move it to the duplicates
+               directory.  
+             - NesToy will now always skip over the duplicate and backup
+               directories in a scan unless they are specified directly on
+               the command line.  This is not recommended.
+             - All internal directory handling routines have been rewritten.
+               Make sure to report any bugs or inconsistancies no matter how
+               minor.
+             - The backup directory can now be changed in nestoy.cfg.  Either
+               delete nestoy.cfg and let it create a new one, or manually
+               add the new entries.
+             - Raised internal directory limit to 100 directories.
+             - Small change in sorting routines.  ROMs with titles like
+               "Dragon Warrior.nes" will now show up in the listings before
+               "Dragon Warrior 2.nes."
+
+Version 2.31b- Some people have been getting a Runtime Error 202 with
+               version 2.3.  Should be fixed now.
+
+Version 2.3b - NesToy can now automatically scan subdirectories under
+               the directories specified on the command line by using the
+               (-sub) command line option.
+             - (-ren) now has the option to place the word "The" in
+               appropriate ROMs at the beginning instead of the end of the
+               filename.  NesToy also recognizes both variations of the
+               name as correct.
+             - Hacks are now split into 3 categories.  Mapper hacks, Game
+               hacks, and hacks which don't fall into the other 2 categories.
+             - Small internal changes to the database structure.  DO NOT
+               try to run NesToy with a database from a previous version of
+               NesToy.
+             - Many internal changes, make sure to report any new bugs or
+               existing ones.
+
+Version 2.2b - Optimized CRC calculation routines resulting in a nice
+               speed increase.
+             - Support for Chinese ROMs.  Country code for China is now
+               (C).  (F) is now used for the one Canadian ROM (French
+               Canadian.)  Default directory for Chinese ROMs is China\.
+
+Version 2.1b - Increased the maximum number of ROMs NesToy can read in
+               one directory from 3000 to 4000.  Even though there are less
+               than 2500 legitimate ROMs, some people seemed to have 3500+
+               ROMs in one directory.  Wow!
+             - When finished, NesToy will now tell you how long it took.
+             - Changed the database file name to NESDBASE.DAT.
+
+Version 2.0b - Fixed a bug where NesToy would not attach a country code
+               to any canadian ROMs (which there is only one.)
+             - Bad [] will now contain a "T", as shown in the docs, when a
+               ROM contains trailing garbage instead of an "F".
+             - The extended info line will now show Ren [] instead of
+               Renamed, or Rep [] instead of Repaired.  This way, you can
+               look inside the brackets and see why the rom needed to be
+               fixed.
+             - Fixed a bug in the missing.txt output routines.
+             - You can now adjust in the nestoy.cfg, whether or not NesToy
+               will include hacks, pirates, translations, or bad dumps when
+               creating or updating the missing.txt file.
+             - Added the [n] option to (-missing).
+
+Version 1.91b- Database update, replaced many bad dumps with good ones.
+
+Version 1.9b - Added support for translations.
+             - Added directory support to (-sort) for translations and
+               pirates.
+             - Pirates are defined as a ROM with the title or copyright
+               information changed, defaced, or removed.  If any other
+               changes have been made to the ROM, then it is a hack.
+             - You can now specify whether or not bad dumps, pirates, or
+               hacks will be moved into their own directories or into their
+               corresponding country directory.
+             - Fixed a bug thats been around for a while that would cause
+               the missing.txt and output.txt files to fail to be created
+               if you were in a directory with long pathnames.
+             - Pressing ESC will now abort NesToy.  NesToy will stop on
+               the ROM it is at and then quit.
+             - Massive database update, make sure you delete you missing.txt
+               and have NesToy create a new one or you may never know what
+               is new.
+
+Version 1.81b- Database update, fixed spelling on about 40 japanese ROMs.
+
+Version 1.8b - Added (-sn) parameter.  When used, shorter file names will
+               be used for some ROMs.  (Example: Instead of "Zelda 2 - The
+               Adventure of Link.nes", the ROM will be named "Zelda 2.nes".)
+             - Added extra options to (-missing) parameter. (c) will sort
+               the missing.txt file by country codes and (b) will output
+               the missing.txt with a bare format only (Name, checksum, and
+               country codes)
+             - Fixed a small bug that would cause a failure of the missing
+               file to be created in a root directory or in some cases,
+               at all.
+             - (-ren) now has an option to rename ROMs to all
+               lowercase names. (This feature was added by request)
+             - You can now add command line parameters to the nestoy.cfg
+               file.
+
+Version 1.7b - When a MISSING.TXT file exists, NesToy will no longer
+               overwrite it, but instead update it by removing ROMs that
+               now exist.  Now you no longer have to scan your entire
+               ROM collection every time you add a few new ROMs to update
+               your missing file.
+             - NesToy will now create a .cfg file (nestoy.cfg) the first
+               time you run it.  You can customize the directories NesToy
+               uses when moving around files in the .cfg file.
+             - Directories with names like USA\, Japan\, etc. are now placed
+               inside the current directory (The one you run NesToy from.)
+               instead of under the directory where the ROM being moved is
+               located.
+             - NesToy will no longer try to move a file if the directory it
+               originated from is the same directory it is being moved to.
+               This caused a bunch of .NE1, .NE2, etc. files in previous
+               releases when this was done.
+             - A file with an extension like .NE1 or .BA1 is created when
+               NesToy moves a file to a directory and a file with the same
+               name already exists.  These should now only appear in the
+               backup and duplicate directories.
+             - ROMs moved to the duplicate directory are now renamed properly
+               when moved.
+             - You can now use (-sort) on a directory located on a CD-ROM
+               drive (or any other unwriteable media) and it will sort the
+               ROMs into directories and optionally rename them if renaming
+               is active.  NesToy currently cannot repair the ROMs this way,
+               but it will move any ROMs that need repairing into a directory
+               called 'Repair\' in the current directory and you can then
+               run NesToy a second time on this directory to finish the
+               repair.  This will be fixed in a future release of NesToy.
+             - Many other changes have been made to improve the way NesToy
+               handles the moving of ROMs.
+             - Received a nice list of japanese spelling errors and fixes
+               which have been incorporated into the database.  I accidentally
+               deleted the e-mail so I have no idea who to give credit to.
+               Sorry.
+
+Version 1.6b - The database now includes known bad dumps.  When using
+               (-sort), these ROMs will be moved into a directory called
+               BAD.  Bad dumps will not show up on your missing list
+               when using (-missing).
+             - A bad dump is now indicated by a 'b' in the far left
+               column in a ROM listing.
+             - Database format has been altered slightly to allow for ROM
+               entries with additional resize information when needed.  
+
+Version 1.5b - Fixed a small bug when NesToy would rename a file with the
+               same name, but different case.
+             - Added the (-doall) parameter.
+             - Added internal resize support for a handful of ROMs that
+               need resizing, but not because of duplicate data.
+             - (-missing) now automatically turns on (-c).  This should fix
+               the problem some of you have been having with (-missing)
+               reporting all ROMs as being missing.
+             - Revision history is now in WHATSNEW.TXT instead of the
+               main documentation.
+
+Version 1.4b - (-res,-resize) parameter added.  Unknown ROMs will now be
+               checked for duplicate data and resized if necessary.
+
+Version 1.3b - Lots of Error checking added.  NesToy no longer goes crazy
+               when unable to create a file or when trying to rename or
+               repair ROMs on a read-only device like a CD-ROM drive.
+             - NesToy will now automatically add a country code to a ROM
+               when renaming if a file already exists in the directory with
+               that name.
+             - Fixed a major bug in the Long File Name handling routines
+               which would cause NesToy to freeze up once in a while for no
+               apparent reason.
+
+Version 1.2b - Fixed incorrect detection of ROMS with trainers present
+             - Fixed a stupid stupid mistake.  It seems after NesToy found
+               a duplicate ROM, it would flag every ROM after that as a
+               duplicate.  This has been fixed.  I forgot to reset the flag
+               for each ROM.
+
+Version 1.1b - Added -missing parameter
+             - Added -sort parameter
+             - Output is now sorted alphabetically
+             - Number of pathnames on command line have been increased from
+               8 to 12.
+             - All backups are automatically put into a directory called
+               BACKUP in the directory where the ROM is located
+             - All duplicates are automatically put into a directory called
+               DUPES in the directory where the ROM is located
+
+Version 1.0b - Changed (-f) parameter to (-o), you can now specify a file
+               to output to, if no file is specified, it defaults to
+               OUTPUT.TXT.
+             - Changed (-s) parameter to (-f)
+             - Added option to add country codes when renaming
+             - Added option to remove spaces from filenames with renaming
+             - Removed the (-t) option, filenames too large to fit on one
+               line will wrap around to the next line
+             - NesToy will no longer flag your ROM as incorrectly named if
+               you are using a different name scheme from the default.
+               In other words, previously, if you chose to use underscores
+               instead of spaces in your ROM names, NesToy would flag these
+               ROMs are being named wrong, it now recognizes all combinations
+               of name schemes.
+             - Work in progress to automatically sort your ROMs into
+               directories.  This is not enabled yet, the routines involve
+               moving files around and I want to make sure they are 100%
+               reliable and bug-free before I enable them.
+
+Version 0.9b - Initial public release

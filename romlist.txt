@@ -1,0 +1,2613 @@
+A Boy and His Blob - Trouble on             1 H...  128kB  128kB   E 8ecbc577
+     Blobolonia
+Action in New York                          1 H...  128kB  128kB   E 3ac0830a
+Adventures of Bayou Billy, The              1 H...  128kB  128kB   E bc9bffcb
+Adventures of Rad Gravity, The              1 H...  128kB  128kB   E a31142ff
+Airwolf                                     1 H...   32kB  128kB   E 4d345422
+Asterix                                     2 V...  128kB  -----   E ed77b453
+Balloon Fight                               0 H...   16kB    8kB   E e54138a9
+Batman                                      4 V...  128kB  128kB   E d0f70e36
+Battle of Olympus, The                      1 H...  128kB  -----   E a97567a4
+Battletoads                                 7 H...  256kB  -----   E 524a5a32
+Battletoads Double Dragon                   7 H...  256kB  -----   E 23d7d48f
+Bionic Commando                             1 H...  256kB  -----   E fa7ee642
+Blades of Steel                             2 V...  128kB  -----   E c0ededd0
+Blaster Master                              1 H...  128kB  128kB   E 8106e694
+Blue Shadow                                 4 V...  128kB  128kB   E c92b814b
+Bram Stoker's Dracula                       4 V...  128kB  128kB   E 89a45446
+Bubble Bobble                               1 H...  128kB   32kB   E c99b690a
+Bucky O'Hare                                4 V...  128kB  128kB   E 6720abac
+Castelian                                   2 V...  128kB  -----   E cf7ca9bd
+Castlevania                                 2 V...  128kB  -----   E a93527e2
+Castlevania 2 - Simon's Quest               1 H...  128kB  128kB   E d6f7383e
+Castlevania 3 - Dracula's Curse             5 H...  256kB  128kB   E 671f23a8
+Caveman Ninja                               4 V...  128kB  128kB   E 04142764
+Chip 'n Dale Rescue Rangers                 1 H...  128kB  128kB   E 84f7fc31
+Cobra Triangle                              7 H...  128kB  -----   E 898e4232
+Crackout                                    2 H...  128kB  -----   E 81af4af9
+Darkwing Duck                               1 H...  128kB  128kB   E 66f6a39e
+Defender of the Crown                       1 H...  256kB  -----   E 68f9b5f5
+Digger T. Rock - The Legend of the Lost     7 H...  128kB  -----   E 96cfb4d8
+     City
+Double Dragon                               1 H...  128kB  128kB   E a1a0c13f
+Double Dragon 3 - The Sacred Stones         4 H...  128kB  128kB   E e9d352eb
+Dr. Mario                                   1 H...   32kB   32kB   E 9735d267
+Dragon's Lair                               4 V...  128kB  128kB   E f919795d
+Drop Zone                                   3 V...   32kB   32kB   E e402b134
+Duck Tales                                  2 V...  128kB  -----   E d029f841
+Dynablaster                                 1 H...  128kB  -----   E 34bb757b
+Elite                                       1 HB..  128kB  -----   E a4bdcc1d
+Excitebike                                  0 V...   16kB    8kB   E 8a0c7337
+Faxanadu                                    1 H...  256kB  -----   E 76c161e3
+Flintstones - The Rescue of Dino &          4 H...  128kB  256kB   E ac609320
+     Hoppy, The
+Galaxy 5000                                 4 H...  128kB  128kB   E 4f089e8a
+Gargoyle's Quest 2 - The Demon Darkness     4 H...  128kB  128kB   E 86c495c6
+Gauntlet 2                                  4 V...  128kB  128kB   E 79f688bc
+Ghosts'n Goblins                            2 V...  128kB  -----   E 9369a2f8
+Goal!                                       1 H...  256kB  128kB   E c0103592
+Goal! Two                                 118 V...  128kB  128kB   E d20bb617
+Godzilla - Monster of Monsters!             1 H...  128kB  128kB   E 46480432
+Golf                                        0 V...   16kB    8kB   E 565b1bdb
+Goonies 2, The                              2 V...  128kB  -----   E 8897a8f1
+Gradius                                     3 V...   32kB   32kB   E 51c51c35
+Gun Smoke                                   2 H...  128kB  -----   E b79c320d
+Hook                                        1 H...  128kB  128kB   E bf888b75
+Hudson's Adventure Island 2                 4 V...  128kB  128kB   E 7e4ba78f
+Ikari Warriors                              2 H...  128kB  -----   E 538218b2
+International Cricket (Prototype)           1 H...  128kB  128kB   E 99c88648
+Isolated Warrior                            4 H...  128kB  128kB   E 4bb9b840
+Jack Nicklaus' Greatest 18 Holes of         2 V...  128kB  -----   E 836fe2c2
+     Championship Golf
+James Bond Jr.                              4 V...  128kB  128kB   E a0a5a0b9
+Jimmy Connor's Tennis                       2 H...  128kB  -----   E b80192b7
+Kabuki - Quantum Fighter                    4 V...  128kB  128kB   E bccfef1c
+Kick Off                                    2 V...  128kB  -----   E d161888b
+Kirby's Adventure                           4 HB..  512kB  256kB   E 2c088dc5
+Konami Hyper Soccer                         2 H...  128kB  -----   E d7b35f7d
+Krusty's Fun House                          4 V...  256kB  128kB   E 585ba83d
+Legend of Prince Valiant, The               1 H...  128kB  128kB   E fd7e9a7e
+Lion King, The                              7 H...  256kB  -----   E 89984244
+Little Nemo - The Dream Master              4 H...  128kB  128kB   E e0fffbd2
+Little Ninja Brothers                       4 H...  128kB  128kB   E 3bb31e38
+Low G Man                                   4 V...  128kB  128kB   E af65aa84
+Lunar Pool                                  0 V...   16kB    8kB   E eee0c7f8
+Maniac Mansion                              1 HB..  256kB  -----   E f59cfc3d
+Marble Madness                              7 H...  128kB  -----   E 51bf28af
+Mega Man 4                                  4 H...  512kB  -----   E 1b932bea
+Mission Impossible                          4 V...  128kB  128kB   E 1353a134
+Monster in my Pocket                        4 V...  128kB  128kB   E 80250d64
+New Ghostbusters 2                          1 H...  128kB  128kB   E f0c198ff
+New Zealand Story                           4 V...  128kB  128kB   E 666be5ec
+Nintendo World Cup                          4 H...  128kB  128kB   E 8da6667d
+Noah's Ark                                  4 V...  128kB  128kB   E 81b2a3cd
+Parodius                                    4 V...  128kB  128kB   E 083e4fc1
+Pinbot                                    119 H...  128kB   64kB   E 9247c38d
+Probotector                                 2 V...  128kB  -----   E b13f00d4
+Probotector 2 - Return of the Evil Forces   4 V...  128kB  128kB   E 37a5eb52
+R.C. Pro-Am (PRG 0 CHR 0)                   7 H...   64kB  -----   E e5a972be
+R.C. Pro-Am (PRG 1 CHR 0)                   1 H...   32kB   32kB   E 46931ea0
+Rad Racer                                   1 H...  128kB  -----   E 654f4e90
+Rush'n Attack                               2 V...  128kB  -----   E e0ac6242
+Shadow Warriors                             1 H...  128kB  128kB   E 709c9399
+Silent Service                              2 V...  128kB  -----   E fa014ba1
+Slalom                                      0 V...   32kB    8kB   E c30848d3
+Snake Rattle'n Roll                         1 H...   32kB   32kB   E 3824f7a5
+Solar Jetman - Hunt for the Golden          7 H...  256kB  -----   E 8904149e
+     Warpship
+Star Wars                                   4 V...  128kB  128kB   E fcd772eb
+Stealth ATF                                 1 H...  128kB  128kB   E e5a8401b
+Street Gangs                                4 H...  128kB  128kB   E f5a1b8fb
+Super Mario Bros.                           0 V...   32kB    8kB   E 9a2db086
+Super Mario Bros. - Duck Hunt              66 H...   64kB   16kB   E 91b4b1d7
+Super Mario Bros. 3                         4 H...  256kB  128kB   E 1ed5c801
+Super Sports Challenge (Aladdin Cart)     232 V...  256kB  -----   E a045fe1d
+Super Turrican                              4 V...  128kB  128kB   E 88c30fda
+Tecmo World Wrestling                       1 H...  128kB  128kB   E cf849f72
+Teenage Mutant Hero Turtles                 1 H...  128kB  128kB   E 00ad1189
+Teenage Mutant Ninja Turtles                1 H...  128kB  128kB   E 6f27300b
+Tetris 2                                    4 V...  128kB  128kB   E 5d2b1962
+Time Lord                                   7 H...  128kB  -----   E 9198279e
+Track & Field 2                             1 H...  128kB  128kB   E c53cf1d0
+Trojan                                      2 V...  128kB  -----   E 4f48b240
+Turbo Racing                                1 HB..  128kB  128kB   E 4d1df589
+Ufouria                                     4 H...  128kB  128kB   E 4ec0fecc
+Wizards & Warriors                          7 H...  128kB  -----   E 5e6d9975
+WWF Steel Cage Challenge                    4 V...  128kB  256kB   E 21f2a1a6
+Xevious                                     0 H...   32kB    8kB   E d745d7cb
+Zelda 2 - The Adventure of Link (PRG 0      1 HB..  128kB  128kB   E 47fd88cf
+     CHR 0)
+Zelda 2 - The Adventure of Link (PRG 2      1 HB..  128kB  128kB   E 47b6a39f
+     CHR 0)
+Deja Vu                                     4 VB..  128kB  256kB   S 39d43261
+Maniac Mansion                              1 HB..  256kB  -----   S 3f2bda65
+Shadowgate                                  4 VB..  128kB  128kB   S 2b1497dc
+Kirby's Adventure                           4 HB..  512kB  256kB  F  37088eff
+10-Yard Fight                               0 H...   32kB    8kB  U  3d564757
+1943                                        2 H...  128kB  -----  U  12c6d5c7
+3-D Battles of WorldRunner, The             2 V...  128kB  -----  U  e6a477b2
+3-D Battles of WorldRunner, The (Mapper    34 V...  256kB  -----  U  33258813
+     34 Hack)
+720                                         1 H...  128kB  -----  U  49f745e0
+8 Eyes                                      4 V...  128kB  128kB  U  326ab3b6
+A Boy and His Blob - Trouble on             1 H...  128kB  128kB  U  4d1ac58c
+     Blobolonia
+A Nightmare On Elm Street                   7 H...  128kB  -----  U  da2cb59a
+Abadox                                      1 H...  128kB  128kB  U  b134d713
+Action 52                                 228 H... 1536kB  512kB  U  51c0b27e
+AD&D Dragon Strike                          4 V...  256kB  256kB  U  2c5908a7
+AD&D Heroes of the Lance                    1 HB..  128kB  128kB  U  b17574f3
+AD&D Hillsfar                               1 HB..  256kB  -----  U  5de61639
+AD&D Pool of Radiance                       4 VB..  512kB  128kB  U  25952141
+Addams Family - Pugsley's Scavenger         1 H...  128kB  128kB  U  063e5653
+     Hunt, The
+Addams Family, The                          1 H...  128kB  128kB  U  65518eae
+Addams Family, The (Alt)                    1 H...  128kB  128kB  U  acde60c0
+Adventures in the Magic Kingdom             1 H...  128kB  128kB  U  5dbd6099
+Adventures of Bayou Billy, The              1 H...  128kB  128kB  U  67751094
+Adventures of Captain Comic, The           11 V...   64kB   64kB  U  a5e89675
+Adventures of Dino Riki                     3 V...   32kB   32kB  U  9bde3267
+Adventures of Lolo                          1 H...   32kB   32kB  U  1e1fbd63
+Adventures of Lolo 2                        4 H...   32kB   32kB  U  1992d163
+Adventures of Lolo 3                        1 H...  128kB  128kB  U  8dd92725
+Adventures of Rad Gravity, The              1 H...  128kB  128kB  U  d8ee7669
+Adventures of Rocky and Bullwinkle and      4 V...  128kB  128kB  U  227cf577
+     Friends, The
+Adventures of Tom Sawyer                    1 H...  128kB  128kB  U  6e85d8dd
+After Burner                               68 H...  128kB  256kB  U  f699ee7e
+Air Fortress                                1 H...  128kB   32kB  U  35c41cd4
+Airwolf                                     1 H...   32kB  128kB  U  489ef6a2
+Al Unser Jr. Turbo Racing                   1 HB..  128kB  128kB  U  5bc9d7a1
+Alfred Chicken                              2 H...  128kB  -----  U  63e992ac
+Alien 3                                     4 V...  128kB  128kB  U  c527c297
+Alien Syndrome                            118 V...  128kB  128kB  U  cbf4366f
+All-Pro Basketball                          1 H...  128kB  128kB  U  934db14a
+Alpha Mission                               3 H...   32kB   32kB  U  dbf90772
+Amagon                                      2 V...  128kB  -----  U  e2b43a68
+American Gladiators                         1 H...  128kB  128kB  U  1973aea8
+Anticipation                                1 H...   32kB   32kB  U  99a9f57e
+Arch Rivals                                 7 H...  128kB  -----  U  c740eb46
+Archon                                      2 H...  128kB  -----  U  f304f1b9
+Arkanoid                                    3 H...   32kB   16kB  U  32fb0583
+Arkista's Ring                              3 H...   32kB   32kB  U  1425d7f4
+Astyanax                                    4 V...  128kB  128kB  U  054cb4eb
+Athena                                      2 V...  128kB  -----  U  27ddf227
+Athletic World                              3 V...   32kB   32kB  U  1771ea8f
+Attack of the Killer Tomatoes               1 H...  128kB  128kB  U  7c6f615f
+Baby Boomer                                11 V...   64kB   16kB  U  bbe40dc4
+Back to the Future                          3 H...   32kB   32kB  U  a55fa397
+Back to the Future 2 & 3                    1 H...  128kB  128kB  U  37ba3261
+Bad Dudes                                   4 V...  128kB  128kB  U  161d717b
+Bad News Baseball                           1 H...  128kB  128kB  U  40dafcba
+Bad Street Brawler                          1 H...  128kB  -----  U  1ae7b933
+Bandai Golf - Challenge Pebble Beach        3 V...   32kB   32kB  U  6cd46979
+Bandit Kings of Ancient China               5 HB..  256kB  128kB  U  15fe6d0f
+Barbie                                      1 H...  128kB  128kB  U  5b6ca654
+Barbie (Rev 3)                              1 H...  128kB  128kB  U  18b249e5
+Bard's Tale - Tales of the Unknown, The     1 HB..  128kB  -----  U  9b821a83
+Barker Bill's Trick Shooting                1 H...   64kB  128kB  U  4318a2f8
+Base Wars                                   4 V...  128kB  128kB  U  f00584b6
+Baseball Simulator 1000                     1 H...  128kB  128kB  U  1f6ea423
+Baseball Stars                              1 HB..  128kB  128kB  U  40d159b6
+Baseball Stars 2                            4 VB..  256kB  128kB  U  18a9f0d9
+Bases Loaded                                1 H...  256kB   64kB  U  daee19f2
+Bases Loaded 2                              1 H...  256kB  128kB  U  b9cf171f
+Bases Loaded 3                              4 V...  256kB  128kB  U  3eca3dda
+Bases Loaded 4                              4 V...  256kB  128kB  U  28f9b41f
+Batman                                      4 V...  128kB  128kB  U  13c6617e
+Batman - Return of the Joker               69 H...  128kB  256kB  U  03ec46af
+Batman Returns                              4 H...  128kB  256kB  U  c247a23d
+Battle Chess                                1 H...  256kB  -----  U  2c2ddfb4
+Battle of Olympus, The                      1 H...  128kB  -----  U  6b53006a
+Battle Tank                                 3 H...   32kB   32kB  U  90d68a43
+Battleship                                  3 H...   32kB   32kB  U  799ad3c6
+Battletoads                                 7 H...  256kB  -----  U  279710dc
+Battletoads Double Dragon                   7 H...  256kB  -----  U  ceb65b06
+Bee 52                                     71 V...   64kB  -----  U  6c93377c
+Beetlejuice                                 7 H...  128kB  -----  U  eb84c54c
+Best of the Best Championship Karate        2 V...  256kB  -----  U  a6a725b8
+Bible Adventures (Ver 1.2)                 11 V...   64kB   64kB  U  7f24efc0
+Bible Adventures (Ver 1.3)                 11 V...   64kB   64kB  U  73140eef
+Bible Buffet (Ver 6.0)                     11 V...  128kB  128kB  U  cfd5ac62
+Big Bird's Hide And Speak                   1 H...  256kB  128kB  U  fde1c7ed
+Big Nose Freaks Out                        71 V...  256kB  -----  U  5b2b72cb
+Big Nose Freaks Out (Aladdin Cart)         71 V...  256kB  -----  U  ccdcbfc6
+Big Nose the Caveman                       71 V...  256kB  -----  U  bd154c3e
+Bigfoot                                     1 H...  128kB  128kB  U  f6fa4453
+Bill & Ted's Excellent Video Game           1 H...  128kB  128kB  U  c4b6ed3c
+     Adventure
+Bill Elliott's NASCAR Challenge             4 V...  128kB  256kB  U  847d672d
+Bionic Commando                             1 H...  256kB  -----  U  d2574720
+Black Bass USA, The                         2 V...  128kB  -----  U  1d0f4d6b
+Blackjack                                  79 V...   32kB   64kB  U  e054a381
+Blades of Steel                             2 V...  128kB  -----  U  8ab52a24
+Blades of Steel (Pirate)                    2 V...  128kB  -----  U  d2121f97
+Blaster Master                              1 H...  128kB  128kB  U  3f0fd764
+Blue Marlin, The                            4 H...  128kB  128kB  U  f37befd5
+Blues Brothers, The                         2 V...  128kB  -----  U  9f2eef20
+Bo Jackson Baseball                         4 V...  128kB  256kB  U  5fd2aab1
+Bomberman                                   0 V...   16kB    8kB  U  db9dcf89
+Bomberman 2                                 1 H...  128kB  -----  U  1ebb5b42
+Bonk's Adventure                            4 H...  256kB  128kB  U  4e44ff44
+Boulder Dash                                1 H...   32kB   32kB  U  0364c3ec
+Bram Stoker's Dracula                       4 V...  128kB  128kB  U  dfa111f1
+Break Time                                  1 H...  128kB   32kB  U  5f0bce2a
+Breakthru                                   1 H...  128kB  128kB  U  a5e8d2cd
+Bubble Bath Babes                           3 V...   32kB   64kB  U  68afef5f
+Bubble Bobble                               1 H...  128kB   32kB  U  5e900522
+Bubble Bobble Part 2                        4 H...  128kB  128kB  U  e095c3f2
+Bucky O'Hare                                4 V...  128kB  128kB  U  e19ee99c
+Bugs Bunny Birthday Bash (Prototype)        4 H...  128kB  128kB  U  85d02cd4
+Bugs Bunny Birthday Blowout, The            4 H...  128kB  128kB  U  126ebf66
+Bugs Bunny Crazy Castle, The                1 H...   64kB   32kB  U  e50a9130
+Bugs Bunny Fun House (Prototype)            1 H...  128kB  128kB  U  ae97627c
+Bump'n'Jump                                 3 H...   32kB   32kB  U  a0a095c4
+Burai Fighter                               4 H...   32kB   32kB  U  ce228874
+Burger Time                                 0 H...   16kB    8kB  U  daf9d7e3
+Cabal                                       7 H...  128kB  -----  U  bdf046ef
+Caesar's Palace                             7 H...  256kB  -----  U  4c7c1af3
+California Games                            2 V...  128kB  -----  U  2f66e302
+Captain America and the Avengers            4 V...  128kB  128kB  U  58c7ddaf
+Captain Planet and the Planeteers           4 V...  128kB  128kB  U  0b404915
+Captain Sky Hawk                            7 H...  128kB  -----  U  f518dd58
+Casino Kid                                  2 H...  128kB  -----  U  05a688c8
+Casino Kid 2                                2 H...  128kB  -----  U  7329118d
+Castelian                                   2 V...  128kB  -----  U  0ae6c9e2
+Castle of Deceit                           11 V...   64kB   64kB  U  345d3a1a
+Castle of Dragon                            2 V...  128kB  -----  U  2f2d1fa9
+Castlequest                                 3 V...   32kB   32kB  U  12906664
+Castlevania (PRG 0)                         2 V...  128kB  -----  U  0ac1aa8f
+Castlevania (PRG 1)                         2 V...  128kB  -----  U  b668c7fc
+Castlevania 2 - Simon's Quest               1 H...  128kB  128kB  U  c471e42d
+Castlevania 3 - Dracula's Curse             5 H...  256kB  128kB  U  ed2465be
+Caveman Games                               1 H...  128kB  128kB  U  7595c7fc
+Challenge of the Dragon                    11 V...   64kB   64kB  U  d188963d
+Championship Bowling                        3 H...   32kB   16kB  U  87645f89
+Championship Pool                           2 V...  128kB  -----  U  cdc641fc
+Cheetahmen 2                              228 H...  256kB  128kB  U  9ab274ae
+Chessmaster, The                            1 H...  128kB   32kB  U  d7f6320c
+Chessmaster, The (Alt)                      1 H...  128kB   32kB  U  ca680e61
+Chiller                                    11 H...   32kB   32kB  U  6332e4ca
+Chip 'n Dale Rescue Rangers                 1 H...  128kB  128kB  U  8bf29cb6
+Chip 'n Dale Rescue Rangers 2               1 H...  128kB  128kB  U  fc5783a7
+Chubby Cherub                               0 V...   32kB    8kB  U  77833016
+Circus Caper                                1 H...  128kB  128kB  U  d152fb02
+City Connection                             3 V...   32kB   32kB  U  ae8666b4
+Clash At Demonhead                          1 H...  128kB  128kB  U  82afa828
+Classic Concentration                       7 H...  256kB  -----  U  932ff06e
+Cliffhanger                                 4 V...  128kB  128kB  U  57c2ae4e
+Cobra Command                               1 H...  128kB  128kB  U  2d75c7a9
+Cobra Triangle                              7 H...  128kB  -----  U  c8ad4f32
+Code Name Viper                             4 V...  128kB  128kB  U  e2313813
+Color A Dinosaur                            2 V...  128kB  -----  U  0123bffe
+Commando                                    2 H...  128kB  -----  U  82be4724
+Commando (Mapper 7 Hack)                    7 H...  256kB  -----  U  975ccfeb
+Conan                                       2 H...  128kB  -----  U  c6000085
+Conflict                                    1 H...  128kB  128kB  U  32cf4307
+Conquest of the Crystal Palace              4 H...  128kB  128kB  U  20a5219b
+Contra                                      2 V...  128kB  -----  U  f6035030
+Contra Force                                4 V...  128kB  128kB  U  a94591b0
+Contra Force (Pirate)                       4 V...  128kB  128kB  U  b5e38091
+Cool World                                  1 H...  128kB  128kB  U  d73aa04c
+Cowboy Kid                                  4 H...  256kB  256kB  U  d18e6be3
+Crash'n The Boys Street Challenge           4 V...  128kB  128kB  U  c7f0c457
+Crystal Mines                              11 V...   64kB   16kB  U  72e66392
+Crystalis                                   4 HB..  256kB  128kB  U  1335cb05
+Crystalis (Prototype)                       4 HB..  256kB  128kB  U  a232e8be
+Cyberball                                   4 H...  128kB  128kB  U  88338ed5
+Cybernoid - The Fighting Machine            3 V...   32kB   32kB  U  ac8dcdea
+Dance Aerobics                              1 H...   64kB   32kB  U  9e382ebf
+Danny Sullivan's Indy Heat                  7 H...  128kB  -----  U  c1b43207
+Darkman                                     1 H...  128kB  128kB  U  398b8182
+Darkwing Duck                               1 H...  128kB  128kB  U  5dce2eea
+Dash Galaxy in the Alien Asylum             3 V...   32kB   32kB  U  67811da6
+Day Dreamin' Davey                          1 H...  256kB  128kB  U  e145b441
+Days of Thunder                             4 V...  128kB  256kB  U  12748678
+Deadly Towers                              34 H...  128kB  -----  U  c2730c30
+Death Race                                 11 V...   64kB   64kB  U  5caa3e61
+Deathbots                                 113 V...   64kB   64kB  U  8eab381c
+Defender 2                                  0 V...   16kB    8kB  U  a2af25d0
+Defender of the Crown                       1 H...  256kB  -----  U  28fb71ae
+Defenders of Dynatron City                  4 V...  128kB  128kB  U  a725b2d3
+Deja Vu                                     4 VB..  128kB  256kB  U  43d01c10
+Demon Sword                                 1 H...  128kB  128kB  U  57c12280
+Desert Commander                            1 H...  128kB  128kB  U  68ec97cb
+Destination Earthstar                       3 H...   32kB   32kB  U  eb9960ee
+Destiny of an Emperor                       1 HB..  256kB  -----  U  a558fb52
+Dick Tracy                                  2 V...  128kB  -----  U  d738c059
+Die Hard                                    1 H...  128kB  128kB  U  085de7c9
+Dig Dug 2                                   0 V...   32kB    8kB  U  dbb06a25
+Digger - The Legend of the Lost City        7 H...  128kB  -----  U  1cee0c21
+Dirty Harry                                 4 V...  256kB  128kB  U  0c2e7863
+Dirty Harry (Alt)                           4 V...  256kB  128kB  U  97217057
+Dizzy The Adventurer (Aladdin Cart)        71 V...  128kB  -----  U  db99d0cb
+Donkey Kong Classics                        3 V...   32kB   32kB  U  703e1948
+Donkey Kong Jr. Math                        0 V...   16kB    8kB  U  0504b007
+Double Dare                                 7 H...  256kB  -----  U  2b378d11
+Double Dragon                               1 H...  128kB  128kB  U  0f1cc048
+Double Dragon 2 - The Revenge               4 V...  128kB  128kB  U  8a640aef
+Double Dragon 3 - The Sacred Stones         4 H...  128kB  128kB  U  50fd0cc6
+Double Dribble                              2 V...  128kB  -----  U  437e7b69
+Double Strike                              79 V...   32kB   32kB  U  1eb4a920
+Dr. Chaos                                   2 V...  128kB  -----  U  73620901
+Dr. Jekyll and Mr. Hyde                     1 H...  128kB   32kB  U  4d3fba78
+Drac's Night Out (Prototype)                1 H...  128kB  128kB  U  4232c609
+Dragon Fighter                              1 H...  128kB  128kB  U  a166548f
+Dragon Power                               66 H...  128kB   32kB  U  811f06d9
+Dragon Spirit - The New Legend              4 H...  128kB  128kB  U  d7e29c03
+Dragon Warrior                              1 HB..   64kB   16kB  U  3b3f88f0
+Dragon Warrior (Rev 2)                      1 HB..   64kB   16kB  U  2545214c
+Dragon Warrior 2                            1 HB..  256kB  -----  U  8c5a784e
+Dragon Warrior 3                            1 HB..  512kB  -----  U  a86a5318
+Dragon Warrior 4                            1 HB..  512kB  -----  U  506e259d
+Dragon Warrior 4 (Wrong Size)               1 HB.. 1024kB  -----  U  41413b06
+Dragon's Lair                               2 V...  128kB  -----  U  ca033b3a
+Duck Tales                                  2 V...  128kB  -----  U  efb09075
+Duck Tales 2                                2 V...  128kB  -----  U  73c7fcf4
+Dudes With Attitude                        79 V...   32kB   32kB  U  bd29178a
+Dungeon Magic - Sword of the Elements       1 HB..  128kB  128kB  U  23c3fb2d
+Dusty Diamond's All-Star Softball           1 H...  128kB  128kB  U  38b590e4
+Dynowarz - Destruction of Spondylus         1 H...  128kB  128kB  U  bde93999
+EarthBound (Prototype)                      4 VB..  256kB  256kB  U  53a9e2ba
+Elevator Action                             0 H...   32kB    8kB  U  2ac87283
+Eliminator Boat Duel                        1 H...  128kB  128kB  U  059e0cdf
+Evert & Lendl Top Player's Tennis           1 H...  128kB  128kB  U  f99e37eb
+Exodus (Ver 4.0)                           11 V...  128kB  128kB  U  0ab26db6
+F-117a Stealth Fighter                      4 V...  256kB  256kB  U  0a7e62d4
+F-15 City War                              79 H...   32kB   32kB  U  d4a76b07
+F-15 Strike Eagle                           4 H...  256kB  256kB  U  0bcaa4d7
+Family Feud                                 1 H...   32kB  128kB  U  51bee3ea
+Fantastic Adventures of Dizzy, The         71 V...  256kB  -----  U  38fbcc85
+Fantasy Zone                                4 H...   64kB   64kB  U  0ffde258
+Faria                                       1 HB..  128kB  128kB  U  45f03d2e
+Faxanadu                                    1 H...  256kB  -----  U  57dd23d1
+Felix the Cat                               4 H...  128kB  128kB  U  2caae01c
+Ferrari Grand Prix Challenge                1 H...  128kB  128kB  U  ce77b4be
+Fester's Quest                              1 H...  128kB  128kB  U  b6bf5137
+Final Fantasy                               1 HB..  256kB  -----  U  cebd2a31
+Fire 'n Ice                                 4 V...  128kB  128kB  U  d534c98e
+Fire Hawk                                  71 H...  128kB  -----  U  1bc686a8
+Fisher Price - Firehouse Rescue             3 V...   32kB   32kB  U  38946c43
+Fisher Price - I Can Remember               3 V...   32kB   32kB  U  267de4cc
+Fisher Price - Perfect Fit                  3 V...   32kB   32kB  U  b9762da8
+Fist of the North Star                      2 V...  128kB  -----  U  06d72c83
+Flight of the Intruder                      2 V...  128kB  -----  U  f92be7f2
+Flintstones - The Rescue of Dino &          4 H...  128kB  256kB  U  2fe20d79
+     Hoppy, The
+Flintstones 2 - The Surprise at Dinosaur    4 H...  128kB  256kB  U  dab84a9c
+     Peak!, The
+Flying Dragon - The Secret Scroll           2 V...  128kB  -----  U  f1fed9b8
+Flying Warriors                             1 H...  128kB  128kB  U  10180072
+Formula One Built To Win                    1 HB..  128kB  128kB  U  5a8b4da8
+Frankenstein - The Monster Returns          1 H...  128kB  128kB  U  e943ec4d
+Freedom Force                               1 H...  128kB  128kB  U  3e58a87e
+Friday the 13th                             3 V...   32kB   32kB  U  beb15855
+Friday the 13th (Pirate)                    3 V...   32kB   32kB  U  04f3354d
+Fun House                                   2 V...  128kB  -----  U  576a0de8
+Galactic Crusader                          11 H...   32kB   32kB  U  09c31cd4
+Galaga                                      0 H...   32kB    8kB  U  1db07c0d
+Galaxy 5000                                 4 H...  128kB  128kB  U  1d20a5c6
+Gargoyle's Quest 2                          4 H...  128kB  128kB  U  f0e9971b
+Gargoyle's Quest 2 (Alt)                    4 H...  128kB  128kB  U  5b80ff0c
+Gauntlet (Licensed)                         4 V..4  128kB   64kB  U  ec968c51
+Gauntlet (Unlicensed)                       4 V..4  128kB   64kB  U  cd50a092
+Gauntlet 2                                  4 V...  128kB  128kB  U  1b71ccdb
+Gemfire                                     5 HB..  256kB  256kB  U  0ec6c023
+Genghis Khan                                1 HB..  256kB  -----  U  2225c20f
+George Foreman's KO Boxing                  4 V...  128kB  256kB  U  af05f37e
+Ghostbusters                                3 H...   32kB   32kB  U  6a154b68
+Ghostbusters 2                              1 H...  128kB  128kB  U  2ae97660
+Ghosts'n Goblins                            2 V...  128kB  -----  U  b4e4879e
+Ghoul School                                1 H...  128kB  128kB  U  2bc25d5a
+GI Joe                                      4 H...  128kB  256kB  U  1d2d93ff
+GI Joe - The Atlantis Factor                4 H...  128kB  256kB  U  8c8dedb6
+Gilligan's Island                           2 V...  128kB  -----  U  55773880
+Goal!                                       1 H...  256kB  128kB  U  84148f73
+Goal! Two                                 118 V...  128kB  128kB  U  90c773c1
+Godzilla - Monster of Monsters!             1 H...  128kB  128kB  U  74386f15
+Godzilla 2 - War of the Monsters            1 H...  128kB  128kB  U  9fb32923
+Gold Medal Challenge '92                    4 VB..  128kB  128kB  U  be250388
+Golf Grand Slam                             1 H...  128kB  128kB  U  cf5f8af0
+Golgo 13 - Top Secret Episode               1 H...  128kB  128kB  U  f532f09a
+Goonies 2, The                              2 V...  128kB  -----  U  999577b6
+Gotcha!                                     3 V...   32kB   32kB  U  4e959173
+Gotcha! (Pirate)                            3 V...   32kB   32kB  U  4fbbfa74
+Gradius                                     3 V...   32kB   32kB  U  350d835e
+Great Waldo Search, The                     1 H...  128kB  128kB  U  2dff7fdc
+Greg Norman's Golf Power                    1 HB..  128kB  -----  U  1352f1b9
+Gremlins 2 - The New Batch                  4 V...  128kB  256kB  U  0ed96f42
+Guardian Legend, The                        2 V...  128kB  -----  U  fa43146b
+Guerrilla War                               1 H...  128kB  128kB  U  6decd886
+Gun Nac                                     4 V...  128kB  128kB  U  d19dcb2b
+Gun Smoke                                   2 H...  128kB  -----  U  a8784932
+Gyruss                                      3 V...   32kB   32kB  U  1d41cc8c
+Harlem Globetrotters                        1 H...  128kB  128kB  U  2e6ee98d
+Hatris                                      1 H...  128kB  -----  U  841b69b6
+Heavy Barrel                                4 V...  128kB  128kB  U  34eab034
+Heavy Shreddin'                             1 H...  128kB  128kB  U  eb15169e
+High Speed                                119 H...  128kB  128kB  U  2a79d3ba
+Hollywood Squares                           7 H...  256kB  -----  U  a8138860
+Home Alone                                  4 H...  128kB  128kB  U  f31d36a3
+Home Alone 2 - Lost In New York             4 V...  128kB  128kB  U  2e0741b6
+Hook                                        1 H...  128kB  128kB  U  d8230d0e
+Hoops                                       1 H...  128kB  128kB  U  f4615036
+Hot Slot                                    3 H...   32kB   64kB  U  ada1b12f
+Hudson Hawk                                 1 H...  128kB  128kB  U  5a4f156d
+Hudson's Adventure Island                   3 V...   32kB   32kB  U  f8a713be
+Hudson's Adventure Island 2                 4 V...  128kB  128kB  U  771c8855
+Hudson's Adventure Island 3                 4 V...  128kB  128kB  U  bfbfd25d
+Hunt For Red October, The                   4 H...  128kB  128kB  U  03f899cd
+Hydlide                                     0 H...   32kB    8kB  U  77bf8b23
+Ice Climber                                 0 H...   16kB    8kB  U  fb98d46e
+Ice Hockey                                  0 V...   32kB    8kB  U  ae64ca77
+Ikari 3 - The Rescue                        1 H...  128kB  128kB  U  567e1620
+Ikari Warriors                              2 H...  128kB  -----  U  655efeed
+Ikari Warriors 2 - Victory Road             1 H...  256kB  -----  U  4f467410
+Image Fight                                 4 H...  128kB  128kB  U  058f23a2
+Immortal, The                               4 V...  128kB  256kB  U  8889c564
+Impossible Mission 2                       34 H...   64kB   64kB  U  92a3d007
+Incredible Crash Dummies, The               4 H...  128kB  256kB  U  a80a0f01
+Indiana Jones and the Last Crusade          1 H...  256kB  -----  U  8bca5146
+     (Taito)
+Indiana Jones and the Last Crusade (UBI     2 H...  128kB  -----  U  2ea8cc16
+     Soft)
+Indiana Jones and the Temple of Doom        4 H...  128kB   64kB  U  139eb5b5
+     (Tengen)
+Indiana Jones and the Temple of Doom        4 H...  128kB   64kB  U  a0c31a57
+Infiltrator                                 4 H...  128kB   64kB  U  a2e4534f
+Iron Tank                                   1 H...  128kB  128kB  U  b14ea4d2
+Ironsword - Wizards & Warriors 2            7 H...  256kB  -----  U  2328046e
+Isolated Warrior                            4 H...  128kB  128kB  U  6944a01a
+Ivan Ironman Stewart's Super Offroad        7 H...  128kB  -----  U  4b041b6b
+Jack Nicklaus' Greatest 18 Holes of         2 V...  128kB  -----  U  c313ef54
+     Championship Golf
+Jackal                                      2 V...  128kB  -----  U  1d5b03a5
+Jackie Chan's Action Kung Fu                4 V...  128kB  128kB  U  45a41784
+James Bond Jr.                              4 V...  128kB  128kB  U  f6898a59
+Jaws                                        3 H...   32kB   32kB  U  27d14a54
+Jeopardy!                                   7 H...  128kB  -----  U  d5c71458
+Jeopardy! 25th Anniversary Edition          7 H...  128kB  -----  U  0bdd8dd9
+Jeopardy! Junior Edition                    7 H...  128kB  -----  U  6a88579f
+Jetsons - Cogswell's Caper!, The            4 V...  128kB  256kB  U  2bf61c53
+Jimmy Connor's Tennis                       2 H...  128kB  -----  U  00e95d86
+Joe & Mac                                   4 V...  128kB  128kB  U  26d3082c
+John Elway's Quarterback                    3 V...   32kB   32kB  U  cf322bb3
+Jordan Vs Bird - One On One                 2 V...  128kB  -----  U  303d4371
+Joshua (Ver 5.0)                           11 V...  128kB  128kB  U  51c70247
+Joshua (Ver 6.0)                           11 V...  128kB  128kB  U  99083b3a
+Journey to Silius                           1 H...  128kB  128kB  U  e2c4edce
+Joust                                       3 H...   32kB   16kB  U  cdac270d
+Jungle Book, The                            4 V...  128kB  128kB  U  61179bfa
+Jurassic Park                               4 V...  128kB  128kB  U  3b7f5b3b
+Kabuki - Quantum Fighter                    4 V...  128kB  128kB  U  7474ac92
+Karate Champ                                3 H...   32kB   32kB  U  f42b0dbd
+Karate Kid, The                             3 V...   32kB   32kB  U  983948a5
+Karnov                                      4 H...  128kB   64kB  U  4e1c1e3c
+Kick Master                                 4 V...  128kB  128kB  U  5104833e
+Kickle Cubicle                              4 V...  128kB  128kB  U  cd10dce2
+Kid Klown                                   4 V...  128kB  128kB  U  8ee7c43e
+Kid Kool                                    2 V...  128kB  -----  U  aa6bb985
+Kid Niki - Radical Ninja                    1 H...  256kB  -----  U  8192d2e7
+King Neptune's Adventure                   11 V...   64kB   64kB  U  6ed3ba25
+King of Kings, The (Ver 1.1)               11 V...  128kB  128kB  U  a55701dd
+King of Kings, The (Ver 1.3)               11 V...  128kB  128kB  U  86974ccc
+King's Knight                               3 H...   32kB   32kB  U  01b4ca89
+King's Quest V                              4 VB..  256kB  256kB  U  00837960
+Kings of the Beach                          3 V...   32kB   32kB  U  f54b34bd
+Kirby's Adventure                           4 HB..  512kB  256kB  U  d7794afc
+Kiwi Kraze                                  4 V...  128kB  128kB  U  563c2cc0
+Klash Ball                                  2 H...  128kB  -----  U  f4dfdb14
+Klax                                       64 H...   64kB   64kB  U  93f3a490
+Knight Rider                                1 H...   64kB  128kB  U  ebcfe7c5
+Krazy Kreatures                            79 V...   32kB   32kB  U  85323fd6
+Krazy Kreatures (Alt)                      79 V...   32kB   32kB  U  637fe65c
+Krion Conquest, The                         4 H...  128kB  128kB  U  03272e9b
+Krion Conquest, The (Alt)                   4 H...  128kB  128kB  U  28154f6c
+Krusty's Fun House                          4 V...  256kB  128kB  U  a0df4b8f
+Kung Fu                                     0 V...   32kB    8kB  U  d5c64257
+Kung Fu (Pirate)                            0 V...   32kB    8kB  U  e37f82cc
+Kung-Fu Heroes                              3 H...   32kB   32kB  U  8b957b50
+L'Empereur                                  5 HB..  256kB  128kB  U  9c18762b
+L'Empereur (Alt)                            5 HB..  256kB  128kB  U  26533405
+Laser Invasion                              5 H...  128kB  128kB  U  b0480ae9
+Last Action Hero                            4 V...  128kB  128kB  U  e7da8a04
+Last Ninja, The                             4 H...  128kB  128kB  U  e353969f
+Last Starfighter, The                       3 V...   32kB   32kB  U  6997f5e1
+Lee Trevino's Fighting Golf                 1 H...  128kB  128kB  U  88e1a5f4
+Legacy of the Wizard                        4 V...  128kB   64kB  U  f181c021
+Legend of Kage, The                         3 H...   32kB   32kB  U  238e1848
+Legend of the Ghost Lion                    1 HB..  128kB  128kB  U  04766130
+Legend of Zelda, The (PRG 0)                1 HB..  128kB  -----  U  3fe272fb
+Legend of Zelda, The (PRG 1)                1 HB..  128kB  -----  U  eaf7ed72
+Legendary Wings                             2 V...  128kB  -----  U  a2194cad
+Legends of the Diamond                      4 V...  128kB  256kB  U  05ce560c
+Lemmings                                    1 H...  128kB  128kB  U  a69f29fa
+Lethal Weapon                               1 H...  128kB  128kB  U  7077b075
+Lifeforce                                   2 V...  128kB  -----  U  c4bc85a2
+Lifeforce (Pirate)                          2 V...  128kB  -----  U  7e26c7d0
+Linus Spacehead's Cosmic Crusade           71 V...  256kB  -----  U  9e379698
+Little League Baseball Championship         1 H...  128kB  128kB  U  859c65e1
+     Series
+Little Mermaid, The                         2 V...  128kB  -----  U  3be244ef
+Little Nemo - The Dream Master              4 H...  128kB  128kB  U  5b4b6056
+Little Ninja Brothers                       4 H...  128kB  128kB  U  bc7fedb9
+Little Samson                               4 V...  256kB  128kB  U  b5e392e2
+Lode Runner                                 0 V...   16kB    8kB  U  af5676de
+Lone Ranger, The                            4 V...  256kB  128kB  U  23d17f5e
+Loopz                                       2 H...  128kB  -----  U  fd8d6c75
+Low G Man                                   4 V...  128kB  128kB  U  93991433
+Lunar Pool                                  0 V...   16kB    8kB  U  988b446d
+M.U.L.E.                                    1 H...  128kB  -----  U  0939852f
+M.U.S.C.L.E.                                0 V...   16kB    8kB  U  8c1e1336
+Mad Max                                     4 H...  128kB  128kB  U  026e41c5
+Mafat Conspiracy - Golgo 13                 4 V...  128kB  128kB  U  8a043cd6
+Magic Darts                                 1 H...  128kB  128kB  U  5eb8e707
+Magic Johnson's Fast Break                  1 H...  128kB  128kB  U  96fcdc5f
+Magic of Scheherazade, The                  1 H...  128kB  128kB  U  92197173
+Magician                                    4 V...  128kB  128kB  U  91e2e863
+Magmax                                      0 H...   32kB    8kB  U  3346e19e
+Major League Baseball                       3 V...   32kB   32kB  U  a03a422b
+Maniac Mansion                              1 HB..  256kB  -----  U  0d9f5bd1
+Mappy-Land                                  4 V...  128kB   32kB  U  83fc38f8
+Marble Madness                              7 H...  128kB  -----  U  09874777
+Mario Is Missing!                           4 V...  128kB  128kB  U  2055971a
+Mario's Time Machine!                       4 V...  128kB  128kB  U  55db7e2a
+Marvel's X-Men                              2 V...  128kB  -----  U  2d41ef92
+Marvel's X-Men (Alt)                        2 V...  128kB  -----  U  4a9f735c
+Master Chu & The Drunkard Hu               11 V...   32kB   32kB  U  3c7e38f5
+Maxi 15                                    11 V...  512kB  512kB  U  2705eaeb
+MC Kids                                     4 V...  128kB  128kB  U  b0ebf3db
+Mechanized Attack                           1 H...   64kB  128kB  U  5ee6008e
+Mega Man                                    2 V...  128kB  -----  U  6ee4bb0a
+Mega Man 2                                  1 H...  256kB  -----  U  0fcfc04d
+Mega Man 3                                  4 V...  256kB  128kB  U  603aaa57
+Mega Man 4                                  4 H...  512kB  -----  U  2bc67aa8
+Mega Man 5                                  4 H...  256kB  256kB  U  3edcf7e8
+Mega Man 6                                  4 H...  512kB  -----  U  988798a8
+Menace Beach                               11 V...   64kB   64kB  U  194942db
+Mendel Palace                               4 V...  128kB  128kB  U  12078afd
+Mermaids of Atlantis                       79 V...   64kB   64kB  U  f05870d5
+Metal Fighter                              11 V...   32kB   32kB  U  11d08cc6
+Metal Gear                                  2 V...  128kB  -----  U  c55a3393
+Metal Mech                                  1 H...  128kB  128kB  U  05378607
+Metal Storm                                 4 V...  128kB  256kB  U  bcacbbf4
+Metroid                                     1 H...  128kB  -----  U  70080810
+Michael Andretti's World Grand Prix         4 V...  128kB  128kB  U  942b1210
+Mickey Mousecapade                          3 V...   32kB   32kB  U  7c6a3d51
+Mickey's Adventures in Numberland           4 V...  128kB  128kB  U  6fb349e2
+Mickey's Safari In Letterland               4 V...  128kB  128kB  U  982dfb38
+Micro Machines                             71 V...  256kB  -----  U  6b523bd7
+Mig-29 Soviet Fighter                      71 V...  128kB  -----  U  e62e3382
+Might & Magic - Secret of the Inner         4 VB..  256kB  256kB  U  532a27e6
+     Sanctum
+Mighty Bomb Jack                            3 H...   32kB   16kB  U  08077383
+Mighty Final Fight                          4 H...  128kB  128kB  U  3f78037c
+Mike Tyson's Punch-Out!!                    9 H...  128kB  128kB  U  2c818014
+Mike Tyson's Punch-Out!! (Hacked)           9 H...  128kB  128kB  U  67e1c05c
+Mike Tyson's Punch-Out!! (Rev 0)            9 H...  128kB  128kB  U  92a2185c
+Millipede                                   0 H...   16kB    8kB  U  ae52dece
+Milon's Secret Castle                       3 V...   32kB   32kB  U  586a3277
+Miracle Piano Teaching System, The          1 H...  256kB   64kB  U  92c138e4
+Mission Cobra                              11 H...   32kB   16kB  U  5da9cec8
+Mission Impossible                          4 V...  128kB  128kB  U  e3c5bb3d
+Monopoly                                    1 H...  128kB  128kB  U  9747ac09
+Monster in my Pocket                        4 V...  128kB  128kB  U  e542e3cf
+Monster Party                               1 H...  128kB  128kB  U  02b9e7c2
+Monster Truck Rally                         3 V...   32kB   32kB  U  2f698c4d
+Moon Ranger                                11 V...   64kB   64kB  U  14a81635
+Motor City Patrol                           1 H...  128kB  128kB  U  0a0926bd
+Ms. Pac-Man                                 0 H...   32kB    8kB  U  43d30c2f
+Ms. Pac-Man (Namco)                         0 H...   32kB    8kB  U  b6d2d300
+Muppet Adventure - Chaos at the Carnival    1 H...  128kB  -----  U  7156cb4d
+Mutant Virus, The                           1 H...  128kB  128kB  U  7dcb4c18
+Mystery Quest                               3 V...   32kB   32kB  U  b5d28ea2
+NARC                                        7 H...  128kB  -----  U  0537322a
+NES Open Tournament Golf                    1 HB..  256kB  -----  U  f6b9799c
+NES Play Action Football                  118 H...  128kB  128kB  U  b9b4d9e0
+NFL Football                                2 V...  128kB  -----  U  35b6febf
+Nigel Mansell's World Championship          1 H...  128kB  128kB  U  4751a751
+     Challenge
+Nightshade                                  4 H...  256kB  256kB  U  a60ca3d6
+Ninja Crusaders                             4 V...  128kB  -----  U  3d1c4894
+Ninja Gaiden                                1 H...  128kB  128kB  U  7c4a72d8
+Ninja Gaiden 2 - The Dark Sword of Chaos    4 V...  128kB  128kB  U  b780521c
+Ninja Gaiden 3 - The Ancient Ship of Doom   4 V...  128kB  128kB  U  902e3168
+Ninja Kid                                   3 V...   32kB   32kB  U  02cc3973
+Nintendo World Cup                          4 H...  128kB  128kB  U  a22657fa
+Nobunaga's Ambition                         1 HB..  256kB  -----  U  4642dda6
+Nobunaga's Ambition 2                       5 HB..  256kB  128kB  U  8ce478db
+North & South                               4 H...  128kB  128kB  U  91d1e85b
+Operation Secret Storm                     11 V...   64kB   64kB  U  ea113128
+Operation Wolf                              1 H...  128kB  128kB  U  edc3662b
+Orb 3D                                      1 H...   64kB  128kB  U  958e4bae
+Othello                                     0 H...   32kB    8kB  U  699fa085
+Overlord                                    1 H...  256kB  -----  U  2856111f
+P'radikus Conflict                         11 V...   64kB   64kB  U  42749a95
+Pac-Man                                     0 H...   16kB    8kB  U  a9bbf44f
+Pac-Man (Namco)                             0 H...   16kB    8kB  U  9e4e9cc2
+Pac-Man (Unlicensed)                        0 H...   16kB    8kB  U  9d38f8f9
+Pacmania                                    4 V...   64kB   32kB  U  e73e7260
+Palamedes                                   1 H...   32kB   32kB  U  6bb6a0ce
+Panic Restaurant                            4 H...  128kB  128kB  U  435aeec6
+Paperboy                                    3 H...   32kB   32kB  U  32086826
+Paperboy (Pirate)                           3 H...   32kB   32kB  U  e3f3f6ae
+Paperboy 2                                  2 H...  256kB  -----  U  3a0965b1
+Peek-A-Boo Poker                            3 H...   32kB   64kB  U  e9f16673
+Pesterminator                              11 V...   64kB   64kB  U  6a483073
+Peter Pan & The Pirates                     1 H...  128kB  128kB  U  0fc72a80
+Phantom Fighter                             1 H...  256kB  -----  U  cc37094c
+Pictionary                                  1 H...  128kB  128kB  U  dc02f095
+Pinball Quest                               1 H...  128kB  128kB  U  2538d860
+Pinbot                                    119 H...  128kB   64kB  U  d19addeb
+Pipe Dream                                  3 V...   32kB   32kB  U  bc065fc3
+Pirates!                                    1 HB..  128kB  128kB  U  3d0996b2
+Platoon                                     1 H...  128kB  128kB  U  b3769a51
+POW - Prisoners of War                      1 H...  128kB  128kB  U  75255f88
+Power Blade                                 4 V...  128kB  128kB  U  5cf536f4
+Power Blade 2                               4 V...  128kB  128kB  U  d273b409
+Power Blade 2 (Pirate)                      4 V...  128kB  128kB  U  b20f87de
+Power Punch 2                               4 H...  128kB  256kB  U  90226e40
+Predator                                    1 H...  128kB  128kB  U  a7de65e4
+Prince of Persia                            2 V...  128kB  -----  U  70ce3771
+Princess Tomato in Salad Kingdom            1 H...  256kB  -----  U  56756615
+Pro Sport Hockey                          118 V...  128kB  128kB  U  41f9e0aa
+Pro Wrestling                               2 V...  128kB  -----  U  e6f08e93
+Punch-Out!!                                 9 H...  128kB  128kB  U  be939fce
+Punisher, The                               4 V...  128kB  128kB  U  27f8d0d2
+Puss 'n Boots - Pero's Great Adventure      2 V...  128kB  -----  U  6e0eb43e
+Puzzle                                     79 H...   32kB   32kB  U  0f0f9c73
+Puzznic                                     3 V...   32kB   32kB  U  eb61133b
+Pyramid                                     0 V...   16kB    8kB  U  2472c3eb
+Pyramid (Pirate)                            0 V...   32kB    8kB  U  a0eca0f9
+Q-bert                                      3 H...   32kB   32kB  U  c0b23520
+Qix                                         1 H...  128kB  -----  U  95e4e594
+Quattro Adventure                         232 V...  256kB  -----  U  b89888c9
+Quattro Adventure (Aladdin Cart)          232 V...  256kB  -----  U  6c040686
+Quattro Arcade                            232 V...  256kB  -----  U  792070a9
+Quattro Sports                            232 V...  256kB  -----  U  cccaf368
+Quattro Sports (Aladdin Cart)             232 V...  256kB  -----  U  62ef6c79
+Quattro Sports (V3 Plug-Thru Cart)        232 V...  256kB  -----  U  b462718e
+R.C. Pro-Am                                 1 H...   32kB   32kB  U  aaed295c
+R.C. Pro-Am 2                               7 H...  256kB  -----  U  9edd2159
+Race America                                1 H...  128kB  128kB  U  a8b0da56
+Racket Attack                               1 H...  256kB  128kB  U  eccd4089
+Rad Racer                                   1 H...  128kB  -----  U  8b9d3e9c
+Rad Racer 2                                 4 V..4   64kB   64kB  U  404b2e8b
+Rad Racket - Deluxe Tennis 2              113 H...   32kB   32kB  U  bde7a7b5
+Raid 2020                                  11 V...   64kB   32kB  U  61253d1c
+Raid on Bungeling Bay                       0 V...   16kB    8kB  U  d308d52c
+Rainbow Islands - The Story of Bubble       2 H...  128kB  -----  U  9ea1dc76
+     Bobble 2
+Rally Bike                                  2 V...  128kB  -----  U  e1c41d7c
+Rambo                                       2 V...  128kB  -----  U  a342a5fd
+Rampage                                     4 V...  128kB   64kB  U  263ac8a0
+Rampart                                     4 V...  128kB  128kB  U  26796758
+RBI Baseball (Licensed)                     4 V...   64kB   32kB  U  3c5c81d4
+RBI Baseball (Unlicensed)                   4 V...   64kB   32kB  U  2e326a1d
+RBI Baseball 2                              4 V...  128kB   64kB  U  96dfc776
+RBI Baseball 3                              4 V...  128kB   64kB  U  34338616
+Remote Control                              1 H...  128kB  128kB  U  9f6c119c
+Ren & Stimpy Show, The                      4 V...  128kB  128kB  U  e98ab943
+Renegade                                    2 V...  128kB  -----  U  a0568e1d
+Rescue - The Embassy Mission                1 H...  128kB  128kB  U  6fd46392
+Ring King                                   4 V...   64kB   64kB  U  5bb62688
+River City Ransom                           4 V...  128kB  128kB  U  e9c387ec
+River City Ransom (Hacked)                  4 V...  128kB  128kB  U  61cb190c
+Road Runner                                 4 V...   64kB  128kB  U  b19a55dd
+RoadBlasters                                1 H...  128kB  128kB  U  8ada3497
+RoadBlasters (Alt)                          1 H...  128kB  128kB  U  45a2acc4
+Robin Hood - Prince of Thieves              1 H...  256kB  -----  U  86b0d1cf
+Robo Warrior                                2 V...  128kB  -----  U  810b7ab9
+Robocop                                     4 V...  128kB  128kB  U  192d546f
+Robocop 2                                   1 H...  128kB  128kB  U  0a686042
+Robocop 3                                   1 H...  128kB  128kB  U  96087988
+Robocop 4 (Robocop 3 Pirate)                1 H...  128kB  128kB  U  10092781
+Robocop Versus the Terminator (Prototype)   4 V...  128kB  128kB  U  df43e073
+Robodemons                                 11 V...   64kB   64kB  U  b788ebf8
+Rock 'n' Ball                               4 H...  128kB   64kB  U  476e022b
+Rocket Ranger                               1 H...  256kB  -----  U  67f77118
+Rocketeer, The                              1 H...  256kB  -----  U  1d6deccc
+Rockin' Kats                                4 V...  128kB  128kB  U  8927fd4c
+Roger Clemens MVP Baseball                  4 V...  128kB  256kB  U  018a8699
+Rollerball                                  1 H...  128kB   32kB  U  69635a6e
+Rollerblade Racer                           4 V...  128kB  128kB  U  2370c0a9
+Rollergames                                 4 V...  128kB  128kB  U  8d9af7af
+Rolling Thunder                             4 H...  128kB  128kB  U  f92be3ec
+Romance of the Three Kingdoms               1 HB..  256kB  -----  U  c6182024
+Romance of the Three Kingdoms 2             5 HB..  256kB  256kB  U  f011e490
+Roundball - 2-on-2 Challenge                4 H...  128kB  128kB  U  6e4dcfd2
+Rush'n Attack                               2 V...  128kB  -----  U  de25b90f
+Rygar                                       2 V...  128kB  -----  U  b3783f2a
+S.C.A.T. - Special Cybernetic Attack Team   1 H...  128kB  128kB  U  74189e12
+Secret Scout                               11 V...   64kB   64kB  U  ac559fbd
+Section Z                                   2 V...  128kB  -----  U  0fec90d2
+Seicross                                    0 V...   32kB    8kB  U  27aa3933
+Sesame Street 123                           1 H...   32kB   32kB  U  339437f6
+Sesame Street ABC                           1 H...   32kB   32kB  U  ec0fc2de
+Sesame Street ABC - 123                     1 H...  128kB  128kB  U  24eecc15
+Sesame Street Countdown                     1 H...  128kB  128kB  U  b6758ee6
+Shadow of the Ninja                         4 V...  128kB  128kB  U  ddd90c39
+Shadowgate                                  4 VB..  128kB  128kB  U  6a1f628a
+Shatterhand                                 4 V...  128kB  128kB  U  aa20f73d
+Shingen The Ruler                           1 H...  256kB  -----  U  be3bf3b3
+Shinobi                                    64 H...  128kB  128kB  U  eb0bda7e
+Shockwave                                  11 V...   32kB   32kB  U  c73b82fc
+Shooting Range                              3 V...   32kB   16kB  U  a5313248
+Short Order - Eggsplode                     1 H...   32kB   32kB  U  23040fc4
+Side Pocket                                 2 H...  128kB  -----  U  dc4da5d4
+Silent Assault                             11 V...   64kB   64kB  U  ca0a869e
+Silent Service                              2 V...  128kB  -----  U  b843eb84
+Silk Worm                                   1 H...  128kB  128kB  U  e74a91bb
+Silver Surfer                               4 V...  128kB  256kB  U  bee1c0d9
+Simpsons - Bart Vs. the Space Mutants       1 H...  128kB  128kB  U  6f10097d
+Simpsons - Bart Vs. the World               4 H...  256kB  128kB  U  445dd134
+Simpsons - Bartman Meets Radioactive Man    4 V...  256kB  128kB  U  5991b9d0
+Skate or Die 2                              1 H...  256kB  128kB  U  06961be4
+Skate or Die!                               2 V...  128kB  -----  U  423ada8e
+Ski or Die                                  1 H...  128kB  128kB  U  e9a6c211
+Skull & Crossbones                         64 H...  128kB   64kB  U  b422a67a
+Sky Kid                                     1 H...   32kB   64kB  U  8207a96c
+Sky Shark                                   1 H...   64kB  128kB  U  9ffe2f55
+Slalom                                      0 V...   32kB    8kB  U  86670c93
+Smash TV                                    4 V...  128kB  128kB  U  6ee94d32
+Snake Rattle'n Roll                         1 H...   32kB   32kB  U  b09e38f9
+Snake's Revenge                             1 H...  128kB  128kB  U  48e904d0
+Snoopy's Silly Sports Spectacular           1 H...  128kB  128kB  U  a8923256
+Snow Bros.                                  1 H...  128kB  128kB  U  8965c590
+Solar Jetman - Hunt for the Golden          7 H...  256kB  -----  U  8111ba08
+     Warpship
+Solitaire                                  79 V...   32kB   32kB  U  8dcc9949
+Solomon's Key                               3 H...   32kB   32kB  U  4356194e
+Solstice                                    7 H...  128kB  -----  U  edcf1b71
+Space Shuttle Project                       1 H...  256kB  -----  U  2220e14a
+Spelunker                                   0 V...   32kB    8kB  U  fa322d23
+Spider-Man - Return of the Sinister Six     4 V...  128kB  256kB  U  d679627a
+Spiritual Warfare (Ver 6.0)                11 V...  128kB  128kB  U  8ce8e264
+Spiritual Warfare (Ver 6.1)                11 V...  128kB  128kB  U  14105c13
+Spot                                        1 H...  128kB  -----  U  cfae9dfa
+Spy Hunter                                  3 V...   32kB   32kB  U  f5d061ca
+Spy Vs Spy                                  0 H...   32kB    8kB  U  869652fe
+Sqoon                                       0 V...   32kB    8kB  U  44f34172
+Stadium Events                              3 H...   32kB   32kB  U  63968624
+Stanley - The Search For Dr. Livingston     4 V...  128kB  128kB  U  62e2e7fc
+Star Force                                  3 V...   32kB   32kB  U  fce408a4
+Star Soldier                                3 V...   32kB   32kB  U  262b5a1d
+Star Trek - 25th Anniversary                4 V...  256kB  256kB  U  16eba50a
+Star Trek - The Next Generation             2 H...  128kB  -----  U  e575687c
+Star Voyager                                3 H...   32kB   32kB  U  374d6871
+Star Wars                                   4 V...  128kB  128kB  U  c1c3636b
+Star Wars - The Empire Strikes Back         4 V...  256kB  256kB  U  1b3a3db3
+     (Pirate)
+Star Wars - The Empire Strikes Back         4 V...  256kB  256kB  U  240de736
+Starship Hector                             2 V...  128kB  -----  U  9f432594
+Startropics                                 4 VB..  256kB  256kB  U  889129cb
+Startropics 2 - Zoda's Revenge              4 VB..  256kB  256kB  U  d054ffb0
+Stealth ATF                                 1 H...  128kB  128kB  U  c6dd7e69
+Stinger                                     2 V...  128kB  -----  U  c5b0b1ab
+Stinger (Alt)                               2 V...  128kB  -----  U  c95480d0
+Street Cop                                  1 H...  128kB  128kB  U  61d86167
+Street Fighter 2010                         4 V...  128kB  128kB  U  8da651d4
+Strider                                     1 H...  256kB  -----  U  02ee3706
+Strider (Pirate)                            1 H...  256kB  -----  U  5b064824
+Stunt Kids                                 71 V...  128kB  -----  U  3a990ee0
+Sunday Funday                              11 V...  128kB  128kB  U  5b16a3c8
+Super C                                     4 V...  128kB  128kB  U  305b4e62
+Super Cars                                  2 H...  128kB  -----  U  419461d0
+Super Dodge Ball                            1 H...  128kB  128kB  U  689971f9
+Super Glove Ball                            2 V...  128kB  -----  U  efcf375d
+Super Jeopardy!                             1 H...  128kB  128kB  U  cf4487a2
+Super Mario Bros. - Duck Hunt              66 H...   64kB   16kB  U  d26efd78
+Super Mario Bros. - Duck Hunt - Track       1 H...  128kB   64kB  U  60e63537
+     Meet
+Super Mario Bros. 2 (PRG 0 CHR 0)           4 V...  128kB  128kB  U  57ac67af
+Super Mario Bros. 2 (PRG 1 CHR 0)           4 V...  128kB  128kB  U  ca594ace
+Super Mario Bros. 3 (PRG 0 CHR 0)           4 H...  256kB  128kB  U  a0b0b742
+Super Mario Bros. 3 (PRG 1 CHR 0)           4 H...  256kB  128kB  U  2e6301ed
+Super Pitfall                               2 V...  128kB  -----  U  979c5314
+Super Spike V'Ball                          4 H...  128kB  128kB  U  e840fd21
+Super Sprint                                4 V...   64kB   64kB  U  b3d1178e
+Super Spy Hunter                            4 V...  128kB  128kB  U  ab41445e
+Super Team Games                            3 H...   32kB   32kB  U  d74b2719
+Superman                                    1 H...  128kB  128kB  U  1fa8c4a4
+Swamp Thing                                 1 H...  128kB  128kB  U  a1ff4e1d
+Sword Master                                4 V...  128kB  128kB  U  465e5483
+Swords And Serpents                         2 V...  128kB  -----  U  3417ec46
+T&C 2 - Thrilla's Surfari                   4 V...  128kB  128kB  U  7e57fbec
+T&C Surf Design                             3 V...   32kB   32kB  U  d3bff72e
+Taboo - The Sixth Sense                     1 H...   32kB   32kB  U  40ed2a9d
+Tag Team Wrestling                          0 H...   32kB    8kB  U  bf250af2
+Tagin' Dragon                              11 V...   32kB   16kB  U  4d527d4a
+TaleSpin                                    1 H...  128kB  128kB  U  798eeb98
+Target Renegade                             1 H...  128kB  128kB  U  93b49582
+Tecmo Baseball                              1 H...  128kB  -----  U  ad12a34f
+Tecmo Bowl                                  1 H...  128kB  128kB  U  ce00022d
+Tecmo Cup - Soccer Game                     1 H...  128kB  128kB  U  696d7839
+Tecmo NBA Basketball                        4 VB..  128kB  256kB  U  2651f227
+Tecmo Super Bowl                            4 HB..  256kB  128kB  U  179a0d57
+Tecmo World Wrestling                       1 H...  128kB  128kB  U  7ff76219
+Teenage Mutant Ninja Turtles                1 H...  128kB  128kB  U  ee921d8e
+Teenage Mutant Ninja Turtles 2              4 V...  256kB  256kB  U  a9217ea2
+Teenage Mutant Ninja Turtles 2 (Pirate)     4 V...  256kB  256kB  U  0c5f40a6
+Teenage Mutant Ninja Turtles 3              4 V...  256kB  256kB  U  bb6d7949
+Teenage Mutant Ninja Turtles Tournament     4 H...  128kB  128kB  U  86964edd
+     Fighters
+Tengen Tetris                               3 V...   32kB   16kB  U  343c7bb0
+Tengen Tetris (Hacked)                      3 V...   32kB   16kB  U  1aa0dbaf
+Tengen Tetris (Pirate)                      3 V...   32kB   16kB  U  7dcbea73
+Terminator 2 - Judgement Day                4 V...  128kB  128kB  U  0fe4fc74
+Terminator 2 - Judgement Day (Prototype)    4 V...  128kB  128kB  U  01934171
+Terminator, The                             4 H...  128kB  128kB  U  6272c549
+Terra Cresta                                2 H...  128kB  -----  U  efd51f04
+Tetris                                      1 H...   32kB  128kB  U  7510180a
+Tetris 2                                    4 V...  128kB  128kB  U  9c537919
+Three Stooges                               1 H...  128kB  128kB  U  538cd2ea
+Thunder & Lightning                        66 H...  128kB  128kB  U  a9004a88
+Thunderbirds                                1 H...  128kB  128kB  U  2ddc2dc3
+Thundercade                                 2 H...  128kB  -----  U  afb46dd6
+Tiger-Heli                                  3 H...   32kB   32kB  U  c3c7a568
+Tiles of Fate                              79 V...   32kB   32kB  U  3e1271d5
+Time Lord                                   7 H...  128kB  -----  U  13d5b1a4
+Times of Lore                               2 V...  128kB  -----  U  0f86feb4
+Tiny Toon Adventures                        4 H...  128kB  128kB  U  99dddb04
+Tiny Toon Adventures 2 - Trouble in         4 H...  128kB  128kB  U  81a5eb65
+     Wackyland
+Tiny Toon Adventures Cartoon Workshop       4 V...  128kB  128kB  U  9e6092a4
+To The Earth                                4 V...   32kB   32kB  U  de8fd935
+Toki                                        4 V...  128kB  256kB  U  7fb74a43
+Tom & Jerry (and Tuffy)                     4 H...  128kB  128kB  U  d63b30f5
+Tombs and Treasure                          1 H...  256kB  -----  U  50d296b3
+Toobin                                      4 H...  128kB   64kB  U  5800be2d
+Toobin (Alt)                                4 H...  128kB   64kB  U  e488a2f0
+Top Gun                                     2 H...  128kB  -----  U  4e22368d
+Top Gun - The Second Mission                4 V...  128kB  128kB  U  6f8af3e8
+Total Recall                                2 V...  128kB  -----  U  248566a7
+Totally Rad                                 4 V...  128kB  128kB  U  b629d555
+Touchdown Fever                             1 H...  128kB   32kB  U  ea4eb69e
+Toxic Crusaders                             4 V...  128kB  128kB  U  f009ddd2
+Track & Field                               3 V...   32kB   32kB  U  9c9f3571
+Track & Field 2                             1 H...  128kB  128kB  U  09c083b7
+Treasure Master                             1 H...  128kB  128kB  U  b918580c
+Trog                                        2 V...  128kB  -----  U  ee6892eb
+Trojan                                      2 V...  128kB  -----  U  fc3e5c86
+Trolls on Treasure Island                  79 V...   32kB   32kB  U  c47efc0e
+Twin Cobra                                  4 V...  128kB  128kB  U  0ef730e7
+Twin Eagle                                  2 V...  128kB  -----  U  cf26a149
+Ultima - Exodus                             1 HB..  256kB  -----  U  a4062017
+Ultima - Quest of the Avatar                1 HB..  256kB  -----  U  a25a750f
+Ultima - Warriors of Destiny                1 HB..  256kB  -----  U  4823eefe
+Ultimate Air Combat                         4 V...  256kB  256kB  U  e387c77f
+Ultimate Basketball                         4 V...  128kB  128kB  U  9f6ce171
+Ultimate League Soccer                     79 H...   32kB   64kB  U  831f9c1a
+Ultimate Stuntman                          71 V...  256kB  -----  U  892434dd
+Uncharted Waters                            5 HB..  512kB  128kB  U  aca15643
+Uninvited                                   4 VB..  128kB  128kB  U  9bac73ef
+Untouchables, The                           1 H...  128kB  128kB  U  209f3587
+Vegas Dream                                 1 H...  128kB  128kB  U  c973699d
+Venice Beach Volleyball                    79 V...   32kB   32kB  U  882e1901
+Vice - Project Doom                         4 V...  128kB  128kB  U  753768a6
+Videomation                                13 V...   32kB  -----  U  5e66eaea
+Vindicators                                 4 V...   64kB   32kB  U  a8f5c2ab
+Volleyball                                  0 V...   32kB    8kB  U  27777635
+Wacky Races                                 4 V...  128kB  128kB  U  401521f7
+Wall Street Kid                             2 H...  128kB  -----  U  b6661bda
+Wally Bear and the No Gang                 11 V...  128kB  -----  U  81ecda0d
+Wario's Woods                               4 VB..  256kB  256kB  U  f79a75d7
+Wayne Gretzky Hockey                        2 V...  128kB  -----  U  15f0d3f1
+Wayne's World                               4 V...  128kB  128kB  U  b0cd000f
+WCW World Championship Wrestling            4 H...  128kB  128kB  U  5ea7d410
+Werewolf                                    4 V...  128kB  128kB  U  333c48a0
+Wheel of Fortune                            7 H...  128kB  -----  U  fbf8a785
+Wheel of Fortune Family Edition             7 H...  128kB  -----  U  009af6be
+Wheel of Fortune Junior Edition             7 H...  128kB  -----  U  68383607
+Wheel of Fortune Starring Vanna White       7 H...  128kB  -----  U  4220c170
+Where In Time Is Carmen Sandiego            4 V...  128kB  256kB  U  917770d8
+Where's Waldo                               4 V...  128kB  128kB  U  c3463a3d
+Who Framed Roger Rabbit                     7 H...  128kB  -----  U  12b2c361
+Whomp'Em                                    4 H...  128kB  128kB  U  6fd5a271
+Widget                                      4 V...  128kB  128kB  U  e7c981a2
+Willow                                      1 H...  128kB  128kB  U  103e7e7f
+Win, Lose or Draw                           1 H...  128kB  -----  U  f74dfc91
+Winter Games                                2 H...  128kB  -----  U  969ef9e4
+Wizardry - Proving Grounds of the Mad       1 HB..  128kB  128kB  U  d9bb572c
+     Overlord
+Wizardry - The Knight of Diamonds           4 VB..  128kB  128kB  U  6bc33d2f
+Wizards & Warriors                          7 H...  128kB  -----  U  505f9715
+Wizards & Warriors 3                        7 H...  256kB  -----  U  d2562072
+Wolverine                                   4 H...  128kB  128kB  U  35476e87
+World Champ                                 4 V...  128kB  128kB  U  8593e5ad
+World Class Track Meet                      3 H...   32kB   32kB  U  af4010ea
+World Games                                 7 H...  128kB  -----  U  f613a8f9
+Wrath of the Black Manta                    1 H...  128kB  128kB  U  f651398d
+Wurm                                        4 V...  128kB  128kB  U  eb803610
+WWF King of the Ring                        4 H...  128kB  256kB  U  7b4ed0bb
+WWF Steel Cage Challenge                    4 V...  128kB  256kB  U  d4611b79
+WWF Wrestlemania                            7 H...  128kB  -----  U  37138039
+WWF Wrestlemania Challenge                  7 H...  256kB  -----  U  3c9fe649
+Xenophobe                                   1 H...  128kB   32kB  U  711896b8
+Xevious                                     0 H...   32kB    8kB  U  dfd70e27
+Xexyz                                       1 H...  128kB  128kB  U  b1612fe6
+Yo! Noid                                    1 H...  128kB  128kB  U  50d141fc
+Yoshi                                       1 H...  128kB  128kB  U  9474c09c
+Yoshi's Cookie                              4 V...  128kB   64kB  U  52b58732
+Young Indiana Jones Chronicles, The         4 V...  128kB  128kB  U  35c6f574
+Zanac                                       2 H...  128kB  -----  U  e292aa10
+Zelda 2 - The Adventure of Link             1 HB..  128kB  128kB  U  ba322865
+Zen Intergalactic Ninja                     4 H...  128kB  128kB  U  d8578bfd
+Zombie Nation                               4 V...  128kB  128kB  U  03fb57b6
+Baseball                                    0 H...   16kB    8kB  UE afdcbd24
+Fantastic Adventures of Dizzy, The         71 V...  256kB  -----  UE f732c8fd
+     (Aladdin Cart)
+Gumshoe                                    66 H...  128kB   32kB  UE beb8ab01
+Kid Icarus                                  1 H...  128kB  -----  UE d770c1a9
+Micro Machines (Aladdin Cart)              71 V...  256kB  -----  UE 24ba12dd
+Bao Qing Tian                             248 H...  256kB  256kB C   c5e5c5b2
+Cecathlon                                 244 V...  128kB   64kB C   46b5751b
+Edu                                       241 HB..  512kB  ----- C   d5d6eac4
+Fong Shen Ban                             246 HB..  512kB  512kB C   b05c558b
+Gen Ke Le Zhuan                           240 HB..  128kB  128kB C   b477bf41
+Hwang Di                                  112 V...  128kB  256kB C   049325d9
+Poker 3 - 5 in 1                          243 V...   64kB   64kB C   f56d6d46
+Shen Huo Le Zhuan                         240 HB..  128kB  128kB C   dddc56b8
+Time Diver Avenger                        250 H...  128kB  128kB C   1c9fb8f7
+Wai Xin Zhan Shi                          242 VB..  512kB  ----- C   a63c6793
+Yong Ze Do Re Long 6                      245 VB..  512kB  ----- C   6bea1235
+Yuu Yuu Hakusho Final                     115 V...  128kB  256kB C   4e800048
+'89 Dennou Kyuusei Uranai                   1 H...  256kB  ----- J   3674ffdb
+10-Yard Fight                               0 H...   16kB    8kB J   836c4fa7
+100 Man $ Kid - Maboroshi No Teiou Hen      1 H...  256kB  ----- J   73e41ac7
+100 Man $ Kid - Maboroshi No Teiou Hen      2 H...  256kB  ----- J   cdef1c0d
+     (Mapper 2 Hack)
+1943                                        2 H...  128kB  ----- J   4e42f13a
+1999 - Hore, Mitakotoka! Seikimatsu         4 H...  256kB  128kB J   29ec0fd1
+4 Nin Uchi Mahjong                          0 V...   16kB    8kB J   84be00e9
+8 Eyes                                      4 V...  128kB  128kB J   f8d53171
+A Ressha De Ikou                            1 HB..  128kB   16kB J   6377cb75
+Aa! Yakyuu Jinsei Icchokusen                4 V...  512kB  ----- J   b7773a07
+Abadox                                      1 H...  128kB  128kB J   14cd576e
+Abadox (FFE Pirate)                         6 V.T.  256kB  ----- J   57dea1fd
+Abarenbou Tengu                             4 V...  128kB  128kB J   cc7a4dca
+Aces - Iron Eagle 3                         4 V...  256kB  256kB J   7c27ab86
+AD&D Dragons of Flame                       1 H...  128kB  128kB J   e616ff0a
+AD&D Heroes of the Lance                    1 HB..  128kB  128kB J   1e472e7a
+AD&D Hillsfar                               1 HB..  256kB  ----- J   2c33161d
+AD&D Pool of Radiance                       4 VB..  512kB  128kB J   ca730971
+Adventures of Lolo                          4 H...   32kB   32kB J   297198b9
+Adventures of Lolo 2                        1 H...  128kB  128kB J   eab93cfb
+After Burner 2                             68 H...  128kB  256kB J   c747ac41
+Ai Sensei No Oshiete - Watashi No Hoshi     4 H.T.  256kB  128kB J   759c40a1
+     (Mapper 4 Hack)
+Ai Sensei No Oshiete - Watashi No Hoshi    65 H...  256kB  128kB J   283ad224
+Aigiina No Yogen                            2 V...  128kB  ----- J   37f59450
+Air Fortress - Kuuchuu Yousai               1 H...  128kB  128kB J   3e785dc3
+Air Fortress - Kuuchuu Yousai (FFE Hack)    6 V.T.  256kB  ----- J   8bbc37a2
+Airwolf                                     1 H...  128kB  128kB J   fb8a9b80
+Airwolf (FFE Pirate)                        6 V.T.  256kB  ----- J   a02b3a39
+Akagawa Jirou No Yuurei Ressha              1 HB..  256kB  ----- J   9d976153
+Akira                                      33 H...  128kB  256kB J   376138d8
+Akira (Alt)                                33 H...  128kB  256kB J   8a7d0abe
+Akira (Mapper 4 Hack)                       4 V.T.  128kB  256kB J   1caae58d
+Akuma Kun - Makai No Wana                  16 H...  128kB  128kB J   2c4421b2
+Akuma No Shoutaijou                         4 VB..  128kB  128kB J   1248326d
+Akumajou Densetsu                          24 H...  256kB  128kB J   e349af38
+Akumajou Densetsu (Mapper 16 Hack)         16 V...  256kB  128kB J   7095ac65
+Akumajou Dracula                            2 V...  128kB  ----- J   a0f99bb8
+Akumajou Special - Boku Dracula Kun        23 H...  128kB  128kB J   c1fbf659
+Akumajou Special - Boku Dracula Kun        23 H...  128kB  128kB J   c6d62814
+     (Hacked)
+Alien Syndrome                              1 H...  128kB  128kB J   5b837e8d
+America Daitouryou Senkyo                   1 H...  128kB  128kB J   9273f18e
+America Oudan Ultra Quiz - Shijou Saidai    4 H...  512kB  ----- J   3256114c
+     No Tatakai
+American Dream                              1 H...  128kB  128kB J   3ffa5762
+Ankoku Shinwa - Yamato Takeru Densetsu      1 H...  256kB  ----- J   644e312b
+Ankoku Shinwa - Yamato Takeru Densetsu      2 V...  256kB  ----- J   8fdb8f62
+     (Mapper 2 Pirate)
+Antarctic Adventure                         0 H...   16kB    8kB J   163eccae
+Aoki Ookami To Shiroki Mejika - Genchou     5 HB..  512kB  256kB J   6f4e4312
+     Hishi
+Aoki Ookami To Shiroki Mejika - Genghis     1 HB..  256kB  ----- J   067bd24c
+     Khan
+Arabian Dream Sherazaado                    1 H...  128kB  128kB J   074ec424
+Arabian Dream Sherazaado (FFE Hack)         6 V.T.  256kB  ----- J   6e899ccf
+Arctic                                      2 V...  128kB  ----- J   da731f14
+Arctic (Trained)                            2 V.T.  128kB  ----- J   ecf3964d
+Argos No Senshi                             2 V...  128kB  ----- J   e1b260da
+Argus                                      87 V...   32kB   16kB J   656fa3b5
+Argus (Mapper 3 Hack)                       3 V...   32kB   16kB J   da6ccd81
+Arkanoid                                    3 H...   32kB   16kB J   c50149db
+Arkanoid (Hacked)                           0 H...   32kB    8kB J   b4481476
+Arkanoid 2                                 70 H...   64kB  128kB J   0f141525
+Arkanoid 2 (FFE Hack)                       6 H.T.  256kB  ----- J   288662e9
+Artelius                                    1 HB..  128kB   32kB J   093e845f
+Arumajiro                                 118 V...  256kB  128kB J   78b657ac
+Asmik Kun Land                              4 V...  128kB  128kB J   15141401
+ASO - Armored Scrum Object                  3 H...   32kB   32kB J   d858033d
+Astro Fang - Super Machine                  4 H...  128kB  128kB J   e949ef8a
+Astro Robo Sasa                             0 V...   32kB    8kB J   2dc05a6f
+Athena                                      2 V...  128kB  ----- J   3f9970f9
+Atlantis No Nazo                          184 V...   32kB   16kB J   f808af60
+Atlantis No Nazo (Mapper 3 Hack)            3 V...   32kB   32kB J   eeb9252b
+Atlantis No Nazo (Mapper 3 Trained Hack)    3 V.T.   32kB   32kB J   e713f464
+Attack Animal Gakuen                        2 V...  128kB  ----- J   7d55cf29
+B-Wings                                     0 H...   32kB    8kB J   492a8782
+B-Wings (Alt)                               0 H...   32kB    8kB J   936e229d
+Babel No Tou                                4 H...   32kB   32kB J   8af25130
+Baken Hisshou Gaku Gate In                  1 H...  256kB  ----- J   27c16011
+Bakushou Ai No Gekijou                      4 H...  128kB  128kB J   dcd8d6f4
+Bakushou Jinsei Gekijou 2                  33 H...  128kB  256kB J   bc7b1d0f
+Bakushou Jinsei Gekijou 3                  33 H...  256kB  256kB J   aebd6549
+Bakushou Jinsei Gekijou 3 (Mapper 4         4 H.T.  256kB  256kB J   4166ff8f
+     Pirate)
+Bakushou! Star Monomane Shitennou           1 H...  128kB  ----- J   6cd9cc23
+Bakushou!! Jinsei Gekijou                  33 H...  256kB  128kB J   adf606f6
+Ballblazer                                  2 V...  128kB  ----- J   9622fbd9
+Baltron                                     0 V...   32kB    8kB J   322f723a
+Banana                                    185 V...   32kB    8kB J   02a7ad0f
+Banana (Mapper 3 Hack)                      3 V...   32kB   32kB J   e1dc9b54
+Bananan Ouji No Dai Bouken                  4 V...  128kB  128kB J   66ed9c00
+Barcode World                              69 H...  128kB  256kB J   48ca0ee1
+Bard's Tale - Tales of the Unknown, The     1 HB..  256kB  ----- J   7ee02ca2
+Bard's Tale 2 - The Destiny Knight, The     1 HB..  256kB  ----- J   c4e1886f
+Baseball                                    0 H...   16kB    8kB J   78a48b23
+Baseball Fighter                            4 H...  256kB  128kB J   bf7f54b4
+Baseball Star - Mezase Sankanou!!           1 HB..  128kB  128kB J   530f8b13
+Batman                                     69 H...  128kB  128kB J   4d7859a9
+Batsu & Terii                               2 V...  128kB  ----- J   f989296c
+Battle Baseball                             4 V...  512kB  ----- J   83ea7b04
+Battle City                                 0 H...   16kB    8kB J   7e053e64
+Battle City (Pirate)                        0 H...   16kB    8kB J   d6da2a1e
+Battle City (Super Tank Pirate)             0 H...   16kB    8kB J   b9c20634
+Battle Fleet                               19 H...  128kB  128kB J   b5ff71ab
+Battle Fleet (FFE Pirate)                  17 V.T.  128kB  128kB J   56b87cb5
+Battle Formula                              4 V...  128kB  128kB J   2b4d80ae
+Battle Stadium - Senbatsu Pro Yakyuu        1 HB..  128kB  128kB J   61a852ea
+Battle Storm                                1 H...  128kB  128kB J   8e373118
+Battletoads                                 7 H...  256kB  ----- J   9806cb84
+Be-Bop-Highschool - Koukousei Gokuraku      1 H...  128kB  128kB J   2bfb1186
+     Densetsu
+Be-Bop-Highschool - Koukousei Gokuraku      6 V...  256kB  ----- J   b69eb14e
+     Densetsu (FFE Hack)
+Best Keiba - Derby Stallion                 1 HB..  128kB  128kB J   a1a33b85
+Best Play - Pro Yakyuu                      1 H...  128kB   32kB J   e19293a2
+Best Play - Pro Yakyuu '90                  1 HB..  256kB  ----- J   974e8840
+Best Play - Pro Yakyuu (Old)                1 H...  128kB   32kB J   3bbff3a6
+Best Play - Pro Yakyuu 2                    1 HB..  256kB  ----- J   c2ef3422
+Best Play - Pro Yakyuu Special              1 HB..  256kB  ----- J   b8747abf
+Bikkuri Nekketsu Shin Kiroku! -             4 V...  128kB  128kB J   12d2b6b0
+     Harukanaru Kin Medal (Pirate)
+Bikkuri Nekketsu Shin Kiroku! -             4 V...  128kB  128kB J   9f648556
+     Harukanaru Kin Medal
+Bikkuriman World - Gekitou Sei Senshi       1 HB..  256kB  ----- J   c6224026
+Bikkuriman World - Gekitou Sei Senshi       2 VB..  256kB  ----- J   e66e59a0
+     (Mapper 2 Pirate)
+Binary Land                                 0 H...   16kB    8kB J   f5f435b1
+Bio Miracle Bokutte Upa                    25 H...  128kB  128kB J   6dc28b5a
+Bio Senshi Dan - Increaser To No Tatakai   34 V.T.  128kB  128kB J   ed4fb487
+     (Mapper 34 Hack)
+Bio Senshi Dan - Increaser To No Tatakai   66 H...  128kB  128kB J   c2df0a00
+Bird Week                                 185 V...   16kB    8kB J   a8a9b982
+Bird Week (Mapper 0 Hack)                   0 V...   16kB    8kB J   65b96d61
+Bird Week (Mapper 3 Hack)                   3 V...   16kB   16kB J   7f397886
+Black Bass 2, The                           2 H...  128kB  ----- J   99a62e47
+Black Bass, The                             2 H...  128kB  ----- J   b04ba659
+Blodia Land                                 1 H...  128kB  128kB J   008e2d30
+Bloody Warriors - Shan Goo No Gyakushuu     1 HB..  256kB  ----- J   391aa1b8
+Bloody Warriors - Shan Goo No Gyakushuu     2 VB..  256kB  ----- J   256441eb
+     (Mapper 2 Pirate)
+Blue Marlin, The                            4 H...  128kB  128kB J   f927fa43
+Bokosuka Wars                               0 V...   32kB    8kB J   fe18e6b6
+Bomber King                                 2 V...  128kB  ----- J   bd9d0e85
+Bomberman                                   0 V...   16kB    8kB J   f2fc8212
+Bomberman 2                                 1 H...  128kB  ----- J   0c401790
+Bomberman 2 (Mapper 2 Hack)                 2 V...  128kB  ----- J   b382aea4
+Bomberman 2 (Mapper 2 Pirate)               2 V...  128kB  ----- J   a0ddf884
+Booby Kids                                  2 H...  128kB  ----- J   b42a57c7
+Boulder Dash                                1 H...   32kB   32kB J   89567668
+Bubble Bobble 2                            33 H...  128kB  128kB J   6cdc0cd9
+Bucky O'Hare                                4 V...  128kB  128kB J   26e82008
+Buggy Popper                                3 H...   32kB   32kB J   f751f337
+Burai Senshi                                4 H...   32kB   32kB J   e9176129
+Burger Time                                 0 H...   16kB    8kB J   5efbded8
+Business Wars                               4 VB..  256kB  ----- J   8d77e5e6
+Cadillac                                    3 V...   32kB   32kB J   0719260c
+Capcom Barcelona '92                        4 VB..  128kB  128kB J   cb5acb49
+Capcom Barcelona '92 (Pirate)               4 VB..  128kB  128kB J   92a2a702
+Captain Ed                                  1 H...  256kB  ----- J   3f56a392
+Captain Saver                              33 H...  128kB  128kB J   99c395f9
+Captain Silver                              1 H...  128kB  128kB J   cb0a3af4
+Captain Silver (FFE Hack)                   6 V.T.  256kB  ----- J   26898b6a
+Captain Tsubasa                             1 H...  128kB  128kB J   f3f1269d
+Captain Tsubasa Vol 2 - Super Striker       4 V...  256kB  128kB J   31b44c65
+Casino Derby                                1 H...  128kB  ----- J   e44001d8
+Castle Excellent                            3 V...   32kB   32kB J   dc33aed8
+Castle Quest                                4 V...  128kB  128kB J   bf4f4ba6
+Cattou Ninden Teyandee                      4 V...  128kB  128kB J   4cccd878
+Chack 'n Pop                                0 H...   16kB    8kB J   622f059d
+Challenger                                  0 V...   32kB    8kB J   34a516fd
+Championship Bowling                        3 H...   32kB   32kB J   9992f445
+Championship Lode Runner                    0 V...   16kB    8kB J   adb5d0b3
+Chaos World                                 1 HB..  256kB  128kB J   e0cbc2ba
+Chester Field                               2 V...  128kB  ----- J   6c70a17b
+Chibi Maruko Chan - Uki Uki Shopping        4 V.T.  128kB  128kB J   b252a5b9
+     (Mapper 4 Hack)
+Chibi Maruko Chan - Uki Uki Shopping       19 V...  128kB  128kB J   0c47946d
+Chiisana Obake - Acchi Socchi Kocchi        1 H...  128kB  128kB J   5dec84f8
+Chiki Chiki Machine Mou Race                4 V...  128kB  128kB J   20af7e1a
+Chinese Chese (Pirate)                      0 H...   32kB    8kB J   e3158e17
+Chinese Chese (TXC Pirate)                  0 H...   32kB    8kB J   c1d3082b
+Chip To Dale No Dai Sakusen                 1 H...  128kB  128kB J   d923eb5b
+Chip To Dale No Dai Sakusen 2               1 H...  128kB  128kB J   99686dad
+Chitei Senkuu - Bazorudaa                   4 V...  128kB  128kB J   7840b18d
+Chiyo No Fuji No Ooichou                    4 V...  128kB  128kB J   f32748a1
+Chiyo No Fuji No Ooichou (FFE Pirate)      17 V.T.  128kB  128kB J   951c12ae
+Choplifter                                 87 V...   32kB   16kB J   38ef66b5
+Choplifter (Mapper 3 Hack)                  3 V...   32kB   16kB J   275dcc83
+Chou Jikuu Yousai - Macross                 0 V...   16kB    8kB J   c1d7ab1d
+Chou Jikuu Yousai - Macross (Pirate)        0 V...   16kB    8kB J   5e5d5963
+Chou Wakusei Senki - Metafight              1 H...  128kB  128kB J   039b4a9c
+Choujin - Ultra Baseball                    1 HB..  128kB  128kB J   078ced30
+Choujin Ookami Senki - Warwolf              4 V...  128kB  128kB J   85e0090b
+Choujin Sentai - Jetman                     1 H...  128kB  128kB J   952a9e77
+Chuka Taisen                                1 H...  128kB  128kB J   8e0d9179
+Chuugoku Janshi Story - Tonpuu              1 H...  128kB  128kB J   5ab54795
+Chuugoku Senseijutsu                        2 H...  128kB  ----- J   f64cb545
+Circus Charlie                              0 V...   16kB    8kB J   e583ec5e
+Circus Charlie (Pirate)                     0 V...   16kB    8kB J   1a39343c
+City Adventure Touch - Mystery of           2 V...  128kB  ----- J   266ce198
+     Triangle
+City Adventure Touch - Mystery of           2 V...  128kB  ----- J   b834eb30
+     Triangle (Alt)
+City Connection                            87 V...   16kB   16kB J   c8160857
+City Connection (Mapper 3 Hack)             3 V...   16kB   16kB J   2a763c9c
+Cobra Command                               1 H...  128kB  128kB J   24ba90ca
+Cocoron                                     1 HB..  256kB  ----- J   78c4460d
+Columbus - Ougon No Yoake                   4 VB..  128kB  128kB J   99004b45
+Conflict                                    1 HB..  128kB  128kB J   a6648353
+Contra                                     23 H...  128kB  128kB J   b27b8cf4
+Contra (FFE Hack)                           6 V.T.  256kB  ----- J   e8b4834c
+Cosmic Epsilon                              4 V...  128kB  256kB J   dc75732f
+Cosmic Wars                                 1 HB..  128kB  128kB J   df3eb610
+Cosmo Genesis                               3 H...   32kB   32kB J   0cd79b71
+Cosmo Police - Galivan                      1 HB..  128kB  128kB J   e53f7a55
+Cosmo Police - Galivan (FFE Pirate)         6 V...  256kB  ----- J   5679e4dc
+Crayon Shin Chan - Ora To Poipoi           16 H...  128kB  128kB J   db05106e
+Crazy Climber                             180 V...  128kB  ----- J   c68363f6
+Crazy Climber (Mapper 15 Hack)             15 H...  256kB  ----- J   c1dc5b12
+Crisis Force                               23 H...  128kB  128kB J   fcbf28b1
+Crisis Force (Mapper 4 Hack)                4 H.T.  128kB  128kB J   1df00462
+Cross Fire                                  4 V...  128kB  128kB J   e95454fc
+Cycle Race - Road Man                       1 H...  128kB  128kB J   e429f0d3
+Dai 2 Ji - Super Robot Taisen               4 VB..  256kB  256kB J   c48363b4
+Dai Kaijuu - Deburas                        4 VB..  128kB  256kB J   956e3d90
+Dai Koukai Jidai                            5 HB..  512kB  128kB J   fe3488d1
+Dai Meiro - Meikyuu No Tatsujin             1 H...  128kB  128kB J   415e5109
+Dai Senryaku                                1 HB..  128kB   32kB J   5a5a0cd9
+Daiku No Gen San                            4 V...  128kB  128kB J   78211ebf
+Daiku No Gen San 2 - Akage No Dan No       65 H...  256kB  256kB J   93b2cec4
+     Gyakushuu
+Daiva - Imperial of Nirsartia               2 V...  128kB  ----- J   721b5217
+Dark Lord                                   4 V...  256kB  128kB J   3eff62e4
+Dash Yarou                                  2 V...  128kB  ----- J   1ed48c5c
+Datach - Battle Rush                       16 H...  256kB  ----- J   983d8175
+Datach - Crayon Shin Chan - Ora To Poi     16 H...  256kB  ----- J   894efdbc
+     Poi
+Datach - Dragon Ball Z - Gekitou           16 H...  256kB  ----- J   19e81461
+     Tenkaichi Budou Kai
+Datach - J League Super Top Players        16 H...  256kB  ----- J   be06853f
+Datach - SD Gundam - Gundam Wars           16 H...  256kB  ----- J   0be0a328
+Datach - Ultraman Club - Supokon Fight!    16 H...  256kB  ----- J   5b457641
+Datach - Yuu Yuu Hakusho - Bakutou         16 H...  256kB  ----- J   f51a7f46
+     Ankoku Bujutsu Kai
+Datsugoku                                   1 H...  128kB  128kB J   360aa8b4
+Datsugoku (FFE Pirate)                      6 V.T.  256kB  ----- J   9768e920
+Deblock                                     3 V...   32kB   32kB J   3fc1dc19
+Deep Dungeon 3 - Yuushi E No Tabi           1 HB..  256kB  ----- J   73f7e5d8
+Deep Dungeon 3 - Yuushi E No Tabi           2 VB..  256kB  ----- J   a65d3207
+     (Mapper 2 Hack)
+Deep Dungeon 4 - Kuro No Youjutsushi        1 HB..  256kB  ----- J   fe364be5
+Deja Vu                                     4 VB..  128kB  256kB J   f053ac5f
+Dengeki - Big Bang!                         1 H...  128kB  128kB J   23bf0507
+Densetsu No Kishi - Elrond                  7 H...  128kB  ----- J   a72fde03
+Derby Stallion - Zenkoku Ban                1 HB..  128kB  128kB J   8c4d59d6
+Devil Man                                  88 V..4  128kB  128kB J   d1691028
+Devil World                                 0 H...   16kB    8kB J   145a9a6c
+Devil World (Alt)                           0 H...   16kB    8kB J   5fab6bce
+Dezaemon                                    1 H...  128kB  ----- J   d1e50064
+Die Hard                                    1 H...  128kB  128kB J   28c2dfce
+Dig Dug                                     0 H...   16kB    8kB J   b174b680
+Dig Dug 2                                   0 V...   32kB    8kB J   2be254e9
+Digital Devil Monogatari - Megami Tensei    4 V.T.  128kB  128kB J   c8133b04
+     (Mapper 4 Hack)
+Digital Devil Monogatari - Megami Tensei    4 VB..  256kB  256kB J   76d5175e
+     2 (Mapper 4 Hack)
+Digital Devil Monogatari - Megami Tensei   17 VBT.  256kB  256kB J   eb297321
+     2 (FFE Hack)
+Digital Devil Monogatari - Megami Tensei   19 VB..  256kB  256kB J   10c9a789
+     2
+Digital Devil Monogatari - Megami Tensei   76 V...  128kB  128kB J   bdad5548
+Doki! Doki! Yuuenchi                        4 V...  128kB  128kB J   3d9fddd5
+Doki! Doki! Yuuenchi (FFE Hack)            17 V.T.  128kB  128kB J   2063f8be
+Dokuganryuu Masamune                       19 HB..  128kB  128kB J   10c8f2fa
+Dokuganryuu Masamune (FFE Hack)             6 V.T.  256kB  ----- J   33346cd2
+Don Doko Don                               33 H...  128kB  256kB J   7a497ae3
+Don Doko Don 2                             33 H...  128kB  256kB J   a7b0536c
+Donald Duck                                 1 H...  128kB  128kB J   e66bddcf
+Donald Land                                 1 H...  128kB  128kB J   a9f0b6f3
+Donald Land (FFE Hack)                      6 V.T.  256kB  ----- J   dcf5fa30
+Donkey Kong Jr. + Jr. Lesson                0 H...   16kB    8kB J   50a1b3fe
+Door Door                                   0 V...   16kB    8kB J   f865ec8d
+Doraemon                                   66 H...  128kB   32kB J   bde3ae9b
+Doraemon - Gigazombie No Gyakushuu          1 HB..  256kB  ----- J   d7215873
+Double Dragon                               1 H...  128kB  128kB J   6dce4b23
+Double Dragon (FFE Hack)                    6 V.T.  256kB  ----- J   c6a4bf7b
+Double Dragon 2 - The Revenge               4 V...  128kB  128kB J   a66596d9
+Double Dragon 2 - The Revenge (Pirate)      4 V...  128kB  128kB J   394df2df
+Double Dragon 3 - The Rosetta Stone         4 H...  128kB  128kB J   0bf306d1
+     (Pirate)
+Double Dragon 3 - The Rosetta Stone         4 H...  128kB  128kB J   6ae69227
+Double Moon Densetsu                        4 HB..  512kB  ----- J   a60fba51
+Dough Boy                                   0 V...   32kB    8kB J   f760f1cb
+Downtown - Nekketsu Koushin Kyoku -         4 V...  128kB  128kB J   3e470fe0
+     Soreyuke Dai Undoukai
+Downtown - Nekketsu Monogatari              4 V...  128kB  128kB J   2a3ca509
+Dragon Ball - Shen Ron No Nazo             66 H...  128kB   32kB J   9552e8df
+Dragon Ball - Shen Ron No Nazo (Mapper     15 H.T.  256kB  ----- J   e2eca5ce
+     15 Hack)
+Dragon Ball - Shen Ron No Nazo (Mapper     34 V.T.  128kB   32kB J   1e2cb8cc
+     34 Hack)
+Dragon Ball 2 - Dai Maou Fukkatsu          16 H...  128kB  128kB J   33b899c9
+Dragon Ball 3 - Gokuu Den                  16 H...  128kB  256kB J   bfc7a2e9
+Dragon Ball 3 - Gokuu Den (Alt)            16 H...  128kB  256kB J   6e68e31a
+Dragon Ball Z - Kyoushuu! Saiya Jin        16 H...  256kB  256kB J   183859d2
+Dragon Ball Z 2 - Gekishin Freeza!!        16 H...  256kB  256kB J   a9541452
+Dragon Ball Z 2 - Gekishin Freeza!! (FFE   17 V.T.  256kB  256kB J   31b949f7
+     Pirate)
+Dragon Ball Z 3 - Ressen Jinzou Ningen     16 H...  256kB  256kB J   dc52bf0c
+Dragon Ball Z 3 - Ressen Jinzou Ningen     17 HB..  256kB  256kB J   2f737eb7
+     (FFE Pirate)
+Dragon Ball Z Gaiden - Saiya Jin           16 H...  256kB  256kB J   136ca449
+     Zetsumetsu Keikaku
+Dragon Buster                              95 V...  128kB   32kB J   7b6dc772
+Dragon Buster (Hacked)                     95 V...  128kB   32kB J   59138e01
+Dragon Buster 2 - Yami No Fuuin             4 V...  128kB   64kB J   d7aa0b6d
+Dragon Fighter                              1 H...  128kB  128kB J   4b0dacce
+Dragon Ninja                               19 V...  128kB  128kB J   2a7d3adf
+Dragon Quest                                3 V...   32kB   32kB J   88053d25
+Dragon Quest 2                              2 V...  128kB  ----- J   48349b0b
+Dragon Quest 2 (Alt)                        2 V...  128kB  ----- J   e7a3867b
+Dragon Quest 3                              1 HB..  256kB  ----- J   a49b48b8
+Dragon Quest 3 (Mapper 2 Hack)              2 VB..  256kB  ----- J   7090b851
+Dragon Quest 4                              1 HB..  512kB  ----- J   0794f2a5
+Dragon Scroll - Yomigaerishi Maryuu        23 H...  128kB  128kB J   ac9895cc
+Dragon Scroll - Yomigaerishi Maryuu (FFE    6 V.T.  256kB  ----- J   847b2d05
+     Hack)
+Dragon Slayer 4 - Drasle Family             4 V...  128kB   64kB J   a5e6baf9
+Dragon Spirit - Aratanaru Densetsu          4 H.T.  128kB  128kB J   7f0ad375
+     (Mapper 4 Hack)
+Dragon Spirit - Aratanaru Densetsu         88 H...  128kB  128kB J   d2699893
+Dragon Unit                                 2 V...  128kB  ----- J   804f898a
+Dragon Wars                                 4 VB..  256kB  128kB J   87ce3f34
+Dragon's Lair                               4 V...  128kB  128kB J   c48ddb52
+Dream Master                               19 H...  256kB  256kB J   bd523011
+Duck Tales 2                                2 V...  128kB  ----- J   eddcc468
+Dungeon & Magic - Swords of Element         1 HB..  128kB  128kB J   459d0c2a
+Dungeon Kid                                 1 HB..  128kB  ----- J   d68a6f33
+Dynamite Batman                            69 H...  128kB  256kB J   0ff6a3b5
+Dynamite Batman (FFE Pirate)               17 H...  128kB  256kB J   06bb007a
+Dynamite Bowl                               3 V...   32kB   32kB J   b786ab95
+Eggerland - Meikyuu No Fukkatsu             1 H...  128kB   32kB J   77dcbba3
+Egypt                                       3 H...   32kB   32kB J   e1c03eb6
+Eigo Asobi                                  0 V...   16kB    8kB J   27738241
+Elevator Action                             0 H...   32kB    8kB J   fcdaca80
+Elysion                                     1 H...  128kB  128kB J   240c6de8
+Emo Yan No 10 Bai Pro Yakyuu                1 HB..  128kB  128kB J   9d45d8ec
+Erika To Satoru No Yume Bouken             19 V...  128kB  128kB J   ef7996bf
+Erika To Satoru No Yume Bouken (Hacked)    19 V...  128kB  128kB J   f5faae4f
+Erika To Satoru No Yume Bouken (Mapper 4    4 V...  128kB  128kB J   0db1c342
+     Hack)
+Ernarc No Zaihou                            2 V...  128kB  ----- J   605f5d51
+Esper Bouken Tai                            2 V...  256kB  ----- J   7b0a41b9
+Esper Bouken Tai (Alt)                      2 V...  256kB  ----- J   02b0b405
+Esper Dream 2 - Aratanaru Tatakai          26 HB..  256kB  128kB J   209b4bed
+Exciting Boxing                            75 V...  128kB  128kB J   ac4bf9dc
+Exciting Rally - World Rally Championship   1 H...  128kB  128kB J   e15c973d
+Exed Exes                                   0 H...   32kB    8kB J   c05a365b
+Exerion                                     0 H...   16kB    8kB J   beb30478
+F-1 Race                                    0 V...   16kB    8kB J   c7c09049
+F-1 Sensation                               4 H...  128kB  128kB J   40b8ee9a
+F1 Circus                                   4 VB..  256kB  128kB J   ecbf33ce
+Famicom Boardgame - Tetsudou Ou             3 V...   32kB   32kB J   942f6bb0
+Famicom Doubutsu Seitai Zukan! - Katteni    1 H...  128kB  128kB J   f8c1a690
+     Shirokuma - Mori Wo Sukue No Maki!
+Famicom Igo Nyuumon                         1 H...  128kB   32kB J   2470402b
+Famicom Jump - Eiyuu Retsuden              16 H...  256kB  128kB J   c66fb098
+Famicom Jump - Eiyuu Retsuden (Alt)        16 H...  256kB  128kB J   d343c66a
+Famicom Jump 2 - Saikyou No 7 Nin          16 HB..  512kB  ----- J   3f15d20d
+Famicom Jump 2 - Saikyou No 7 Nin (FFE     17 HBT.  512kB  ----- J   ef4f6d07
+     Hack)
+Famicom Meijin Sen                          1 HB..  128kB  128kB J   821f2f9f
+Famicom Shougi - Ryuuousen                  1 HB..  128kB  128kB J   149c0ec3
+Famicom Top Management                      1 HB..  256kB  ----- J   58507bc9
+Famicom Wars                               10 H...  128kB  128kB J   a3e37134
+Famicom Yakyuu Ban                          1 H...  128kB  128kB J   d0a9f4e1
+Family BASIC (Ver 2.0)                      0 VB..   32kB    8kB J   f7606810
+Family BASIC (Ver 2.1a)                     0 VB..   32kB    8kB J   895037bc
+Family BASIC (Ver 3)                        0 VB..   32kB    8kB J   69759626
+Family BASIC (Ver 3) (Alt)                  0 VB..   32kB    8kB J   b2530afc
+Family Block                               66 H...  128kB   32kB J   0bb5b3a0
+Family Boxing                               4 V...   64kB   64kB J   5b4c6146
+Family Circuit                              4 V...  128kB   32kB J   9cbc8253
+Family Circuit '91                         19 VB..  512kB  128kB J   c247cc80
+Family Computer Othello (Mapper 3)          3 V...   32kB   32kB J   73921674
+Family Computer Typing Tutor                0 V...   32kB  ----- J   4b462393
+Family Computer Typing Tutor 2              0 H...   32kB  ----- J   d4b89f7b
+Family Jockey                               4 H...   32kB   32kB J   3719a26d
+Family Mahjong                              4 H...  128kB   64kB J   c6557e02
+Family Mahjong 2 - Shanghai E No Michi      4 H...  128kB   64kB J   dd29fd59
+Family Pinball                              4 H...  128kB   64kB J   491d8cdb
+Family Quiz                                 2 V...  128kB  ----- J   79fba5a2
+Family School                               1 H...  256kB  ----- J   f568a7a4
+Family Stadium '87 - Pro Yakyuu             4 V...   64kB   32kB J   1300a8b7
+Family Stadium '88 - Pro Yakyuu             4 V...  128kB   64kB J   ae321339
+Family Stadium '89 - Kaimaku Ban!!          4 V...  128kB   64kB J   4f2f1846
+Family Stadium '90                         19 V...  128kB  128kB J   0c1792da
+Family Stadium '91                         19 V...  128kB  128kB J   808606f0
+Family Stadium '91 (Mapper 4 Hack)          4 V.T.  128kB  128kB J   ca8efc8a
+Family Stadium '92                         19 V...  128kB  128kB J   6ec51de5
+Family Stadium '92 (Mapper 4 Hack)          4 V.T.  128kB  128kB J   4192d82c
+Family Stadium '93                         19 V...  128kB  128kB J   adffd64f
+Family Stadium '93 (Mapper 4 Hack)          4 V.T.  128kB  128kB J   54b80a8a
+Family Stadium '94                         19 V...  128kB  128kB J   429103c9
+Family Stadium '94 (Mapper 4 Hack)          4 V...  128kB  128kB J   895faef2
+Family Stadium '94 (Mapper 4 Trainer        4 V.T.  128kB  128kB J   ba7b13e1
+     Hack)
+Family Stadium - Pro Yakyuu                 4 V...   64kB   32kB J   dcdf06de
+Family Tennis                               4 V...   64kB   64kB J   a49253c6
+Family Trainer - Aerobics Studio            3 H...   32kB   32kB J   29de87af
+Family Trainer - Athletic World             3 V...   32kB   32kB J   60ad090a
+Family Trainer - Dai Undoukai               3 H...   32kB   32kB J   6cca1c1f
+Family Trainer - Fuuun!! Takeshi Jou        3 H...   32kB   32kB J   8a12a7d9
+Family Trainer - Fuuun!! Takeshi Jou 2      3 H...   32kB   32kB J   69ffb014
+Family Trainer - Jogging Race               3 V...   32kB  128kB J   2f128512
+Family Trainer - Manhattan Police          70 H..4  128kB  128kB J   bba58be5
+Family Trainer - Meiro Dai Sakusen         70 H...  128kB  128kB J   370ceb65
+Family Trainer - Rairai Kyonshiizu          3 H...   32kB   32kB J   9044550e
+Family Trainer - Running Stadium            3 H...   32kB   32kB J   ea90f3e2
+Fantasy Zone                               93 H...  128kB  ----- J   10119e6b
+Fantasy Zone (Mapper 2 Hack)                2 H...  128kB  ----- J   6f365e7b
+Fantasy Zone 2 - The Teardrop of Opa-Opa   67 V...  128kB  128kB J   0c5a6297
+Faria                                       1 HB..  128kB  128kB J   f885d931
+Faxanadu                                    1 H...  256kB  ----- J   73272e0a
+Faxanadu (Mapper 2 Hack)                    2 H...  256kB  ----- J   5e5723f4
+FC Genjin - Freakthoropus Computerus        4 H...  256kB  128kB J   5f14dc48
+Ferrari Grand Prix Challenge                1 H...  128kB  128kB J   a485abed
+Field Combat                                0 H...   16kB    8kB J   1b45a73e
+Fighting Golf                               1 H...  128kB  128kB J   8308fed7
+Fighting Road                               4 H...  128kB  128kB J   974d0745
+Final Fantasy                               1 HB..  256kB  ----- J   466efdc2
+Final Fantasy (Mapper 2 Hack)               2 VB..  256kB  ----- J   ab07c7f3
+Final Fantasy 1 & 2                         1 HB..  512kB  ----- J   c9556b36
+Final Fantasy 2                             1 HB..  256kB  ----- J   d29db3c7
+Final Fantasy 2 (Mapper 2 Hack)             2 VB..  256kB  ----- J   ec04f0da
+Final Fantasy 3                             4 VB..  512kB  ----- J   57e220d0
+Final Lap                                  19 V...  128kB  128kB J   5746a461
+Final Mission                               1 H...  128kB  128kB J   d5941aa9
+Fire Emblem                                10 HB..  256kB  128kB J   97cad370
+Fire Emblem (Mapper 4 Hack)                 4 VB..  256kB  128kB J   ee64327b
+Fire Emblem Gaiden                         10 HB..  256kB  128kB J   a98046b8
+Flappy                                      0 H...   32kB    8kB J   22f95ff1
+Fleet Commander                             3 H...   32kB   32kB J   b811c054
+Flintstones - The Rescue of Dino &         33 H...  128kB  256kB J   40c0ad47
+     Hoppy, The
+Flipull                                     3 V...   32kB   32kB J   cbb545c1
+Flipull (Pirate)                            3 V...   32kB   32kB J   67755041
+Flying Hero                                 2 H...  128kB  ----- J   f6751d3d
+Flying Hero (Pirate)                        2 H...  128kB  ----- J   83431081
+Formation Z                                 0 H...   16kB    8kB J   e9023072
+Foton - The Ultimate Game on Planet Earth   2 H...  128kB  ----- J   b8f3781d
+Front Line                                  0 H...   16kB    8kB J   cf4dbdbe
+Fudou Myouou Den                           80 H...  256kB  128kB J   7678f1d5
+Fushigi No Umi No Nadia                     4 VB..  128kB  128kB J   0546bd12
+Fushigina Bloby - Blobania No Kiki          1 H...  128kB  128kB J   1b7bd879
+Fuzzical Fighter                            4 V...  128kB  128kB J   5e24eeda
+Galaga                                      0 H...   16kB    8kB J   e911bcc4
+Galaxian                                    0 H...   16kB    8kB J   e5d11921
+Galaxian (Alt)                              0 H...   16kB    8kB J   572ca03a
+Galg                                        0 H...   32kB    8kB J   f308e97a
+Gambler Jiko Chuushin Ha - Mahjong Game     1 HB..  256kB  ----- J   2e2acae9
+Gambler Jiko Chuushin Ha - Mahjong Game     2 HB..  256kB  ----- J   053c4699
+     (Mapper 2 Pirate)
+Gambler Jiko Chuushin Ha 2                  1 H...  256kB  ----- J   85f12d37
+Game Party                                  1 H...  128kB  128kB J   f1c76aed
+Ganbare Goemon 2                           23 H...  128kB  128kB J   0cc9ffec
+Ganbare Goemon 2 (Mapper 4 Hack)            4 V.T.  128kB  128kB J   1cc26e7e
+Ganbare Goemon Gaiden - Kieta Ougon        25 HB..  256kB  256kB J   eb92b32a
+     Kiseru
+Ganbare Goemon Gaiden 2 - Tenka No         21 HB..  256kB  256kB J   76705b5f
+     Zaihou (Alt)
+Ganbare Goemon Gaiden 2 - Tenka No Zaihou  21 HB..  256kB  256kB J   286fcd20
+Ganbare Goemon! - Karakuri Douchuu         75 V...  128kB  128kB J   4fc2f673
+Ganbare Goemon! - Karakuri Douchuu (FFE     6 V.T.  256kB  ----- J   b56d128f
+     Hack)
+Ganbare Pennant Race!                      22 H...  128kB  128kB J   90f6fa33
+Ganbare Pennant Race! (Alt)                25 H...  128kB  256kB J   7c393da4
+Ganso Saiyuuki - Super Monkey Dai Bouken    3 V...   32kB   32kB J   3bf55966
+Garfield - A Week of Garfield               1 H...  128kB   32kB J   b4ff91e7
+Gegege No Kitarou - Youkai Dai Makyou       3 V...   32kB   32kB J   d60e10aa
+Gegege No Kitarou 2 - Youkai Gundan No     70 H...  128kB  128kB J   bda8f8e4
+     Chousen
+Gegege No Kitarou 2 - Youkaigundan No       6 V.T.  256kB  ----- J   cbe9482f
+     Chousen (FFE Hack)
+Geimos                                      0 H...   32kB    8kB J   1dbd1d2b
+Gekikame Ninja Den                          1 H...  128kB  128kB J   64a02715
+Gekikame Ninja Den (FFE Pirate)             6 V.T.  256kB  ----- J   efcc2da9
+Gekitotsu Yonku Battle                      2 H...  128kB  ----- J   04109355
+Gekitou Pro Wrestling!! Toukon Densetsu     1 H...  128kB  128kB J   50893b58
+     (Alt)
+Gekitou Puroresu!! Toukon Densetsu          1 H...  128kB  128kB J   36c5ee93
+Gekitou Stadium!!                           1 H...  128kB  128kB J   481519b1
+Gekitou Stadium!! (FFE Pirate)              6 V.T.  256kB  ----- J   628cc178
+Genpei Touma Den - Computer Boardgame       4 H...  128kB   64kB J   c372399b
+Getsufuu Maden                             23 H...  128kB  128kB J   49123146
+Ghostbusters                                3 H...   32kB   32kB J   4057c51b
+Gimmi a Break - Shijou Saikyou No Quiz      1 H...  128kB  ----- J   d9f45be9
+     Ou Ketteisen
+Gimmi a Break - Shijou Saikyou No Quiz      1 H...  256kB  ----- J   1545bd13
+     Ou Ketteisen 2
+Gimmick!                                   69 H...  256kB  128kB J   705ef660
+Gimmick! (Alt)                             69 H...  256kB  128kB J   0d65e7c7
+Ginga Eiyuu Densetsu                        1 HB..  128kB  128kB J   8d5b77c0
+Ginga No Sannin                             2 V...  128kB  ----- J   8a368744
+Goal!                                      18 H...  128kB  128kB J   5b7ac91f
+God Slayer - Haruka Tenkuu No Sonata        4 HB..  256kB  128kB J   79698b98
+Godzilla                                    1 H...  128kB  128kB J   639d74e4
+Golby No Pipeline Dai Sakusen               3 H...   32kB   32kB J   1829616a
+Golf '92, The                               1 H...  128kB  128kB J   139b15ba
+Golf Club - Birdy Rush                      1 H...  128kB  128kB J   fcb13110
+Golf Grand Slam                             1 H...  128kB  128kB J   3f0c8136
+Golf Ko Open                               33 H...  128kB  256kB J   baca10a9
+Golgo 13 - Dai 1 Shou - Kamigami No         1 H...  128kB  128kB J   a0006b26
+     Tasogare (Alt)
+Golgo 13 - Dai 1 Shou - Kamigami No         1 H...  128kB  128kB J   b25735f3
+     Tasogare
+Golgo 13 - Dai 1 Shou - Kamigami No         6 V.T.  256kB  ----- J   3729d529
+     Tasogare (FFE Hack)
+Golgo 13 - The Riddle of Icarus             4 V...  128kB  128kB J   27d34a57
+Gomoku Narabe                               0 V...   16kB    8kB J   4a99b47e
+Goonies 2 - Fratelli Saigo No Chousen       2 V...  128kB  ----- J   92f04530
+Goonies, The                               87 V...   32kB   16kB J   e6df6616
+Goonies, The (Mapper 3 Hack)                3 V...   32kB   16kB J   e3b98143
+Goonies, The (Pirate)                       3 V...   32kB   16kB J   bf865533
+Gorilla Man                                 4 V...  512kB  ----- J   9fd718fd
+Gozonji - Yaki Kita Chin Douchuu            1 H...  256kB  128kB J   0da00298
+Gozonji Yaji Kita Chin Douchuu (Alt)        1 H...  256kB  128kB J   7f1d087f
+Gradius                                     3 V...   32kB   32kB J   d8eff0df
+Gradius (ArchiMENdes Edition)               3 V...   32kB   32kB J   de395efd
+Gradius 2                                  25 H...  128kB  128kB J   5adbf660
+Gradius 2 (Mapper 4 Hack)                   4 H.T.  128kB  128kB J   fd3c3147
+Grand Master                                1 H...  256kB  128kB J   c060ed0a
+Great Battle Cyber                          4 H...  128kB  256kB J   8172fc55
+Great Battle Cyber (Pirate)                 4 H...  128kB  256kB J   38d314db
+Great Boxing - Rush Up                      4 V...  128kB  128kB J   175eda0b
+Great Deal                                  1 H...  128kB  ----- J   bcf68611
+Great Tank                                  1 H...  128kB  128kB J   d09b74dc
+Great Tank (FFE Pirate)                     6 V.T.  256kB  ----- J   cc0034e3
+Gremlin 2 - Shinshu Tanjou                 69 H...  128kB  256kB J   0897021b
+Guardic Gaiden                              2 V...  128kB  ----- J   b59a7a29
+Guevara                                     1 H...  128kB  128kB J   63c4e122
+Guevara (FFE Hack)                          6 V.T.  256kB  ----- J   411edf39
+Gun Hed                                     1 HB..  128kB  128kB J   e8baa782
+Gun Nac                                     4 V...  128kB  128kB J   d9084936
+Gun Sight                                   5 H...  128kB  128kB J   0afb395e
+Gun-Dec                                     4 V...  128kB  128kB J   619bea12
+Gyrodine                                    0 V...   32kB    8kB J   29e173ff
+Gyrodine (Pirate)                           0 V...   32kB    8kB J   2a971204
+Haja No Fuuin                               1 H...  128kB  128kB J   21dd2174
+Haja No Fuuin (FFE Hack)                    6 V.T.  256kB  ----- J   5cc1e2c6
+Hana No Star Kaidou                         2 V...  128kB  ----- J   6a6b7239
+Hanjuku Hero                                1 HB..  128kB  ----- J   cd7a2fd7
+Hanjuku Hero (Mapper 2 Hack)                2 HB..  128kB  ----- J   9c015583
+Happy Birthday Bugs                         4 H...  128kB  128kB J   b47569e2
+Hatris (Mapper 2 Hack)                      2 V...  128kB  ----- J   c7ce1429
+Hayachi Super Igo (Pirate)                  3 H...   32kB   32kB J   98087e4d
+Hayauchi Super Igo                          3 H...   32kB   32kB J   93146bb0
+Heavy Barrel                                4 V...  128kB  128kB J   2bcf2132
+Hebereke                                   69 H...  128kB  128kB J   72928698
+Hector 87                                   2 V...  128kB  ----- J   15662081
+Heisei Tensai Bakabon                      19 V...  128kB  128kB J   81b7f1a8
+Hello Kitty No Ohanabatake                  3 V...   32kB   32kB J   26bb1c8c
+Hello Kitty World                           2 V...  128kB  ----- J   67d5c3f9
+Herakles No Eikou - Toujin Makyou Den       2 V...  128kB  ----- J   48c8de53
+Herakles No Eikou 2 - Titan No Metsubou     1 HB..  256kB  ----- J   ba766ec6
+Hi No Tori - Houou Hen - Gaou No Bouken     2 V...  128kB  ----- J   2ac5233c
+Higemaru Makaijima - Nanatsu No Shima       2 V...  128kB  ----- J   70bb52d7
+     Dai Bouken
+Higemaru Makaijima - Nanatsu No Shima       2 V...  128kB  ----- J   b301b0dc
+     Dai Bouken (Alt)
+Highway Star                                1 H...  128kB  ----- J   02589598
+Highway Star (Mapper 2 Hack)                2 V...  128kB  ----- J   24a0aa1a
+Hirake! Ponkikki                            1 H...   32kB   32kB J   64bd6cdb
+Hiryuu No Ken - Ougi No Sho                 2 V...  128kB  ----- J   0b8e8649
+Hiryuu No Ken 2 - Dragon No Tsubasa         1 H...  128kB  128kB J   0a68452e
+     (Hacked)
+Hiryuu No Ken 2 - Dragon No Tsubasa         1 H...  128kB  128kB J   74663267
+Hiryuu No Ken 3 - 5 Nin No Ryuu Senshi      4 V...  128kB  128kB J   8f628d51
+Hiryuu No Ken Special - Fighting Wars       1 H...  128kB  128kB J   07977186
+Hissatsu Doujou Yaburi                      1 HB..  256kB  ----- J   565a4681
+Hissatsu Shigoto Nin                        4 VB..  256kB  128kB J   5d105c10
+Hitler No Fukkatsu - Top Secret             1 H...  256kB  ----- J   16a0a3a3
+Hokuto No Ken                               3 V...   32kB   32kB J   644dfe2b
+Hokuto No Ken (Alt)                         3 V...   32kB   32kB J   60a3b803
+Hokuto No Ken (Hacked)                      3 V...   32kB   32kB J   ede55d1c
+Hokuto No Ken 2 - Seikimatsu Kyuuseishu     2 V...  128kB  ----- J   d1f7df3a
+     Densetsu
+Hokuto No Ken 3 - Shin Seiki Souzou         1 HB..  256kB  ----- J   771ce357
+     Seiken Restuden
+Hokuto No Ken 4 - Shichisei Hakenden -      1 HB..  256kB  ----- J   63469396
+     Hokuto Shinken No Kanata E
+Holy Diver                                 78 H..4  128kB  128kB J   ba51ac6f
+Holy Diver (Alt)                           78 H..4  128kB  128kB J   ed36649f
+Holy Diver (FFE Pirate)                     6 V.T.  256kB  ----- J   6414e03d
+Home Run Nighter '90 - The Pennant League   4 VB..  128kB  128kB J   0ae3cc5e
+Home Run Nighter - Pennant League!!         1 H...  128kB  128kB J   3057b904
+Honoo No Toukyuuji - Dodge Danpei          69 H...  128kB  256kB J   4c049cfe
+Honoo No Toukyuuji - Dodge Danpei 2        69 H...  256kB  256kB J   a4e935df
+Hook                                        1 H...  128kB  128kB J   2db7c31e
+Hoshi No Kirby - Yume No Izumi No           4 HB..  512kB  256kB J   e4a7d436
+     Monogatari
+Hoshi Wo Miru Hito                          2 V...  128kB  ----- J   4471d531
+Hostages - The Embassy Mission              1 H...  128kB  128kB J   85c5953f
+Hostages - The Embassy Mission (FFE         6 V.T.  256kB  ----- J   7cffbc5b
+     Pirate)
+Hototogisu                                  1 HB..  256kB  ----- J   9ebdc94e
+Hototogisu (Mapper 2 Hack)                  2 VB..  256kB  ----- J   6de472f4
+Hottaaman No Chitei Tanken                  3 V...   32kB   32kB J   3275fd7e
+Houma Ga Toki                               2 V...  128kB  ----- J   96ba90b0
+Hudson Hawk                                 1 H...  128kB  128kB J   2fc1abae
+Hyakkiyakou                                 1 HB..  128kB  128kB J   dc1e07d2
+Hyakkiyakou (FFE Pirate)                    6 V...  256kB  ----- J   45a3f009
+Hyaku No Sekai No Monogatari - The Tales    1 H...  128kB  128kB J   e95e51e0
+     on a Watery Wilderness
+Hydlide 3 - Yami Kara No Houmonsha         19 H...  256kB  128kB J   47c2020b
+Hydlide Special                             0 H...   32kB    8kB J   8575a0cb
+Hyokkori Hyoutan Jima - Nazo No             1 H...  128kB  128kB J   0b13658b
+     Kaizokusen
+Hyper Olympic                               0 V...   16kB    8kB J   980be936
+Hyper Olympic - Tonosama Ban               87 V...   32kB   16kB J   21f85681
+Hyper Sports                                0 V...   16kB    8kB J   915a53a7
+I Love Softball                             1 H...  128kB  128kB J   aa4318ae
+Ide Yousuke Meijin No Jissen Mahjong        2 H...  128kB  ----- J   9fae4d46
+Ide Yousuke Meijin No Jissen Mahjong 2      1 H...  256kB  ----- J   7b44fb2a
+Idol Hakkenden                              1 H...  128kB  128kB J   8da4e539
+Igo Kyuu Roban Taikyok                      1 H...   32kB   16kB J   9b208ab1
+Igo Meikan                                  0 H...   32kB    8kB J   455ca7de
+Igo Shinan                                  0 H...   32kB    8kB J   89550500
+Igo Shinan '91                              1 H...  128kB   32kB J   e333ffa1
+Igo Shinan '92                              1 H...  128kB   32kB J   7a11d2c9
+Igo Shinan '93                              1 H...  128kB   32kB J   9c053f24
+Igo Shinan '94                              1 H...  128kB   32kB J   a7e784ed
+Ikari                                       2 H...  128kB  ----- J   8c3d54e8
+Ikari 2 - Dogosoken                         1 H...  256kB  ----- J   d2bc86f3
+Ikari 2 - Dogosoken (Mapper 2 Hack)         2 H...  256kB  ----- J   a875c5e9
+Ikari 3                                     1 H...  128kB  128kB J   f7d20181
+Ikari 3 (FFE Pirate)                        6 V.T.  256kB  ----- J   269b5f1e
+Ike Ike! Nekketsu Hockey Bu - Subette       4 V...  128kB  128kB J   4f032933
+     Koronde Dai Rantou
+Ikinari Musician                            3 V...   32kB   16kB J   092ec15c
+Ikki                                        0 V...   16kB    8kB J   821feb7a
+Ikki (Pirate)                               0 V...   16kB    8kB J   687ebcd7
+Ikki (Pirate) (Alt)                         0 V...   16kB    8kB J   207e618c
+Image Fight                                32 H...  128kB  128kB J   d2038fc5
+Indora No Hikari                            2 HB..  128kB  ----- J   e8973b45
+Insector X                                 33 H...  128kB  128kB J   f80bdc50
+Isaki Shuugorou No Keiba Hisshou Gaku       1 HB..  256kB  ----- J   18d44bba
+Ishin No Arashi                             5 HB..  256kB  128kB J   1ced086f
+Itadaki Street - Watashi No Mise Ni         1 HB..  128kB  128kB J   ca503f32
+     Yottette
+J League Fighting Soccer - The King of      4 VB..  128kB  128kB J   803b9979
+     Ace Strikers
+J League Winning Goal                       4 V...  128kB  128kB J   3d4b64f1
+Jackie Chan                                 4 V...  128kB  128kB J   59280bec
+Jajamaru - Ninpou Chou                     75 V...  128kB  128kB J   ecec80b4
+Jajamaru - Ninpou Chou (Alt)               75 V...  128kB  128kB J   12f048df
+Jajamaru - Ninpou Chou (Mapper 4 Hack)      4 V.T.  128kB  128kB J   1ea703cb
+Jajamaru Gekimaden - Maboroshi No          18 HB..  128kB  128kB J   0f1babe7
+     Kinmajou
+Jajamaru No Dai Bouken                     66 H...   32kB   32kB J   d6cc1f78
+Jajamaru No Dai Bouken (Alt)               66 H...   32kB   32kB J   6bbe2be5
+Jangou                                      1 H...  256kB  ----- J   0973f714
+Jarinko Chie - Bakudan Musume No           23 H...  128kB  256kB J   39b68aa3
+     Shiawase Sagashi
+Jesus - Kyoufu No Bio Monster               1 H...  256kB  ----- J   0dc53188
+Jesus - Kyoufu No Bio Monster (Mapper 2     2 V...  256kB  ----- J   32979126
+     Hack)
+Jesus - Kyoufu No Bio Monster (Mapper 2     2 V...  256kB  ----- J   b4362294
+     Pirate)
+Jetsons - Cogswell's Caper!, The           33 H...  128kB  256kB J   1500e835
+Jigoku Gokuraku Maru                        4 V...  128kB  128kB J   045e8cd8
+Jikuu Yuuden - Debias                       4 V...  128kB   64kB J   22d6d5bd
+JJ - Tobidase Daisakusen Part 2             2 V...  128kB  ----- J   63af202f
+Jongbou                                     2 V...  128kB  ----- J   da122635
+Joust                                       0 V...   16kB    8kB J   927c7a3a
+Joy Mech Fight                              4 HB..  256kB  256kB J   708ea2be
+Juju Densetsu                               4 V...  128kB  256kB J   ccaf543a
+Jumbo Ozaki No Hole in One Professional     1 H...  128kB   32kB J   8dcd9486
+Jumpin' Kid - Jack To Mame No Ki            4 V...  128kB  128kB J   b976219a
+     Monogatari
+Just Breed                                  5 HB..  512kB  256kB J   9cbadc25
+Juuouki                                     4 V...  128kB  128kB J   6772ca86
+Juuryoku Soukou Metal Storm                 4 V...  128kB  256kB J   fdb8aa9a
+Juvei Quest                                19 HB..  256kB  256kB J   716daea5
+Juvei Quest (Alt)                          19 HB..  256kB  256kB J   cf23290f
+Juvei Quest (FFE Pirate)                   17 VBT.  256kB  256kB J   d84cda4c
+Kabushiki Doujou                            1 H...  256kB  ----- J   7172f3d4
+Kaettekita! Gunjin Shougi - Nanya Sore!     1 H...  128kB  ----- J   e74aa15a
+Kage                                        4 V...  128kB  128kB J   98977591
+Kage No Densetsu                            3 H...   32kB   16kB J   86291f44
+Kagerou Densetsu                            4 VB..  128kB  128kB J   c9187b43
+Kaguya Hime Densetsu                        1 HB..  256kB  ----- J   26cec726
+Kaguya Hime Densetsu (Mapper 2 Hack)        2 HB..  256kB  ----- J   d0c6e757
+Kaijuu Monogatari                          19 H...  128kB  128kB J   bc11e61a
+Kaijuu Monogatari (Mapper 4 Hack)           4 V.T.  128kB  128kB J   65636a4e
+Kaiketsu Yanchamaru                        97 H...  256kB  ----- J   d1397940
+Kaiketsu Yanchamaru 2 - Karakuri Land      17 H...  128kB  128kB J   764bea6b
+     (FFE Pirate)
+Kaiketsu Yanchamaru 2 - Karakuri Land      23 V...  128kB  128kB J   95192148
+     (Mapper 23 Hack)
+Kaiketsu Yanchamaru 2 - Karakuri Land      32 H...  128kB  128kB J   b979cad5
+Kaiketsu Yanchamaru 3 - Taiketsu!          65 H...  128kB  128kB J   9e898385
+     Zouringen
+Kakefu Kun No Jump Tengoku - Speed Jigoku   2 V...  128kB  ----- J   5c629297
+Kame No Ongaeshi - Urashima Densetsu        1 H...  128kB  128kB J   489d19ab
+Kamen No Ninja - Akakage                    2 V...  128kB  ----- J   28c1d3d5
+Kamen No Ninja - Hanamaru                   1 H...  128kB  128kB J   e6b30bb3
+Kamen Rider Club                           70 H...  128kB  128kB J   dd8ed0f7
+Kamen Rider Club (FFE Hack)                 6 V.T.  256kB  ----- J   dea62da3
+Kamen Rider Club (FFE Hack) (Alt)           6 V.T.  256kB  ----- J   e4cf03d3
+Kamen Rider SD - Guranshokkaa No Yabou      4 HB..  128kB  128kB J   2a1919fe
+Kanshakudama Nage Kantarou No Toukaidou     3 V...   32kB   32kB J   7d44b948
+     Gojuusan Tsugi (Mapper 3 Hack)
+Kanshakudama Nage Kantarou No Toukaidou   184 V...   32kB   16kB J   2795e4f6
+     Gojuusan Tsugi
+Karakuri Kengou Den - Musashi Road -        4 HB..  128kB  128kB J   9d9a4a26
+     Karakuri Nin Hashiru!
+Karaoke Studio                            188 H...  128kB  ----- J   f02035b1
+Karaoke Studio Senyou Cassette Vol. 1     188 V...  256kB  ----- J   4b6ef399
+Karaoke Studio Senyou Cassette Vol. 2     188 H...  256kB  ----- J   50f3e338
+Karateka                                    0 V...   16kB    8kB J   8ba75848
+Karnov                                      4 H...  128kB   64kB J   267e592f
+Kawa No Nushi Tsuri                         4 H...  128kB  128kB J   f4e5df0e
+Keiba Simulation - Honmei                   4 V...  128kB  128kB J   93a7d26c
+Kero Kero Keroppi No Dai Bouken             3 H...   32kB   32kB J   eb465156
+Kero Kero Keroppi No Dai Bouken - Donuts    1 H...  128kB  128kB J   41f5d38d
+     Ike Ha Oosawagi!
+Keroppi To Keroriinu No Splash Bomb!        1 H...  128kB   32kB J   4156a3cd
+King Kong 2 - Ikari No Megaton Punch        4 V.T.  128kB  128kB J   6be54033
+     (Mapper 4 Hack)
+King Kong 2 - Ikari No Megaton Punch       75 V...  128kB  128kB J   b06c0674
+King of Kings                              19 VB..  128kB  128kB J   369da42d
+King of Kings (Mapper 4 Hack)               4 VB..  128kB  128kB J   1e4afd90
+King's Knight                               3 H...   32kB   32kB J   ac136f2d
+Kinnikuman - Muscle Tag Match               0 V...   16kB    8kB J   ac4f4e9f
+Kiteretsu Dai Hyakka                        1 H...  128kB  128kB J   db479677
+Klax                                        4 V...   64kB   64kB J   ed0aa77b
+Knight Rider                                1 H...   64kB  128kB J   66f4d9f5
+Konamic Sports in Seoul                     1 H...  128kB  128kB J   c7642467
+Kouryuu Densetsu Villgust Gaiden            4 VB..  128kB  256kB J   5318cdb9
+Koushien                                    1 H...  128kB  128kB J   83cb743f
+Kujaku Ou                                   1 H...  256kB  ----- J   71c9ed1e
+Kujaku Ou (Mapper 2 Hack)                   2 V...  256kB  ----- J   b39bab34
+Kujaku Ou 2                                 1 H...  128kB  128kB J   a4dcdf28
+Kunio Kun No Jidaigeki Dayo Zenin           4 V...  128kB  128kB J   dc45a886
+     Shuugou!
+Kunio Kun No Nekketsu Soccer League         4 V...  128kB  128kB J   4b5177e9
+Kurogane Hiroshi No Yosou Daisuki!          4 HB..  128kB  128kB J   8f011713
+     Kachiuma Densetsu
+Kyonshiizu 2                               80 V...  128kB  128kB J   de9c9c64
+Kyoro Chan Land                             2 H...  128kB  ----- J   5229fcdd
+Kyoto Zaiteku Satsujin Jiken (Mapper 4      4 H.T.  128kB  128kB J   3d3a0367
+     Hack)
+Kyouryuu Sentai Juuranger                   4 H...  128kB  128kB J   516b2412
+Kyuukyoku Harikiri Koushien                82 HB..  128kB  256kB J   db5169dc
+Kyuukyoku Harikiri Stadium '88             80 V...  128kB  128kB J   d0e53454
+Kyuukyoku Harikiri Stadium '88 (Mapper 4    4 V.T.  128kB  128kB J   c09bf032
+     Hack)
+Kyuukyoku Harikiri Stadium '88 (Old)       80 V...  128kB  128kB J   cea35d5a
+Kyuukyoku Harikiri Stadium - Heisei        82 V...  128kB  256kB J   0bbf80cb
+     Gannen Ban
+Kyuukyoku Harikiri Stadium 3               82 HB..  128kB  256kB J   2bb3dabe
+Kyuukyoku Tiger                             4 V...  128kB  128kB J   091ed5a9
+L'Empereur                                  5 HB..  256kB  128kB J   6396b988
+Labyrinth                                   2 V...  128kB  ----- J   f6139ee9
+Lagrange Point                             85 HB..  512kB  ----- J   33ce3ff0
+Lagrange Point (Alt)                       85 HB..  512kB  ----- J   743387ff
+Last Armageddon                             4 VB..  512kB  ----- J   8eef8b76
+Last Armageddon (FFE Pirate)               17 V...  512kB  ----- J   a2d6ee34
+Law of the West                             2 V...  128kB  ----- J   ae128fac
+Layla                                       2 V...  128kB  ----- J   131a18cb
+Lipple Island                               1 H...  128kB  ----- J   8f726dbc
+Lipple Island (Mapper 2 Hack)               2 V...  128kB  ----- J   5012d5d0
+Little Magic                                4 VB..  128kB  128kB J   c9edf585
+Little Mermaid - Ningyo Hime                2 V...  128kB  ----- J   64c0fa3b
+Live in Power Bowl - TM Network             4 V...  128kB  128kB J   69565f13
+Lode Runner                                 0 V...   16kB    8kB J   3faaa154
+Lord of King, The                          18 H...  128kB  128kB J   d0eb749f
+Lost Word of Jenny                          2 V...  128kB  ----- J   3cd6bb0e
+Lot Lot                                     0 H...   32kB    8kB J   75a7e399
+Lot Lot (Pirate)                            0 V...   32kB    8kB J   716c3fce
+Lunar Ball                                  0 V...   16kB    8kB J   2d782595
+Lupin Sansei - Pandora No Isan              4 V...  128kB   64kB J   9d21fe96
+Mad City                                    1 H...  128kB  128kB J   df3e45d2
+Magic Candle, The                           4 VB..  256kB  128kB J   4942bda8
+Magic Darts                                 1 H...  128kB  128kB J   e02133ac
+Magic John                                 18 H...  128kB  128kB J   d8748e0a
+Magical Doropie                             4 H...  128kB  128kB J   7ec6f75b
+Magical Taruruuto Kun - Fantastic World!!  16 HB..  128kB  128kB J   dcb972ce
+Magical Taruruuto Kun 2 - Mahou Dai        16 HB..  128kB  128kB J   b7f28915
+     Bouken
+Magmax                                      0 H...   32kB    8kB J   5e345b6d
+Magnum Kiki Ippatsu - Empire City - 1931    2 V...  128kB  ----- J   8e7abdfc
+Maharaja                                   68 H...  128kB  128kB J   98ccc9ab
+Mahjong                                     0 V...   16kB    8kB J   34dfb13c
+Mahjong Club - Nagatachou                   4 H...  512kB  ----- J   85bc0777
+Mahjong RPG Dora Dora Dora                  1 H...  128kB  128kB J   099b8caa
+Mahjong Taikai                              1 HB..  128kB  ----- J   f714fae3
+Mahjong Taisen                              4 HB..  256kB  128kB J   59449e3b
+Mahou No Princess Minky Momo - Remember     1 H...  128kB  128kB J   2d2f91b8
+     Dream
+Maison Ikkoku                               1 H...  256kB  ----- J   3348e3bd
+Maison Ikkoku (Mapper 2 Hack)               2 H...  256kB  ----- J   39aa20f0
+Majaventure - Mahjong Senki                 1 H...  128kB  128kB J   8531c166
+Majin Eiyuu Den Wataru Gaiden               1 HB..  256kB  ----- J   d0cc5ec8
+Majin Eiyuu Den Wataru Gaiden (Alt)         1 HB..  256kB  ----- J   6cd204b5
+Major League                               32 H...  128kB  128kB J   243a8735
+Majou Densetsu 2 - Daimashikyou Galious     2 V...  128kB  ----- J   78b09986
+Makaimura                                   2 V...  128kB  ----- J   bf3635cf
+Maniac Mansion                              2 V...  256kB  ----- J   3da2085e
+Mappy                                       0 V...   16kB    8kB J   5d1301c5
+Mappy (Pirate)                              0 V...   16kB    8kB J   656196a6
+Mappy Kids                                 19 V...  128kB  128kB J   e91f17c2
+Mappy-Land                                  4 V...  128kB   32kB J   2e563c66
+Mario Open Golf                             1 HB..  256kB  ----- J   db564628
+Marusa No Onna                              1 H...  128kB  128kB J   e2281986
+Mashou                                     34 H...  128kB  ----- J   a21e675c
+Mashou (Hacked)                            34 H...  128kB  ----- J   5030bca8
+Mashou (Invincibility Trainer)             34 H.T.  128kB  ----- J   5a7b15c8
+Masuzoe Youichi - Asa Made Famicom          4 V...  512kB  ----- J   98a97a59
+Matendouji                                  4 H...  128kB  128kB J   f2594374
+Matsumoto Tooru No Kabushiki Hisshou        1 HB..  256kB  ----- J   1208e754
+     Gaku 2
+Matsumoto Tooru No Kabushiki Hisshou Gaku   2 VB..  256kB  ----- J   ddad5880
+Max Warrior - Wakusei Kaigenrei             4 H...  128kB  128kB J   fe4ed42b
+Mei Tantei Holmes - Kiri No London          1 H...  256kB  ----- J   1a7e97ed
+     Satsujin Jiken
+Mei Tantei Holmes - Kiri No London          2 H...  256kB  ----- J   f2679d5a
+     Satsujin Jiken (Mapper 2 Hack)
+Mei Tantei Holmes - M Kara No Chousenjou    1 H...  256kB  ----- J   0a73a792
+Meiji Ishin                                 1 HB..  256kB  ----- J   66dd04e1
+Meikyuu Kumikyoku                           3 V...   32kB   32kB J   060f6e75
+Meikyuujima                                32 H...  128kB  128kB J   6f5d9b2a
+Meimon! Dai San Yakyuu Bu                  16 H...  128kB  128kB J   7b5206af
+Meimon! Takonishi Ouendan - Kouha 6 Nin     4 V...  128kB  128kB J   9e36080e
+     Shuu
+Melville's Flame                            1 HB..  128kB  128kB J   f7e07b83
+Melville's Flame (FFE Pirate)               6 V.T.  256kB  ----- J   69240dcf
+Metal Flame Psybuster                       1 H...  128kB  128kB J   bf93112a
+Metal Gear                                  2 V...  128kB  ----- J   805f81bc
+Metal Gear (Alt)                            2 V...  128kB  ----- J   322c9b09
+Metal Max                                   4 VB..  256kB  256kB J   9509f703
+Metal Slader Glory                          5 HB..  512kB  512kB J   b4735fac
+Metro-Cross                                 4 V...   32kB   32kB J   e40b4973
+Mezase Pachi Pro - Pachio Kun               1 H...  128kB  ----- J   9c3e8fc0
+Mezase Pachi Pro - Pachio Kun (Mapper 2     2 V...  128kB  ----- J   7778aba8
+     Hack)
+Mezase Top Pro - Green Ni Kakeru Yume      18 H...  256kB  128kB J   3691c120
+Mickey Mouse (Alt)                          3 V...   32kB   32kB J   c237ccb0
+Mickey Mouse 3 - Yume Fuusen                4 V...  128kB  128kB J   57d162f1
+Mickey Mousecapade                          3 V...   32kB   32kB J   33716316
+Might & Magic                               4 VB..  256kB  256kB J   9bdcd892
+Mighty Bomb Jack                          185 H...   32kB    8kB J   9c521240
+Mighty Bomb Jack (Mapper 0 Hack)            0 H...   32kB    8kB J   2bb7f34a
+Mighty Final Fight                          4 H...  128kB  128kB J   2b160bf0
+Millipede                                   0 H...   16kB    8kB J   77512388
+Millipede (Pirate)                          0 H...   16kB    8kB J   7fedc0d7
+Mindseeker                                 19 H...  128kB  128kB J   ace56f39
+Minelvaton Saga                            80 VB..  128kB  128kB J   8ee25f78
+Minelvaton Saga (Mapper 4 Hack)             4 HBT.  128kB  128kB J   7c864796
+Mini Putt                                   1 H...  128kB  128kB J   2ebf2e0d
+Minna No Taabou No Nakayoshi Dai Sakusen    3 H...   32kB   32kB J   555042b3
+Miracle Ropit's Adventure in 2100           2 V...  128kB  ----- J   9f8336db
+Mirai Senshi - Lios                         1 HB..  256kB  ----- J   e94d5181
+Mirai Shinwa Jarvas                        80 V...  128kB  128kB J   0e1683c5
+Mirai Shinwa Jarvas (Mapper 4 Hack)         4 V...  128kB  128kB J   bc8e8bc7
+Mississippi Satsijin Jiken (Mapper 34      34 V.T.  128kB   32kB J   63b00ea7
+     Hack) (Alt)
+Mississippi Satsijin Jiken (Mapper 34      34 V.T.  128kB   32kB J   f34175b3
+     Hack)
+Mississippi Satsujin Jiken                 66 H...  128kB   32kB J   3293afea
+Mississippi Satsujin Jiken (Alt)           66 H...  128kB   32kB J   e84274c5
+Mito Koumon                                89 V...  128kB  128kB J   bb7c5f7a
+Mito Koumon (Alt)                          89 V...  128kB  128kB J   21f8c4ab
+Mito Koumon (FFE Hack)                      6 V.T.  256kB  ----- J   86b2355f
+Mito Koumon - Sekai Manyuu Ki              67 H...  128kB  128kB J   ca24a1a2
+Mitsume Ga Tooru                            4 V...  128kB  128kB J   c8edc97e
+Mizushima Shinji No Dai Koushien            1 H...  256kB  ----- J   09c1fc7d
+Mizushima Shinji No Dai Koushien (Mapper    2 V.T.  256kB  ----- J   3a622c78
+     2 Trained Pirate)
+Moai Kun                                    3 V...   32kB   32kB J   ec8a884f
+Mobile Suit Z Gundam - Hot Scramble        15 H.T.  256kB  ----- J   f0ae68c0
+     (Mapper 15 Hack)
+Mobile Suit Z Gundam - Hot Scramble        66 H...  128kB   32kB J   ce07194f
+Mobile Suit Z Gundam - Hot Scramble (Alt)  66 H...  128kB   32kB J   e18ab050
+Moe Pro! '90 - Kandou Hen                  18 H...  256kB  128kB J   9dc96ec7
+Moe Pro! Saikyou Hen                       18 H...  256kB  128kB J   3f8d6889
+Moero TwinBee - Cinnamon Hakase Wo Sukeu!   2 V...  128kB  ----- J   9f03b11f
+Moero!! Junior Basket - Two on Two         75 H...  128kB  128kB J   175c4a3c
+Moero!! Juudou Warriors                    72 V...  128kB  128kB J   9ee83916
+Moero!! Pro Soccer                         92 V...  256kB  128kB J   7f45cff5
+Moero!! Pro Tennis                         72 V...  128kB  128kB J   6c61b622
+Moero!! Pro Tennis (FFE Pirate)             6 V...  256kB  ----- J   39e1a201
+Moero!! Pro Yakyuu '88 Kettei Ban          92 V...  256kB  128kB J   b297b5e7
+Moero!! Pro Yakyuu (Black)                 86 V...  128kB   64kB J   30bf2dba
+Moero!! Pro Yakyuu (Red)                   86 V...  128kB   64kB J   f1e6b576
+Moeru! Oniisan                              1 H...  128kB  128kB J   f96d07c8
+Momotarou Densetsu                          1 H...  256kB  ----- J   b5576820
+Momotarou Densetsu (Alt)                    1 H...  256kB  ----- J   2305b528
+Momotarou Densetsu (Mapper 2 Hack)          2 VB..  256kB  ----- J   c9acec1d
+Momotarou Densetsu Gaiden                   4 VB..  512kB  ----- J   9c58f4a6
+Momotarou Dentetsu                          2 V...  256kB  ----- J   1027c432
+Money Game 2 - Kabuto Chou No Kiseki, The   1 H...  128kB  128kB J   b9ab06aa
+Money Game, The                             1 H...  128kB   32kB J   cfd4a281
+Money Game, The (FFE Hack)                  6 V...  256kB  ----- J   1495414c
+Monopoly                                    1 H...  256kB  ----- J   86759c0f
+Monster Maker - 7 Tsu No Hihou              1 HB..  256kB  ----- J   fb1c0551
+Moon Crystal                                4 V...  256kB  256kB J   26e39935
+Morita Kazuo No Shougi                      1 H...  128kB    8kB J   9e356267
+Mother                                      4 VB..  256kB  128kB J   20cc079d
+Motocross Champion                          1 H...  128kB  128kB J   e6c9029e
+Motocross Champion (FFE Pirate)             6 V.T.  256kB  ----- J   2ba30713
+Mottomo Abunai Deka                         2 H...  128kB  ----- J   f89300fb
+Mouryou Senki Madara                       26 H...  256kB  256kB J   e1383deb
+Musashi No Bouken                           1 HB..  128kB  128kB J   70f67ab7
+Musashi No Ken - Tadaima Shugyou Chuu       3 V...   32kB   32kB J   577482bb
+My Life My Love - Boku No Yume - Watashi    4 VB..  256kB  256kB J   26049798
+     No Negai
+Nagagutsu Wo Haita Neko                     3 V...   32kB   32kB J   5816ccc5
+Nagagutsu Wo Haita Neko (Alt)               3 V...   32kB   32kB J   e8af6ff5
+Naitou 9 Dan - Shougi Hiden                 0 H...   16kB    8kB J   ffd9db04
+Nakajima Satoru F-1 Hero                    4 V...  128kB  128kB J   768a1b6a
+Nakajima Satoru F-1 Hero 2                  4 V...  128kB  128kB J   1c2a58ff
+Nakayoshi To Issho                          4 VB..  128kB  256kB J   ffe8507e
+Namco Classic                              19 H...  256kB  256kB J   4c5836bd
+Namco Classic 2                            19 H...  256kB  256kB J   684b292f
+Namcot Mahjong 3 - Mahjong Tengoku          4 H.T.  128kB  128kB J   72e65d5c
+     (Mapper 4 Hack)
+Namcot Mahjong 3 - Mahjong Tengoku         88 H...  128kB  128kB J   91ac514e
+Nangoku Shirei - Spy Vs Spy                 2 V...  128kB  ----- J   fc201c46
+Nantettatte!! Baseball                     68 HB..  128kB  128kB J   a2623bc1
+Napoleon Senki                             77 H..4  128kB   32kB J   06144b4a
+Napoleon Senki (Alt)                       77 H..4  128kB   32kB J   19cc71d2
+Navy Blue                                   1 H...  128kB  ----- J   69bcdb8b
+Nekketsu Kakutou Densetsu                   4 V...  128kB  128kB J   3a1694f9
+Nekketsu Kakutou Densetsu (Pirate)          4 V...  128kB  128kB J   a5b62a4c
+Nekketsu Kouha - Kunio Kun                  2 V...  128kB  ----- J   a7d3635e
+Nekketsu Kouha - Kunio Kun (Alt)            2 V...  128kB  ----- J   0d6cf078
+Nekketsu Koukou - Dodgeball Bu              1 H...  128kB  128kB J   62c67984
+Nekketsu Koukou - Dodgeball Bu (FFE Hack)   6 V.T.  256kB  ----- J   313cfd8a
+Nekketsu Koukou Dodgeball Bu - Soccer Hen   4 H...  128kB  128kB J   64fd3ba6
+Nekketsu! Street Basket - Ganbare Dunk      4 V...  128kB  128kB J   88062d9a
+     Heroes
+Nemo - Pajama Hero                          4 H...  128kB  128kB J   3be91a23
+Nemo - Pajama Hero (Pirate)                 4 H...  128kB  128kB J   f34190b4
+New Ghostbusters 2                          1 H...  128kB  128kB J   5931be01
+New Ghostbusters 2 (FFE Pirate)             6 V.T.  256kB  ----- J   4a339590
+New Ghostbusters 2 (Mapper 1 Pirate)        1 H...  128kB  128kB J   27b29870
+New York Nyankies                           4 V...  128kB  128kB J   2dc331a2
+Nichibutsu Mahjong 3 - Mahjong G Men        4 H...  128kB  128kB J   fa2a8a8b
+Nihonichi No Mei Kantoku                    1 HB..  256kB  ----- J   da690d17
+Niji No Silk Road                           4 VB..  256kB  128kB J   5337f73c
+Ningen Heiki - Dead Fox                     4 V...  128kB  128kB J   2e1e7fd8
+Ninja Cop Saizou                            1 H...  128kB  128kB J   9e777ea5
+Ninja Crusaders - Ryuuga                    4 V...  128kB  ----- J   b5e24324
+Ninja Hattori Kun                           0 V...   32kB    8kB J   55761931
+Ninja Hattori Kun (Pirate)                  0 V...   32kB    8kB J   04be2206
+Ninja Jajamaru - Ginga Dai Sakusen         18 H...  128kB  128kB J   06f9c714
+Ninja Jajamaru Kun                         87 V...   16kB   16kB J   d97595a3
+Ninja Jajamaru Kun (Mapper 3 Hack)          3 V...   16kB   16kB J   8d2454b7
+Ninja Kun                                   0 H...   16kB    8kB J   fc00a282
+Ninja Kun (Pirate)                          0 H...   16kB    8kB J   be8a744d
+Ninja Kun - Ashura No Shou                  2 V...  128kB  ----- J   219dfabf
+Ninja Ryukenden                             1 H...  128kB  128kB J   d7cb398f
+Ninja Ryukenden 2 - Ankoku No Jashin Ken    4 V...  128kB  128kB J   7bf8a890
+Ninja Ryukenden 3 - Yomi No Hakobune        4 V...  128kB  128kB J   2f2e30f7
+Ninjara Hoi!                                1 H...  512kB  ----- J   cee5857b
+Nishimura Kyoutarou Mystery - Blue Train   16 H...  128kB  256kB J   a851cae9
+     Satsujin Jiken
+Nishimura Kyoutarou Mystery - Super         4 V...  128kB  128kB J   f56135c0
+     Express Satsujin Jiken
+Nobunaga No Yabou - Bushou Fuuun Roku       5 HB..  512kB  256kB J   f540677b
+Nobunaga No Yabou - Sengoku Gunyuu Den      5 HB..  256kB  128kB J   eee9a682
+Nobunaga No Yabou - Zenkoku Ban             1 HB..  256kB  ----- J   29449ba9
+Nobunaga No Yabou - Zenkoku Ban (Alt)       1 HB..  256kB  ----- J   2b11e0b0
+Nobunaga No Yabou - Zenkoku Ban (Mapper     2 VB..  256kB  ----- J   3dae3335
+     2 Hack)
+North & South                               4 H...  128kB  128kB J   0fc8e9b7
+Nuts & Milk                                 0 V...   16kB    8kB J   739a1027
+Obake No Q Tarou - Wanwan Panic             0 V...   32kB    8kB J   330de468
+Obocchama Kun                               1 HB..  128kB  128kB J   e24483b1
+Oeka Kids - Anpanman No Hiragana Daisuki   96 H...  128kB  ----- J   c3c0811d
+Oeka Kids - Anpanman To Oekaki Shiyou!!    96 H...  128kB  ----- J   9d048ea4
+Ohootsuku Ni Kiyu - Hokkaidou Rensa         1 H...  256kB  ----- J   992af039
+     Satsujin
+Oishinbo                                    1 H...  128kB  128kB J   264f26b1
+Onyanko Town                                0 V...   32kB    8kB J   270eaed5
+Operation Wolf                             33 H...  128kB  128kB J   2a6559a1
+Oryunposu No Tatakai                        1 H...  128kB  ----- J   03d56cf7
+Oryunposu No Tatakai (Mapper 2 Hack)        2 V...  128kB  ----- J   185633d5
+Osomatsu Kun                                1 H...  128kB  128kB J   4e5257d7
+Osomatsu Kun (Alt)                          1 H...  128kB  128kB J   57783e71
+Otaku No Seiza - An Adventure in the        4 H...  256kB  128kB J   4582f22e
+     Otaku Galaxy
+Othello                                     0 V...   32kB    8kB J   1d62f13f
+Outlanders                                  2 V...  128kB  ----- J   838bf76f
+Over Horizon                                4 V...  128kB  128kB J   ce06f2d4
+Paaman - Enban Wo Torikaese!!              32 H...  128kB  128kB J   fe387fe5
+Paaman 2 - Himitsu Kessha Madoodan Wo      32 H...  256kB  128kB J   ca094848
+     Taose!
+Pac-Land                                    0 V...   32kB    8kB J   e28f2596
+Pac-Man                                     0 H...   16kB    8kB J   3e95ba25
+Pac-Man (Pirate)                            0 H...   16kB    8kB J   e4e3d2ed
+Pachi Com                                   0 H...   32kB    8kB J   e30b2bcf
+Pachi Slot Adventure 2 - Sorotta Kun No     4 H...  128kB  128kB J   9eefb4b4
+     Pachi Slot Tanteidan
+Pachi Slot Adventure 3 - Bitaoshii 7        4 V...  128kB  128kB J   051cd5f2
+     Kenzan
+Pachinko Dai Sakusen                        1 H...  128kB  128kB J   c22c23ab
+Pachinko Dai Sakusen 2                      1 H...  128kB  128kB J   44f92026
+Pachio Kun 2                                1 H...  256kB  ----- J   291bcd7d
+Pachio Kun 2 (Mapper 2 Pirate)              2 V...  256kB  ----- J   c346b2cc
+Pachio Kun 3                                4 VB..  256kB  128kB J   8bcb0993
+Pachio Kun 4                                4 VB..  512kB  ----- J   e08c8a60
+Pachio Kun 5                                4 VB..  256kB  128kB J   9b3c5124
+Palamedes                                   1 H...   32kB   32kB J   c6b5d7e0
+Palamedes 2 - Star Twinkles                 1 H...   32kB   32kB J   31957ae4
+Parallel World                              4 H...  128kB  128kB J   f08e8ef0
+Parasol Henbee                              4 V...  128kB  128kB J   c769bb34
+Paris-Dakar Rally Special                  66 H...  128kB   32kB J   5f6e8a07
+Parodius Da!                               23 H...  128kB  128kB J   d467c0cc
+Parodius Da! (FFE Pirate)                  17 H.T.  128kB  128kB J   0ac65c40
+Parodius Da! (Mapper 4 Pirate)              4 H.T.  128kB  128kB J   2001f0ed
+Parutena No Kagami - Hikari Shinwa          1 H...  128kB  ----- J   66d65a58
+Peepar Time                                 3 H...   32kB   16kB J   8f4497ee
+Penguin Kun Wars                            0 V...   32kB    8kB J   02d7976b
+Perfect Bowling                             1 H...  128kB   32kB J   9ecb9dcd
+Pinball Quest                              72 H...  128kB  128kB J   475cdbfe
+Pizza Pop!                                 18 H...  128kB  128kB J   49da2f76
+Plasma Ball                                18 H...  128kB  128kB J   0db4b382
+Pocket Zaurus - Juu Ouken No Nazo          70 H...  128kB  128kB J   b1a94b82
+Pocket Zaurus - Juu Ouken No Nazo (FFE      6 V.T.  256kB  ----- J   0a640eea
+     Hack)
+Pooyan                                      0 V...   16kB    8kB J   99b73746
+Pooyan (Pirate)                             0 V...   16kB    8kB J   c2cfd9d9
+Portpia Renzoku Satsujin Jiken              0 V...   32kB    8kB J   7c596e45
+Power Blazer                               33 H...  128kB  128kB J   aeb7fce9
+Power Soccer                                3 H...   32kB   32kB J   7080d1f8
+Predator                                    1 H...  128kB  128kB J   b399bee4
+President No Sentaku                        1 HB..  256kB  ----- J   4640ebe0
+Pro Yakyuu Satsujin Jiken!                  2 VB..  256kB  ----- J   cdca4513
+Pro Yakyuu Satsujin Jiken! (Pirate)         2 VB..  256kB  ----- J   09a6ff02
+Project Q                                   4 VB..  256kB  ----- J   c1ba8bb9
+Punch-Out!! Shouhinban                      9 H...  128kB  128kB J   84382231
+Puyo Puyo                                   2 H...  128kB  ----- J   fcb5cb1e
+Puzslot                                     1 H...  128kB  128kB J   f4dd5ba5
+Puzznic                                     3 V...   32kB   32kB J   8752dccb
+Pyokotan No Dai Meiro                      69 H...  128kB  128kB J   4339865c
+Quarter Back Scramble                       1 H...  128kB  128kB J   3fea656a
+Quarth                                      3 H...   32kB   32kB J   9a808c3b
+Quest of Ki, The                            4 V...  128kB   64kB J   e1526228
+Quinty                                     88 V...  128kB  128kB J   13da2122
+Quinty (Mapper 4 Hack)                      4 V...  128kB  128kB J   eb75ca30
+Racer Mini Yon Ku - Japan Cup              25 H...  128kB  128kB J   f6271a51
+Radia Senki - Reimei Hen                    4 HB..  256kB  128kB J   332c47e0
+Raf World                                   1 H...  128kB  128kB J   9eff96d2
+Raid on Bungeling Bay                       0 V...   16kB    8kB J   a547a6ec
+Raid on Bungeling Bay (Alt)                 0 V...   16kB    8kB J   64c96f53
+Rainbow Islands - The Story of Bubble       2 H...  128kB  ----- J   0f5410e3
+     Bobble 2 (Pirate)
+Rainbow Islands - The Story of Bubble       2 H...  128kB  ----- J   fa704c86
+     Bobble 2
+Rambo                                       2 V...  128kB  ----- J   35effd0e
+Rampart                                     2 H...  128kB  ----- J   3ecdb1f7
+Rasaaru Ishii No Childs Quest               4 H...  128kB   64kB J   d97c31b0
+Red Ariimaa 2                               4 H...  128kB  128kB J   530bccb4
+Red Ariimaa 2 (Pirate)                      4 H...  128kB  128kB J   ee43153e
+Reigen Doushi                               1 H...  256kB  ----- J   0021ed29
+Reigen Doushi (Mapper 2 Hack)               2 V...  256kB  ----- J   7d32acb9
+Road Fighter                                0 H...   16kB    8kB J   7ee625eb
+Road Fighter (CCE Pirate)                   0 H...   16kB    8kB J   b22c41cd
+Robocco Wars                                4 H...  256kB  128kB J   36584c96
+Robocop                                     4 V...  128kB  128kB J   6b5ca5ae
+Robocop 2                                   1 H...  128kB  128kB J   c22ff1d8
+Rockman                                     2 V...  128kB  ----- J   d31dc910
+Rockman 2 - Dr. Wily No Nazo                1 H...  256kB  ----- J   6150517c
+Rockman 2 - Dr. Wily No Nazo (Mapper 2      2 V...  256kB  ----- J   cc8a8652
+     Pirate)
+Rockman 3 - Dr. Wily No Saigo!              4 V...  256kB  128kB J   d9f1e47c
+Rockman 3 - Dr. Wily No Saigo! (Pirate)     4 V...  256kB  128kB J   81f31409
+Rockman 4 - Aratanaru Yabou!!               4 H...  512kB  ----- J   f161a5d8
+Rockman 5 - Blues No Wana!                  4 H...  256kB  256kB J   fddf2135
+Rockman 6 - Shijou Saidai No Tatakai!!      4 H...  512kB  ----- J   2d664d99
+Rockman 7 (Rockman 6 Pirate)                4 H...  512kB  ----- J   e3526d8b
+Rod Land                                    2 H...  128kB  ----- J   0eaa7515
+Rokudenashi Blues                          16 H...  256kB  256kB J   a262a81f
+Rollerball                                  1 H...  128kB   32kB J   e2a79a57
+Rolling Thunder                            19 H...  128kB  256kB J   2565786d
+Romancia                                    1 H...  128kB  ----- J   cf9cf7a2
+Route-16 Turbo                              0 H...   32kB    8kB J   728bfa8d
+Route-16 Turbo (Pirate)                     0 H...   32kB    8kB J   2554f9fd
+Royal Blood                                 5 HB..  256kB  256kB J   bc80fb52
+RPG Jinsei Game                             4 V...  256kB  128kB J   07d92c31
+Saint Seiya - Ougon Densetsu               70 H...  128kB  128kB J   026c5fca
+Saint Seiya - Ougon Densetsu (FFE Hack)     6 V.T.  256kB  ----- J   c6a66b68
+Saint Seiya - Ougon Densetsu Kanketsu       6 V.T.  256kB  ----- J   79cac545
+     Hen (FFE Hack)
+Saint Seiya - Ougon Densetsu Kanketsu Hen   1 H...  128kB  128kB J   9561798d
+Saiyuuki World                              2 V...  128kB  ----- J   203d32ab
+Saiyuuki World (Alt)                        2 V...  128kB  ----- J   69d07ddb
+Saiyuuki World 2 - Tenjoukai No Majin      17 H...  128kB  128kB J   854f4661
+     (FFE Pirate)
+Saiyuuki World 2 - Tenjoukai No Majin      18 H...  128kB  128kB J   75b3eb37
+Sakigake!! Otoko Juku - Shippuu Ichi Gou   16 H...  128kB  128kB J   9c04c8d5
+     Sei
+Salad No Kuni No Tomato Hime                1 H...  256kB  ----- J   016c93d8
+Salad No Kuni No Tomato Hime (Mapper 2      2 V...  256kB  ----- J   c4966242
+     Hack)
+Salamander                                 73 V...  128kB  ----- J   ac652b47
+Sanada Juu Yuushi                           1 HB..  128kB  128kB J   0902c8f0
+Sangokushi                                  1 HB..  256kB  ----- J   1028fc27
+Sangokushi - Chuugen No Hasha              19 VB..  128kB  128kB J   e64b8975
+Sangokushi 2                                5 HB..  256kB  256kB J   184c2124
+Sangokushi 2 - Haou No Tairiku             19 HB..  256kB  256kB J   098c672a
+Sangokushi 2 - Haou No Tairiku (FFE        17 VBT.  256kB  256kB J   f511566c
+     Pirate)
+Sanma No Mei Tantei                         4 H...  128kB   64kB J   f41add60
+Sanrio Carnival                             3 V...   32kB   32kB J   485ac098
+Sanrio Carnival (Pirate)                    3 V...   32kB   32kB J   b14e668e
+Sanrio Carnival 2                           3 V...   32kB   32kB J   3d95d866
+Sanrio Cup - Pon Pon Volley                 3 V...   32kB   32kB J   f7b852e4
+Sansaara Naaga                              4 VB..  256kB  128kB J   ebcf8419
+Sansuu 1 Nen - Keisan Game                185 H...   32kB    8kB J   02361407
+Sansuu 1 Nen - Keisan Game (Mapper 3        3 H...   32kB   32kB J   21a5a053
+     Hack) (Alt)
+Sansuu 1 Nen - Keisan Game (Mapper 3        3 H...   32kB   32kB J   9ca42697
+     Hack)
+Sansuu 2 Nen - Keisan Game                185 V...   32kB    8kB J   d255c7a3
+Sansuu 2 Nen - Keisan Game (Mapper 3        3 V...   32kB   32kB J   b5897e94
+     Hack)
+Sansuu 3 Nen - Keisan Game                185 V...   32kB    8kB J   98dc1099
+Sansuu 3 Nen - Keisan Game (Mapper 3        3 V...   32kB   16kB J   72e32402
+     Hack)
+Sansuu 4 Nen - Keisan Game                  3 V...   32kB   32kB J   8b4a2866
+Sansuu 5 & 6 Nen - Keisan Game              3 V...   32kB   32kB J   9aacd75d
+Sansuu Asobi                                0 V...   16kB    8kB J   63aea200
+Satomi Hakkenden                            1 HB..  128kB  128kB J   a9a4ea4c
+Satomi Hakkenden (FFE Pirate)               6 V.T.  256kB  ----- J   355ecafd
+Satsui No Kaisou                            1 H...  256kB  ----- J   2858933b
+Satsui No Kaisou (Mapper 2 Hack)            2 V...  256kB  ----- J   0d52e2e6
+Satsujin Club                               4 VB..  128kB  128kB J   3b1a7eef
+SD Battle Oozumou - Heisei Hero Basho       4 V...  128kB  128kB J   e78a394c
+SD Gundam - Gachapon Senshi 2 - Capsule     4 H...  128kB  128kB J   a2f713c0
+     Senki
+SD Gundam - Gachapon Senshi 3 - Eiyuu       4 V...  128kB  128kB J   1066b66d
+     Senki
+SD Gundam - Gachapon Senshi 4 - New Type    4 V...  256kB  256kB J   67555417
+     Story
+SD Gundam - Gachapon Senshi 5 - Battle      4 V..4  128kB  128kB J   6c940a59
+     of Universal Century
+SD Gundam Gaiden - Knight Gundam           16 HB..  256kB  128kB J   e170404c
+     Monogatari
+SD Gundam Gaiden - Knight Gundam           16 HB..  256kB  256kB J   b049a8c4
+     Monogatari 2 - Hikari No Kishi
+SD Gundam Gaiden - Knight Gundam           16 HB..  256kB  256kB J   c2840372
+     Monogatari 3 - Densetsu No Kishi Dan
+SD Gundam Gaiden - Knight Gundam           17 HB..  256kB  256kB J   932c11c1
+     Monogatari 2 - Hikari No Kishi (FFE Pirate)
+SD Hero - Soukessen - Taose! Aku No         4 V...  128kB  128kB J   dbece74f
+     Gundan
+SD Keiji - Blader                          82 HB..  128kB  128kB J   05f04eac
+SD Sengoku Bushou Retsuden                  4 VB..  128kB  128kB J   8d26fdea
+Seicross                                    0 V...   32kB    8kB J   0caf2f15
+Seikima 2 - Akuma No Gyakushuu              3 V...   32kB   32kB J   fa6d4281
+Seirei Densetsu Lickle                      4 V...  256kB  128kB J   0d3482d7
+Seirei Gari                                 2 V...  256kB  ----- J   d8f651e2
+Seiryaku Simulation - Inbou No Wakusei -    4 V...  128kB  128kB J   c22bc87b
+     Shancara
+Sekiryuuou                                  1 H...  128kB  128kB J   396f0d59
+Sekiryuuou (FFE Pirate)                     6 V.T.  256kB  ----- J   5b0b26be
+Senjou No Ookami                           94 H...  128kB  ----- J   441aeae6
+Senjou No Ookami (Mapper 2 Hack)            2 H...  128kB  ----- J   3dd3ba1e
+Sensha Senryaku - Sabaku No Kitsune         1 H...  128kB  128kB J   828f8f1f
+Sensha Senryaku - Sabaku No Kitsune (FFE    6 V.T.  256kB  ----- J   56f01370
+     Hack)
+Shadow Brain                                4 VB..  128kB  256kB J   50da4867
+Shadowgate                                  4 VB..  128kB  128kB J   cf40b1c5
+Shaffle Fight                               4 V...  256kB  ----- J   bdc124e5
+Shanghai                                    2 V...  128kB  ----- J   e61e89ee
+Shanghai 2                                  2 V...  128kB  ----- J   e62a531b
+Shanghai 2 (Pirate)                         2 V...  128kB  ----- J   c0fb91ac
+Sherlock Holmes - Hakushaku Reijou          2 H...  128kB  ----- J   2bb6a0f8
+     Yuukai Jiken
+Shikinjou                                   1 H...  128kB  ----- J   bc1fbd7b
+Shin 4 Nin Uchi Mahjong - Yakuman Tengoku   5 H...  256kB  128kB J   d532e98f
+Shin Jinrui - The New Type                  3 V...   32kB   32kB J   03fc2b59
+Shin Moero!! Pro Yakyuu                    18 H...  256kB  128kB J   4ae58f5d
+Shin Satmi Hakken-Den - Hikari To Yami      1 HB..  256kB  ----- J   23e9c736
+     No Tatakai
+Shinjinrui - The New Type (Pirate)          3 V...   32kB   32kB J   c4fee54c
+Shinsenden                                  1 HB..  256kB  ----- J   bb435255
+Shougi Meikan '92                           4 H...  256kB  ----- J   5a6860f1
+Shougi Meikan '93                           4 H...  256kB  ----- J   ae280e20
+Shougun                                     1 HB..  128kB  ----- J   44b060da
+Shougun (Mapper 2 Hack)                     2 HB..  128kB  ----- J   818ce8aa
+Shoukoushi Ceddie                           1 HB..  256kB  ----- J   c30c9ec9
+Shoukoushi Ceddie (Mapper 2 Pirate)         2 HB..  256kB  ----- J   ea2b9d3f
+Shounen Ashibe - Nepal Dai Bouken No Maki   4 HB..  128kB  128kB J   31c7ad13
+Shufflepuck Cafe                            2 H...  128kB  ----- J   917d9262
+Side Pocket                                 4 H...  128kB   32kB J   0efde8c0
+Silva Saga                                  4 VB..  256kB  256kB J   900e3a23
+Sky Destroyer                               0 H...   16kB    8kB J   e47e9fa7
+Sky Destroyer (Pirate)                      0 H...   16kB    8kB J   e801f662
+Sky Kid                                     4 V...   32kB   32kB J   ca6a7bf1
+Snow Bros.                                  1 H...  128kB  128kB J   aaf49344
+Soccer League - Winner's Cup                1 H...  128kB  128kB J   8d3c33b3
+Softball Tengoku                            1 H...  128kB  128kB J   822f17eb
+Solomon No Kagi                             3 H...   32kB   32kB J   d821a1c6
+Solomon No Kagi 2 - Coolmin Tou             4 VB..  128kB  128kB J   eee6314e
+     Kyuushutsu Sakusen
+Solstice                                    7 H...  128kB  ----- J   a91460b8
+Son Son                                     0 V...   32kB    8kB J   10baeef3
+Son Son (Pirate)                            0 V...   32kB    8kB J   9adb2af7
+Soreike! Anpan Man - Minna De Hiking        4 H...  128kB  128kB J   fe99bbed
+     Game!
+Space Harrier                               1 H...  128kB  ----- J   43539a3c
+Space Harrier (Mapper 2 Pirate)             2 V...  128kB  ----- J   ee6ef957
+Space Hunter                                3 H...   32kB   32kB J   684afccd
+Space Invaders                              0 H...   16kB    8kB J   d9c093b1
+Space Shadow                               70 H...   64kB  128kB J   ad9c63e2
+Space Shadow (FFE Pirate)                   6 V.T.  256kB  ----- J   3b7cc14a
+Spartan X                                   0 V...   32kB    8kB J   6058c65d
+Spartan X 2                                65 H...  128kB  128kB J   6f6686b0
+Spartan X 2 (FFE Hack)                     17 V...  128kB  128kB J   5a40f532
+Spelunker                                   0 V...   32kB    8kB J   589b2ec8
+Spelunker 2 - Yuusha E No Chousen           2 V...  128kB  ----- J   5e98ba4a
+Splatterhouse - Wanpaku Graffiti           19 V...  128kB  128kB J   46fd7843
+Spot                                        1 H...  128kB  ----- J   0abdd5ca
+Spy Vs Spy                                185 H...   32kB    8kB J   cf0c9d97
+Spy Vs Spy (Mapper 0 Hack)                  0 H...   32kB    8kB J   3a15b344
+Sqoon                                       0 V...   32kB    8kB J   4dfd949e
+Square No Tom Sawyer                        1 HB..  256kB  ----- J   cb0a76b1
+Star Force                                  0 V...   16kB    8kB J   6823cbc8
+Star Gate                                   0 V...   16kB    8kB J   493bd2ff
+Star Luster                                 0 H...   32kB    8kB J   26bd6ec6
+Star Soldier                                3 V...   32kB   16kB J   c4835a34
+Star Wars (Mapper 4 Hack)                   4 H...  128kB  128kB J   63af464b
+Star Wars (Namco)                          19 H...  128kB  128kB J   ca69751b
+Star Wars (Victor Ongaku Sangyou)           4 V...  128kB  128kB J   bad36c17
+Star Wars - The Empire Strikes Back         4 V...  256kB  256kB J   0b6443d4
+Sted - Iseki Wakusei No Yabou               1 HB..  128kB  128kB J   f19a11af
+Stick Hunter - Exciting Ice Hockey          2 V...  128kB  ----- J   5440811c
+Street Fighter 2010                         4 V...  128kB  128kB J   18a885b0
+Street Fighter 2010 (FFE Pirate)           17 V.T.  128kB  128kB J   6fb51ffb
+Sugoro Quest - Dice No Senshi Tachi!        4 VB..  128kB  128kB J   1411005b
+Suikoden - Tenmei No Chikai                 5 HB..  256kB  128kB J   39f2ce4b
+Sukeban Deka 3                              2 H...  128kB  ----- J   28c11d24
+Sukeban Deka 3 (Alt)                        2 H...  128kB  ----- J   02863604
+Summer Carnival '92 - Recca                 4 V...  128kB  128kB J   f31dcc15
+Super Arabian                               0 V...   16kB    8kB J   908505ee
+Super Arabian (Hacked)                      0 V...   16kB    8kB J   1f59ef24
+Super Arabian (Pirate)                      0 V...   16kB    8kB J   8c6631c8
+Super Black Onyx                            1 HB..  256kB  ----- J   dfc0ce21
+Super Black Onyx (Mapper 2 Hack)            2 HB..  256kB  ----- J   654d7a3e
+Super Chinese                               4 H...   32kB   16kB J   711c2b0e
+Super Chinese (Mapper 3 Hack)               3 H...   32kB   32kB J   6b53222c
+Super Chinese 2 - Dragon Kid                4 H...  128kB  128kB J   26bfed27
+Super Chinese 3                             1 HB..  128kB  128kB J   f17486df
+Super Contra                                4 V...  128kB  128kB J   b1250d0c
+Super Dyna'mix Badminton                    0 V...   32kB    8kB J   b1494b9e
+Super Mario Bros. 2 (Pirate)               40 V...   64kB    8kB J   8e010b17
+Super Mario Bros. 3                         4 H...  256kB  128kB J   52e2b5e0
+Super Mario Bros. 3 (Translation Hack)      4 H...  256kB  128kB J   4c5fa6ef
+Super Mario USA                             4 V...  128kB  128kB J   80fb7e6b
+Super Mogura Tataki!! - Pokkun Moguraa      3 H...   32kB   32kB J   9f8f200a
+Super Momotarou Dentetsu                    1 HB..  256kB  ----- J   09ffdf45
+Super Momotarou Dentetsu (Mapper 2          2 VB..  256kB  ----- J   705e13ca
+     Pirate)
+Super Pinball                               1 H...  128kB  ----- J   1a2ea6b9
+Super Pinball (Mapper 2 Hack)               2 H...  128kB  ----- J   faff4177
+Super Pitfall                               2 V...  128kB  ----- J   1c66baf6
+Super Real Baseball '88                     1 H...  128kB  128kB J   d175b0cb
+Super Rugby                                 1 H...  128kB  128kB J   9f5138cb
+Super Rugby (FFE Pirate)                    6 V.T.  256kB  ----- J   dcb71ca6
+Super Sprint                                4 V...   64kB   64kB J   9cbb0291
+Super Star Force                            2 V...  128kB  ----- J   3fa96277
+Super Xevious - Ganpu No Nazo               4 H...  128kB   32kB J   ee60b5d6
+Super Xevious - Ganpu No Nazo (Alt)         4 H...  128kB   32kB J   7bb5664f
+Superman                                    1 H...  128kB  128kB J   856e7600
+Superman (FFE Hack)                         6 V.T.  256kB  ----- J   2c14d55e
+Superstar Puroresu                          4 H...  128kB  128kB J   705bd7c3
+SWAT - Special Weapons and Tactics          2 V...  128kB  ----- J   7c3d2ea3
+Sweet Home                                  1 HB..  256kB  ----- J   45917511
+Sweet Home (Mapper 2 Pirate)                2 HB..  256kB  ----- J   f982cdf5
+Sword Master                                4 V...  128kB  128kB J   df3776c6
+Sword Master (Pirate)                       4 V...  128kB  128kB J   664e9906
+Tag Team Pro-Wrestling                      0 H...   32kB    8kB J   32fa246f
+Taito Basketball                            4 V...  128kB  128kB J   4f16c504
+Taito Chase H.Q.                            4 V...  128kB  128kB J   99d38676
+Taito Grand Prix - Eikou E No License      80 V...  128kB  128kB J   10b0f8b0
+Taiyou No Shinden - Asteka 2                1 H...  256kB  ----- J   50ccda33
+Taiyou No Shinden - Asteka 2 (Mapper 2      2 H...  256kB  ----- J   7aee2161
+     Hack)
+Taiyou No Yuusha - Fibird                   4 H...  128kB  128kB J   948e0bd6
+Takahashi Meijin No Boukenjima              3 V...   32kB   32kB J   603c8abe
+Takahashi Meijin No Boukenjima 2            4 V...  128kB  128kB J   701b1adf
+Takahashi Meijin No Boukenjima 3            4 V...  128kB  128kB J   626abd49
+Takahashi Meijin No Boukenjima 4            4 V...  256kB  128kB J   7bd8f902
+Takahashi Meijin No Bugutte Honey          66 H...  128kB   32kB J   2526c943
+Takeda Shingen                              2 V...  128kB  ----- J   0a42d84f
+Takeda Shingen 2                            1 HB..  256kB  ----- J   0e997cf6
+Takeshi No Chousenjou                       2 V...  128kB  ----- J   db196068
+Takeshi No Chousenjou (Alt)                 2 V...  128kB  ----- J   bb4ee993
+Takeshi No Sengoku Fuuunji                 33 H...  128kB  128kB J   d920f9df
+Takeshi No Sengoku Fuuunji (Mapper 4        4 V.T.  128kB  128kB J   fed27aca
+     Hack)
+Tamura Koushou Mahjong Seminar              1 HB..  128kB  ----- J   34debdfd
+Tamura Koushou Mahjong Seminar (Hacked)     1 HB..  128kB  ----- J   74a95441
+Tanigawa Kouji No Shougi Shinan 2           1 HB..  128kB  ----- J   3836eeac
+Tanigawa Kouji No Shougi Shinan 3           1 H...  128kB  ----- J   e63d9193
+Tantei Jinguuji Saburou - Toki No           2 H...  128kB  ----- J   2061772a
+     Sugiyuku Mama Ni
+Tantei Jinguuji Saburou - Yokohamakou       1 H...  128kB  128kB J   268e39d0
+     Renzoku Satsujin Jiken
+Tao                                         1 HB..  128kB  128kB J   dad34ee6
+Tashiro Masashi No Princess Ga Ippai        1 H...  128kB  128kB J   16e93f39
+Tatakae!! Rahmen Man - Sakuretsu Choujin    1 H...  128kB  128kB J   2f27cdef
+     102 Gei
+Tatakai No Banka                            2 V...  128kB  ----- J   be95b219
+Tecmo Bowl                                  1 H...  128kB  128kB J   588e7492
+Tecmo Super Bowl                            4 HB..  256kB  128kB J   022589b9
+Tecmo World Cup Soccer                      4 V...   64kB   64kB J   8a5bc0d3
+Teenage Mutant Ninja Turtles               25 H...  256kB  256kB J   4a601a2c
+Teenage Mutant Ninja Turtles 2             25 H...  256kB  256kB J   490e8a4c
+Tenchi Wo Kurau                             1 HB..  256kB  ----- J   1ac701b5
+Tenchi Wo Kurau 2 - Shokatsu Koumei Den     4 VB..  512kB  ----- J   ac05ebb7
+     (Pirate)
+Tenchi Wo Kurau 2 - Shokatsu Koumei Den     4 VB..  512kB  ----- J   cb32e243
+Tenkaichi Bushi - Keru Naguuru              4 V...  128kB  128kB J   f3473009
+Terao No Dosukoi Oozumou                   18 H...  128kB  128kB J   6479e76a
+Terminator 2 - Judgement Day                4 V...  128kB  128kB J   d27b9d50
+Terra Cresta                                2 H...  128kB  ----- J   6d65cac6
+Tetrastar - The Fighter                     4 V...  256kB  256kB J   f85e264d
+Tetris (BPS)                                3 H...   32kB   32kB J   b807446e
+Tetris 2 + Bombliss                         1 HB..  128kB  ----- J   fd45e9c1
+Tetris Flash                                4 V...  128kB  128kB J   2746b39e
+Tetsuwan Atom                              75 V...  128kB  128kB J   794caab6
+Tetsuwan Atom (Mapper 4 Hack)               4 H...  128kB  128kB J   6b5858b6
+Thexder                                     0 H...   32kB    8kB J   e940d56f
+Thunderbirds                                1 H...  128kB  128kB J   7b72fba4
+Tiger-Heli                                  3 H...   32kB   32kB J   e46c156d
+Tiger-Heli (CCE Pirate)                     3 H...   32kB   32kB J   19411bd7
+Tiger-Heli (Pirate)                         3 H...   32kB   32kB J   109f1acc
+Time Zone                                   4 H...  128kB  128kB J   e305202e
+Times of Lore                               2 V...  128kB  ----- J   2ffde228
+Tiny Toon Adventures                       23 H...  128kB  128kB J   c3ba98ee
+Tiny Toon Adventures (Alt)                 23 H...  128kB  128kB J   91328c1d
+Tiny Toon Adventures 2 - Montana Land E    85 H...  128kB  128kB J   e4362167
+     Youkoso
+Titan                                       1 H...  128kB  ----- J   75901b18
+Toki No Tabibito                            2 V...  128kB  ----- J   c5cfe54e
+Tokkyuu Shirei - Solbrain                   4 V...  128kB  128kB J   b70129f4
+Tokoro San No Mamorumo Semerumo             3 V...   32kB   32kB J   6776a977
+Tom & Jerry (and Tuffy)                     4 H...  128kB  128kB J   4aea40f7
+Tom Sawyer No Bouken                        4 V...  128kB  128kB J   6800c5b3
+Tonjan!                                     1 H...  128kB  128kB J   25edaf5c
+Tonjan! (FFE Pirate)                        6 V.T.  256kB  ----- J   a81c51ea
+Top Gun                                     2 H...  128kB  ----- J   957f3d28
+Top Gun (Alt)                               2 H...  128kB  ----- J   493680c8
+Top Gun 2 - Dual Fighters                   4 V...  128kB  128kB J   ca96ad0e
+Top Gun 2 - Dual Fighters (FFE Pirate)     17 V.T.  128kB  128kB J   2b7fe4d7
+Top Rider                                   1 H...  128kB   32kB J   47232739
+Top Striker                                19 V...  128kB  128kB J   2447e03b
+Top Striker (Mapper 4 Hack)                 4 V...  128kB  128kB J   86ca126d
+Totsuzen! Machoman                          2 V...  128kB  ----- J   e24df353
+Touch Down Fever                            1 H...  128kB   32kB J   67a3c362
+Touhou Kenbun Roku                          1 H...  128kB  128kB J   97bc4585
+Touhou Kenbun Roku (FFE Pirate)             6 V.T.  256kB  ----- J   d653e27b
+Toukon Club                                18 H...  128kB  256kB J   ea3e78dd
+Toukyou Pachi Slot Adventure                1 H...  128kB  128kB J   162ccbd0
+Tower of Druaga, The                        0 V...   32kB    8kB J   eb764567
+Transformers - Convoy No Nazo               3 V...   32kB   32kB J   ea89963f
+Transformers - Convoy No Nazo (Alt)         3 V...   32kB   32kB J   9f85fa70
+Triathron, The                              1 H...  128kB  128kB J   cc3544b0
+Tsuppari Oozumou                            3 V...   32kB   32kB J   90ecdade
+Tsuppari Wars                               1 H...  128kB  128kB J   972d08c5
+Tsuri Kichi Sanpei - Blue Marlin Hen        2 H...  128kB  ----- J   5a18f611
+Tsuri Kichi Sanpei - Blue Marlin Hen        2 H...  128kB  ----- J   a16ab939
+     (Pirate)
+Tsuru Pika Hagemaru - Mezase! Tsuru Seko   18 H...  128kB  128kB J   652f3324
+     No Akashi
+Twin Eagle - Revenge Joe's Brother          2 V...  128kB  ----- J   3cf67aec
+TwinBee                                     3 H...   32kB   16kB J   985b1d05
+TwinBee 3 - Poko Poko Dai Maou             22 H...  128kB  128kB J   d7fabac1
+Uchuu Keibitai SDF                          5 H...  128kB  128kB J   bb7f829a
+Uchuusen - Cosmo Carrier                   78 H...  128kB  128kB J   695cb142
+Ultima - Kyoufu No Exodus                   1 HB..  256kB  ----- J   250f7913
+Ultima - Kyoufu No Exodus (Mapper 2 Hack)   2 VB..  256kB  ----- J   21ebe345
+Ultima - Seija E No Michi                   1 HB..  256kB  ----- J   71d8c6e9
+Ultraman Club (Pirate)                      4 V...  128kB  256kB J   bdc65c91
+Ultraman Club - Kaijuu Dai Kessen!          4 V...  128kB  256kB J   9adfc8f0
+Ultraman Club 2 - Kaettekita Ultraman       4 V...  128kB  128kB J   7980c4f7
+Ultraman Club 3                             4 V...  256kB  128kB J   923f915b
+Untouchables, The                           1 H...  128kB  128kB J   6e4697bf
+Urusei Yatsura - Lum No Wedding Bell        3 V...   32kB   32kB J   60f1fd6f
+     (Mapper 3 Hack)
+Urusei Yatsura - Lum No Wedding Bell       86 V...   32kB   32kB J   8442b86c
+US Championship V'Ball                      4 H...  128kB  128kB J   213cb3fb
+USA Ice Hockey in FC                       18 H...  128kB  128kB J   91d52e9a
+Ushio To Tora - Shinen No Daiyou            4 V...  128kB  256kB J   a58a8da1
+Utsurun Desu                                4 V...  128kB  128kB J   20c5d187
+Valis - The Fantastic Soldier               2 V...  128kB  ----- J   c76aadf4
+Vegas Connection - Casino Kara Ai Wo        1 HB..  256kB  ----- J   57e9b21c
+     Komete
+Venus Senki                                 1 H...  128kB  128kB J   1d8bf724
+Viva! Las Vegas                             1 H...  128kB  128kB J   3c54a0bf
+Volguard 2                                  0 V...   32kB    8kB J   fde14cce
+Wagan Land                                  4 V...  128kB   64kB J   2a01f9d1
+Wagan Land 2                               19 V...  256kB  128kB J   1dc0f740
+Wagan Land 2 (Mapper 4 Hack)                4 V...  256kB  128kB J   e922037c
+Wagan Land 3                               19 V...  256kB  256kB J   a0f56a29
+Wai Wai World                              23 H...  128kB  128kB J   8a96e00d
+Wai Wai World (FFE Hack)                    6 V.T.  256kB  ----- J   1f818018
+Wai Wai World 2 - SOS!! Paseri Jou         21 H...  256kB  128kB J   8b03f74d
+Walkure No Bouken - Toki No Kagi Densetsu   4 H...   32kB   32kB J   c6add8c5
+Wanpaku Duck Yume Bouken                    2 V...  128kB  ----- J   dcb7c0a1
+Wanpaku Kokkun No Gourmet World             4 H...  128kB  128kB J   d568563f
+Wario No Mori                               4 VB..  256kB  256kB J   03e2898f
+Warpman                                     0 H...   16kB    8kB J   504c6455
+Western Kids                                4 H...  256kB  256kB J   0fd6bfc8
+White Lion Densetsu                         1 HB..  128kB  128kB J   850090bc
+Willow                                      1 H...  128kB  128kB J   752743ec
+Wily & Light No Rockboard - That's          4 H...  256kB  ----- J   23f4b48f
+     Paradise
+Wing of Madoola, The                      184 V...   32kB   32kB J   3a8f81b0
+Wing of Madoola, The (FFE Hack+Trainer)    17 V.T.   32kB   32kB J   e20fca45
+Wing of Madoola, The (Mapper 3 Hack)        3 V...   32kB  128kB J   adba7064
+Wit's                                       2 V...  128kB  ----- J   b1b16b8a
+Wizardry - Legacy of Llylgamyn              4 HB..  128kB  128kB J   55397db3
+Wizardry - Proving Grounds of the Mad       1 HB..  128kB  128kB J   498187b6
+     Overlord
+Wizardry - The Knight of Diamonds           4 HB..  128kB  128kB J   5c123ef7
+Woody Poko                                  2 V...  128kB  ----- J   fcfa4c1e
+World Boxing                                1 H...  128kB  128kB J   4dcd15ee
+World Boxing (FFE Pirate)                   6 V.T.  256kB  ----- J   e294c86f
+World Grand-Prix - Pole To Finish           1 HB..  128kB  128kB J   b5f7e661
+World Super Tennis                          1 H...  128kB  128kB J   41cc30a7
+World Super Tennis (FFE Pirate)             6 V.T.  256kB  ----- J   e60c5258
+WWF Wrestlemania Challenge                  2 V...  128kB  ----- J   f3808245
+Xevious                                     0 H...   32kB    8kB J   b3c30bea
+Yamamura Misa Suspense - Kyouto Hana No     4 V...  128kB  128kB J   1ed7d6be
+     Misshitsu Satsujin Jiken
+Yamamura Misa Suspense - Kyouto Ryuu No    80 H...  128kB  128kB J   342727b1
+     Tera Satsujin
+Yamamura Misa Suspense - Kyouto Zaiteku     4 H...  128kB  128kB J   028374f2
+     Satsujin Jiken
+Yie Ar Kung-Fu                              0 H...   16kB    8kB J   408b54ee
+Yie Ar Kung-Fu (Ver 1.2)                    0 H...   16kB    8kB J   8baa5ff2
+Yoshi No Cookie                             4 V...  128kB   64kB J   f66ec512
+Yoshi No Tamago                             1 H...  128kB   32kB J   1e4d3831
+Youkai Club                                66 H...  128kB   32kB J   6bc65d7e
+Youkai Douchuuki                           19 V...  128kB  128kB J   c811dc7a
+Ys                                          1 HB..  256kB  ----- J   92547f1c
+Ys (Mapper 2 Hack)                          2 HB..  256kB  ----- J   282aa7e0
+Ys 2 - Ancient Ys Vanished                  4 HB..  256kB  128kB J   5a0454f3
+Ys 3 - Wanderers From Ys                  118 V...  256kB  128kB J   37b62d04
+Yume Penguin Monogatari                     4 V...  128kB  128kB J   abef6b83
+Yume Penguin Monogatari (Pirate)            4 V...  128kB  128kB J   ff5bc685
+Zelda No Densetsu - The Hyrule Fantasy      1 HB..  128kB  ----- J   7ae0bf3c
+Zenbei!! Pro Basketball                     1 H...  128kB  128kB J   0f5f1f86
+Zenbei!! Pro Basketball (FFE Pirate)        6 V.T.  256kB  ----- J   82f48389
+Zippy Race                                  0 V...   16kB    8kB J   e492d45a
+Zoids - Chuuou Tairiku No Tatakai           2 V...  128kB  ----- J   d0df726e
+Zoids - Mokushiroku                         4 H...  128kB  128kB J   f3623561
+Zoids - Mokushiroku (Pirate)                4 H...  128kB  128kB J   a2c0cab7
+Zoids 2 - Zenebasu No Gyakushuu             1 HB..  256kB  ----- J   89e085fe
+Zoids 2 - Zenebasu No Gyakushuu (Mapper     2 VB..  256kB  ----- J   bde10416
+     2 Hack)
+Zombie Hunter                               1 H...  128kB   32kB J   41632cb6
+Ice Climber                                 0 H...   16kB    8kB J E 0b58880c
+1942                                        0 H...   32kB    8kB JU  171251e3
+Balloon Fight                               0 H...   16kB    8kB JU  2b462010
+Clu Clu Land                                0 H...   16kB    8kB JU  48f68d40
+Donkey Kong                                 0 H...   16kB    8kB JU  6f97c721
+Donkey Kong Jr.                             0 H...   16kB    8kB JU  4864c304
+Dr. Mario                                   1 H...   32kB   32kB JU  198c2f41
+Excitebike                                  0 V...   16kB    8kB JU  49aeb3a6
+Golf                                        0 V...   16kB    8kB JU  5c9063e0
+Hogan's Alley                               0 V...   16kB    8kB JU  ff24d794
+Hogan's Alley (Hacked Pirate)               0 V...   16kB    8kB JU  284e65e8
+Hogan's Alley (Hacked)                      0 V...   16kB    8kB JU  19df419a
+Mach Rider                                  0 H...   32kB    8kB JU  59977a46
+Mach Rider (Alt)                            0 H...   32kB    8kB JU  38810a91
+Mach Rider (Pirate)                         0 H...   32kB    8kB JU  5d044347
+Mario Bros.                                 0 V...   16kB    8kB JU  c4c3949a
+Pinball                                     0 H...   16kB    8kB JU  035dc2e9
+Popeye                                      0 H...   16kB    8kB JU  5581e835
+Popeye (Pirate)                             0 H...   16kB    8kB JU  63ddd219
+Soccer                                      0 V...   32kB    8kB JU  27aeaf2f
+Stack-Up                                    0 H...   32kB    8kB JU  df67daa1
+Super Mario Bros. (No Title Hack)           0 V...   32kB    8kB JU  8e2bd25c
+Super Mario Bros. (PRG 0 CHR 0)             0 V...   32kB    8kB JU  d445f698
+Super Mario Bros. (PRG 1 CHR 0)             0 V...   32kB    8kB JU  c96971e2
+Super Mario Bros. (Trained)                 0 V.T.   32kB    8kB JU  7d280346
+Tennis                                      0 H...   16kB    8kB JU  d4d9e21a
+Urban Champion                              0 V...   16kB    8kB JU  656d4265
+Donkey Kong 3                               0 V...   16kB    8kB JUE b3d74c0d
+Donkey Kong 3 (Pirate)                      0 V...   16kB    8kB JUE 791138d9
+Duck Hunt                                   0 V...   16kB    8kB JUE 24598791
+Duck Hunt (Hacked)                          0 V...   16kB    8kB JUE 827e5df5
+Duck Hunt (Pirate)                          0 V...   16kB    8kB JUE 13332bfa
+Gyromite                                    0 V...   32kB    8kB JUE 023a5a32
+Wild Gunman                                 0 V...   16kB    8kB JUE 5112dc21
+Wrecking Crew                               0 H...   32kB    8kB JUE 9b506a48
+1942                                        0 H...   32kB    8kB P10 9615209f
+Balloon Fight                               0 H...   16kB    8kB P10 04d0d47c
+Castlevania                                 2 V...  128kB  ----- P10 b20001f4
+Contra                                      2 V...  128kB  ----- P10 a86e3704
+Double Dragon                               1 H...  128kB  128kB P10 80c227ad
+Double Dribble                              2 V...  128kB  ----- P10 08b04364
+Dr. Mario                                   1 H...   32kB   32kB P10 534865c6
+Duck Hunt                                   0 V...   16kB    8kB P10 4c9b6d43
+Excitebike                                  0 V...   16kB    8kB P10 ffef86c8
+Fester's Quest                              1 H...  128kB  128kB P10 941ba912
+Gauntlet                                    4 V..4  128kB   64kB P10 fdb1917e
+Golf                                        0 V...   16kB    8kB P10 6e2e53c3
+Goonies, The                               87 V...   32kB   16kB P10 801a6d23
+Gradius                                     3 V...   32kB   32kB P10 0d8a30a2
+Gradius (Alt)                               3 V...   32kB   32kB P10 a308a153
+Hogan's Alley                               0 V...   16kB    8kB P10 fe35d144
+Kung Fu                                     0 V...   32kB    8kB P10 46652449
+Mario Bros.                                 0 V...   16kB    8kB P10 07838ef9
+Metroid                                     1 H...  128kB  ----- P10 3409413f
+Mike Tyson's Punch-Out!!                    9 HB..  128kB  128kB P10 580aa5e7
+Ninja Gaiden                                1 H...  128kB  128kB P10 bb4b6df7
+Ninja Gaiden 3 - The Ancient Ship of Doom   4 V...  128kB  128kB P10 ccf6bdb2
+Nintendo World Cup                          4 H...  128kB  128kB P10 8ee98523
+Pinbot                                    119 H...  128kB   64kB P10 f5399c3c
+Pro Wrestling                               2 V...  128kB  ----- P10 be9c42c9
+R.C. Pro-Am                                 1 H...   32kB   32kB P10 69885e71
+Rad Racer                                   1 H...  128kB  ----- P10 900cf570
+Rush'n Attack                               2 V...  128kB  ----- P10 b24abc55
+Rygar                                       2 V...  128kB  ----- P10 319730e3
+Super C                                     4 V...  128kB  128kB P10 78bdf588
+Super Mario Bros.                           0 V...   32kB    8kB P10 f21af99c
+Super Mario Bros. 2                         4 V...  128kB  128kB P10 5efc27d6
+Super Mario Bros. 3                         4 H...  256kB  128kB P10 ed67811e
+Teenage Mutant Ninja Turtles                1 H...  128kB  128kB P10 250a8eaa
+Teenage Mutant Ninja Turtles 2              4 V...  256kB  256kB P10 839f2f71
+Tennis                                      0 H...   16kB    8kB P10 832c3b9f
+Track & Field                               3 V...   32kB   32kB P10 fb7f90fa
+Trojan                                      2 V...  128kB  ----- P10 8b0e1235
+Volleyball                                  0 V...   32kB    8kB P10 bbc44e39
+Wild Gunman                                 0 V...   16kB    8kB P10 fa46c411
+100-in-1 Contra Function 16                15 H... 1024kB  ----- Unl 1b219e01
+110-in-1                                  255 H... 2048kB 1024kB Unl 7f7f2821
+110-in-1 (Menu)                             0 V...   16kB    8kB Unl 2ed0e5b2
+1200-in-1                                 227 H...  512kB  ----- Unl 4962c024
+1944 (Pirate)                               2 H...  128kB  ----- Unl 85d3f785
+22-in-1                                   230 V...  640kB  ----- Unl 03fdefad
+24-in-1                                     1 H...   64kB   32kB Unl 1708fff4
+3 in 1 Supergun                             3 V...   32kB   32kB Unl 74bea652
+31-in-1                                   229 V...  512kB  256kB Unl 78a97fce
+31-in-1 (Menu)                              3 H...   16kB   16kB Unl baa6cfc3
+350-in-1 (Menu)                             0 V...   16kB    8kB Unl ff33a325
+3D Block                                    0 V...   32kB  ----- Unl cae5382d
+42-in-1                                   233 H... 1024kB  ----- Unl b27414ed
+52 Games                                  225 H... 1024kB  512kB Unl 926f07af
+58-in-1                                   225 H... 1024kB  512kB Unl f84e2912
+58-in-1 (Menu)                              0 V...   16kB    8kB Unl 2a25f7a3
+64-in-1                                   225 H... 1024kB  512kB Unl 542bed56
+72-in-1                                   225 H... 1024kB  512kB Unl 8e9afef0
+76-in-1                                   226 H... 2048kB  ----- Unl 9aac6754
+76-in-1 (Menu)                              0 H...   32kB  ----- Unl ad6e96f1
+All Night Nippon Super Mario Bros.          0 V...   32kB    8kB Unl e2482419
+     (Pirate)
+AV Pachi Slot (Pirate)                      3 H...   32kB   64kB Unl 9a23a458
+BAR (Need correct title and country)        3 V...   32kB    8kB Unl fa8e27eb
+Bar Games (Need correct title and           3 V...   32kB   32kB Unl 8dedea07
+     country)
+Batman 3 (Pirate)                           4 H...  128kB  256kB Unl 163a5eda
+big2 (Need correct title and country)       4 H...   64kB   64kB Unl 153eb948
+Boku Koku Shuu Kin                          0 V...   32kB    8kB Unl af4a01ff
+Bomberman Collection                        0 V...   32kB    8kB Unl 3f45c309
+Brush Roller                                0 V...   16kB    8kB Unl ac92e9e0
+Chou                                        3 H...   32kB   32kB Unl f5f5aa5d
+CMC Wavy (Demo)                             0 V...   16kB    8kB Unl f23c035c
+Double Dragon 4 (Pirate)                    1 H...  128kB  128kB Unl 12b57e82
+Duck                                        3 H...   32kB    8kB Unl 543c6ede
+EarthBound Zero (Neo Demiforce Hack)        4 VB..  256kB  256kB Unl 00f0fbbc
+EarthBound Zero (Neo Demiforce v1.01        4 VB..  256kB  256kB Unl 42ec339a
+     Hack-2)
+EarthBound Zero (Neo Demiforce v1.01        4 VB..  256kB  256kB Unl c7908669
+     Hack-1)
+Elite                                       1 HB..  128kB  ----- Unl bc7485b5
+Famicom Disk System BIOS                    0 H...   32kB    8kB Unl a461436a
+Fatal Fury 2                               83 V...  128kB  256kB Unl cdb8c6a5
+Flame (Demo)                                0 V...   32kB    8kB Unl 497b9d15
+Game Genie                                  0 H...   16kB    8kB Unl 2e4ccf46
+Game Genie Decoder                          0 V...   16kB    8kB Unl b1e84e5b
+Garou Densetsu 2                           83 V...  128kB  256kB Unl a9e70766
+Garou Densetsu Special                      4 V...  256kB  256kB Unl d3ac6990
+Greys (Demo)                                0 V...   16kB    8kB Unl 3db9509a
+Halloween (Demo)                            0 V...   16kB  ----- Unl 8baedc0e
+Hanafuda Yuukyou Den - Nagarebana Oryuu     3 H...   32kB   32kB Unl 73c09bcb
+Idol Shisen Mahjong                         3 V...   32kB   64kB Unl 535c5446
+Jewelry                                     0 V...   16kB    8kB Unl a189843d
+Jewelry (Pirate)                            0 V...   32kB    8kB Unl 2e6b1432
+Junk (Demo)                                 0 V...   32kB    8kB Unl a098ebd2
+Kart Fighter                                4 H...  128kB  256kB Unl 6c15609f
+M82 Game Selectable Working Product         0 V...   16kB    8kB Unl fcebcc5f
+     Display
+Magic Block                                 2 H...  128kB  ----- Unl 823afd95
+Mahjong 16                                  3 V...   32kB   32kB Unl 48f0419b
+Mari Street Fighter 3 Turbo                91 V...  128kB  512kB Unl e124bc56
+Mario Lottery                               3 V...   32kB   32kB Unl e1c997db
+Mega Man Jet (Demo)                         0 H...   16kB    8kB Unl 6aad2985
+Mortal Kombat 3 - Special 56 Peoples       90 V...  128kB  512kB Unl 44c3d8f8
+Motion (Demo)                               0 V...   32kB    8kB Unl 0e8c28f9
+Mouser (Beta 1.0)                           0 V...   32kB    8kB Unl deb21c9e
+NES Test Cart                               0 H...   16kB    8kB Unl 2e0f51af
+Puffy! Land (Pirate)                        0 H...   16kB    8kB Unl 84c94e20
+Puzzle (Pirate)                             3 H...   32kB   32kB Unl 2fa8cbb4
+Rocman X                                    4 V...  256kB  256kB Unl 36ca3102
+Sango Fighter                             112 V...  128kB  256kB Unl fb2f949f
+Seifuku Hen - Shisen Mahjong                3 H...   32kB   64kB Unl 2f52bbe0
+Shin Samurai Spirits 2 - Haoumaru Jigoku   90 V...  128kB  512kB Unl dd4d9a62
+     Hen
+Snow (Demo)                                 0 H...   32kB    8kB Unl a38fe9ce
+Soap Panic                                  3 V...   32kB   32kB Unl e8829001
+Solar Wars                                  3 V...   32kB   32kB Unl 40f96469
+Solar Wars (Silent)                         3 V...   16kB   32kB Unl f3a36c5f
+Somari                                      4 H...  256kB  256kB Unl dc5959d2
+Stars (Demo)                                0 V...   32kB    8kB Unl d54f21c7
+Stars - Biology (Demo)                      0 V...   16kB    8kB Unl 317b3237
+Stars - Field (Demo)                        0 V...   16kB    8kB Unl 9f8bd88d
+Stars SE (Demo)                             0 V...   32kB    8kB Unl e1789032
+Street Fighter 3                           91 V...  128kB  512kB Unl a09aa82c
+Super 8 in 1 Fighting                     251 H... 3072kB  ----- Unl 5fca83d0
+Super Donkey Kong 2                         4 V...  128kB  256kB Unl 6fb28af7
+Super Donkey Kong 2 (Alt)                   4 V...  128kB  256kB Unl fc889532
+Super Mario World                          90 V...  512kB  256kB Unl d63d6b36
+Tank Demo (Mapper 0 NTSC)                   0 H...   32kB  ----- Unl f9d5ae4a
+Tank Demo (Mapper 0 PAL)                    0 H...   32kB  ----- Unl dc5930ab
+Tank Demo (MApper 1 NTSC)                   1 H...  128kB  ----- Unl d7fb558e
+Tank Demo (Mapper 1 PAL)                    1 H...  128kB  ----- Unl 30fd5776
+Tekken 2                                   90 V...  128kB  512kB Unl fc78acaf
+Wall (Demo)                                 0 V...   16kB    8kB Unl 3fbf0480
+World Heroes 2                             83 V...  256kB  512kB Unl 23386b90
+Atari RBI Baseball                          4 V...   64kB   32kB VS  e45485a5
+Dr. Mario                                   1 H...   64kB   32kB VS  2b85420e
+Duck Hunt                                  99 V...   32kB   16kB VS  abe1a0c2
+Excitebike                                 99 V...   32kB   16kB VS  c95321a8
+Golf                                       99 V...   32kB   16kB VS  b1c4c508
+Goonies, The                              151 V...   64kB   16kB VS  5e35ad1d
+Gradius                                   151 V...   64kB   32kB VS  f735d926
+Hogan's Alley                              99 V...   32kB   16kB VS  16aa4e2d
+Ice Climber                                99 H...   32kB   16kB VS  ef7af338
+Ladies Golf                                99 V...   32kB   16kB VS  63abf889
+Mach Rider                                 99 H...   32kB   16kB VS  e8b20197
+Pinball                                    99 H...   32kB   16kB VS  ca3e9b1a
+Platoon                                    68 V...  128kB  128kB VS  2019fe65
+Soccer                                     99 V...   32kB   16kB VS  766c2cac
+Tennis                                     99 H...   32kB   16kB VS  1c6ba3b2
+Top Gun                                     2 H...  128kB  ----- VS  8c0c2df5
+Vs Super Mario Bros.                       99 V...   32kB   16kB VS  98e3c75a
+Vs. Castlevania                             2 V...  128kB  ----- VS  ffbef374
