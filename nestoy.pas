@@ -244,6 +244,17 @@ begin
   countryi2s:=temp;
 end;
 
+function exist(fname:string):boolean;
+var
+  f:word;
+  dirinfo:tfinddata;
+begin
+  exist:=false;
+  f:=lfnfindfirst(fname,FA_NORMAL,FA_NORMAL,dirinfo);
+  if dos7error=0 then exist:=true;
+  lfnfindclose(f);
+end;
+
 procedure searchps(s:string;var p:integer;var value:string);
 var
   found,count:integer;
@@ -307,8 +318,11 @@ var
   buf:array[1..16384] of byte;
   sp,sn,dp,dn:string;
   dirinfo:tfinddata;
+  existb:boolean;
+  ctr:integer;
 begin
   errcode:=0;
+  ctr:=0;
   splitpath(sourcepath,sn,sp);
   splitpath(destpath,dn,dp);
   if dn='' then dn:=sn;
@@ -319,6 +333,16 @@ begin
   if dos7error<>0 then LFNMkDir(copy(dp,1,length(dp)-1));
   LFNFindClose(f);
   sf:=LFNOpenFile(sourcepath,FA_RDONLY,OPEN_RDONLY,1);
+  repeat
+    ctr:=ctr+1;
+    existb:=exist(destpath);
+    if existb=true then
+      begin
+        if ctr<10 then delete(destpath,length(destpath),1);
+        if ctr>=10 then delete(destpath,length(destpath)-1,2);
+        destpath:=destpath+i2s(ctr);
+      end;
+  until existb=false;
   df:=LFNCreateFile(destpath,FA_NORMAL,OPEN_WRONLY,1);
   if errcode=0 then
     repeat
@@ -458,7 +482,7 @@ begin
   readneshdr:=hdr;
 end;
 
-procedure WriteNesHdr(fname:string;nhdr:neshdr);
+procedure WriteNesHdr(fname:string;nhdr:neshdr;errcode:byte);
 var
   f,f2,result,result2:word;
   hdr:array[1..16] of char;
@@ -471,21 +495,25 @@ begin
   if copy(rfname,length(fname)-3,1)='.' then rfname:=copy(fname,1,length(fname)-4);
   rfname:=rfname+'.ba~';
   LFNRename(fname,rfname);
-  f:=LFNOpenFile(fname,FA_NORMAL,OPEN_WRONLY+OPEN_AUTOCREATE,1);
-  f2:=LFNOpenFile(rfname,FA_NORMAL,OPEN_RDONLY,1);
-  tstr:=setneshdr(nhdr);
-  for c:=1 to 16 do hdr[c]:=tstr[c];
-  result:=lfnblockwrite(f,hdr,16);
-  result2:=lfnblockread(f2,hdr,16);
-  repeat
-    result2:=lfnblockread(f2,buf,sizeof(buf));
-    g:=result2 mod 8192;
-    if g=512 then g:=0;
-    if g>0 then result2:=result2-g;
-    result:=lfnblockwrite(f,buf,result2);
-  until (result2=0) or (result<>result2);
-  LFNCloseFile(f);
-  LFNCloseFile(f2);
+  errcode:=dos7error;
+  if errcode=0 then
+    begin
+      f:=LFNOpenFile(fname,FA_NORMAL,OPEN_WRONLY+OPEN_AUTOCREATE,1);
+      f2:=LFNOpenFile(rfname,FA_NORMAL,OPEN_RDONLY,1);
+      tstr:=setneshdr(nhdr);
+      for c:=1 to 16 do hdr[c]:=tstr[c];
+      result:=lfnblockwrite(f,hdr,16);
+      result2:=lfnblockread(f2,hdr,16);
+      repeat
+        result2:=lfnblockread(f2,buf,sizeof(buf));
+        g:=result2 mod 8192;
+        if g=512 then g:=0;
+        if g>0 then result2:=result2-g;
+        result:=lfnblockwrite(f,buf,result2);
+      until (result2=0) or (result<>result2);
+      LFNCloseFile(f);
+      LFNCloseFile(f2);
+    end;
 end;
 
 function readdir(pathname:string):word;
@@ -696,7 +724,7 @@ end;
 procedure listmissing;
 var
   f,f2:text;
-  io,c,p,x,code,acount:integer;
+  io,io2,c,p,x,code,acount:integer;
   counter:integer;
   byte7,byte8:byte;
   ts,ts2,fn,out,out2:string;
@@ -704,71 +732,85 @@ var
   csum:string[8];
   dbasearray:array[1..2500] of pchar;
   charout:array[0..255] of char;
+  volinfo:tvolinfo;
 begin
   acount:=0;
-  assign(f2,cpath+'\MISSING.TXT');
+  getvolumeinformation(copy(cpath,1,3),volinfo);
+  if volinfo.FSName='CDFS' then assign(f2,progpath+'\MISSING.TXT')
+                           else assign(f2,cpath+'\MISSING.TXT');
   {$I-}
   reset(f2);
-  {$I+}
   io:=ioresult;
   if io>0 then rewrite(f2) else append(f2);
-  if io=0 then begin
-                 writeln(f2);
-                 writeln(f2,'------------------------------------------------------------------------------');
-               end;
-  assign(f,progpath+dbasefile);
-  reset(f);
-  for c:=1 to dbasecount do
+  io2:=ioresult;
+  {$I+}
+  if io2=0 then
     begin
-      readln(f,ts);
-      if csumdbase[c].flag=false then
+      if io=0 then begin
+                     writeln(f2);
+                     writeln(f2,'------------------------------------------------------------------------------');
+                   end;
+      assign(f,progpath+dbasefile);
+      reset(f);
+      for c:=1 to dbasecount do
         begin
-          acount:=acount+1;
-          p:=pos(';',ts); csum:=copy(ts,1,p-1); delete(ts,1,p);
-          p:=pos(';',ts);
-          if p=0 then fn:=ts else
+          readln(f,ts);
+          if csumdbase[c].flag=false then
             begin
-              fn:=copy(ts,1,p-1);
-              delete(ts,1,p);
+              acount:=acount+1;
+              p:=pos(';',ts); csum:=copy(ts,1,p-1); delete(ts,1,p);
+              p:=pos(';',ts);
+              if p=0 then fn:=ts else
+                begin
+                  fn:=copy(ts,1,p-1);
+                  delete(ts,1,p);
+                end;
+              p:=pos(';',ts); ts2:=copy(ts,1,p-1); delete(ts,1,p); val(ts2,x,code); byte7:=x;
+              p:=pos(';',ts); ts2:=copy(ts,1,p-1); delete(ts,1,p); val(ts2,x,code); byte8:=x;
+              p:=pos(';',ts); ts2:=copy(ts,1,p-1); delete(ts,1,p); val(ts2,x,code); dbaseinfo.prg:=x;
+              p:=pos(';',ts); ts2:=copy(ts,1,p-1); delete(ts,1,p); val(ts2,x,code); dbaseinfo.chr:=x;
+              p:=pos(';',ts); if p=0 then ts2:=ts else begin ts2:=copy(ts,1,p-1); delete(ts,1,p); end;
+              dbaseinfo.country:=countrys2i(ts2);
+              p:=pos(';',ts); if p=0 then ts2:=ts else begin ts2:=copy(ts,1,p-1); delete(ts,1,p); end;
+              dbaseinfo.company:=ts2;
+              dbaseinfo.mirror:=byte7 mod 2;
+              dbaseinfo.sram:=byte7 div 2 mod 2;
+              dbaseinfo.trainer:=byte7 div 4 mod 2;
+              dbaseinfo.fourscr:=byte7 div 8 mod 2;
+              dbaseinfo.mapper:=byte7 div 16+byte8 div 16*16;
+              dbaseinfo.vs:=byte8 mod 2;
+              dbaseinfo.pc10:=byte8 div 2 mod 2;
+              dbaseinfo.hdr:=hdrstring;
+              dbaseinfo.other:=null8;
+              out:=formatoutput(fn,dbaseinfo,true,csum,0,41,false);
+              delete(out,1,2);
+              for counter:=1 to length(out) do charout[counter-1]:=out[counter];
+              charout[counter]:=#0;
+              dbasearray[acount]:=strnew(charout);
             end;
-          p:=pos(';',ts); ts2:=copy(ts,1,p-1); delete(ts,1,p); val(ts2,x,code); byte7:=x;
-          p:=pos(';',ts); ts2:=copy(ts,1,p-1); delete(ts,1,p); val(ts2,x,code); byte8:=x;
-          p:=pos(';',ts); ts2:=copy(ts,1,p-1); delete(ts,1,p); val(ts2,x,code); dbaseinfo.prg:=x;
-          p:=pos(';',ts); ts2:=copy(ts,1,p-1); delete(ts,1,p); val(ts2,x,code); dbaseinfo.chr:=x;
-          p:=pos(';',ts); if p=0 then ts2:=ts else begin ts2:=copy(ts,1,p-1); delete(ts,1,p); end;
-          dbaseinfo.country:=countrys2i(ts2);
-          p:=pos(';',ts); if p=0 then ts2:=ts else begin ts2:=copy(ts,1,p-1); delete(ts,1,p); end;
-          dbaseinfo.company:=ts2;
-          dbaseinfo.mirror:=byte7 mod 2;
-          dbaseinfo.sram:=byte7 div 2 mod 2;
-          dbaseinfo.trainer:=byte7 div 4 mod 2;
-          dbaseinfo.fourscr:=byte7 div 8 mod 2;
-          dbaseinfo.mapper:=byte7 div 16+byte8 div 16*16;
-          dbaseinfo.vs:=byte8 mod 2;
-          dbaseinfo.pc10:=byte8 div 2 mod 2;
-          dbaseinfo.hdr:=hdrstring;
-          dbaseinfo.other:=null8;
-          out:=formatoutput(fn,dbaseinfo,true,csum,0,41,false);
-          delete(out,1,2);
-          for counter:=1 to length(out) do charout[counter-1]:=out[counter];
-          charout[counter]:=#0;
-          dbasearray[acount]:=strnew(charout);
         end;
+      quicksort(dbasearray,1,acount);
+      for c:=1 to acount do
+        begin
+          out:=strpas(dbasearray[c]);
+          checksplit(out,out2);
+          writeln(f2,out);
+          if out2<>'' then writeln(f2,out2);
+        end;
+      writeln(f2);
+      writeln(f2,acount,' missing roms out of ',dbasecount);
+      close(f);
+      close(f2);
+      for c:=acount downto 1 do
+         strdispose(dbasearray[c]);
     end;
-  quicksort(dbasearray,1,acount);
-  for c:=1 to acount do
+  if io2>0 then
     begin
-      out:=strpas(dbasearray[c]);
-      checksplit(out,out2);
-      writeln(f2,out);
-      if out2<>'' then writeln(f2,out2);
+      writeln;
+      write('Error: Cannot create ');
+      if volinfo.FSName='CDFS' then writeln(progpath,'MISSING.TXT')
+                               else writeln(cpath,'MISSING.TXT');
     end;
-  writeln(f2);
-  writeln(f2,acount,' missing roms out of ',dbasecount);
-  close(f);
-  close(f2);
-  for c:=acount downto 1 do
-     strdispose(dbasearray[c]);
 end;
 
 
@@ -825,7 +867,7 @@ if t=1 then
   end;
 if t=2 then
   begin
-    writeln('error: You must specify a filename!');
+    writeln('Error: You must specify a filename!');
     writeln;
   end;
 if t=3 then
@@ -848,7 +890,7 @@ var
   dbpos,io,pc:integer;
   docsum,show,show_h,show_v,show_b,show_4,show_t,view_bl,outfile,extout,unknown:boolean;
   rname,namematch,dbase,repair,cmp,abort,dbasemissing,garbage,sort:boolean;
-  uscore,ccode,remspace,dupe:boolean;
+  uscore,ccode,remspace,dupe,notrenamed,notrepaired:boolean;
   result,rtmp:string;
   key:char;
   out,out2:string;
@@ -856,6 +898,7 @@ var
   ofile:text;
   errcode:byte;
   name:string;
+  volinfo:tvolinfo;
 
 begin
   checkbreak:=false;
@@ -948,12 +991,21 @@ begin
     begin
       outfile:=true;
       if result='' then result:='OUTPUT.TXT';
-      assign(ofile,cpath+result);
+      getvolumeinformation(copy(cpath,1,3),volinfo);
+      if volinfo.FSName='CDFS' then assign(ofile,progpath+result)
+                               else assign(ofile,cpath+result);
       {$I-}
       reset(ofile);
-      {$I+}
       io:=ioresult;
       if io>0 then rewrite(ofile) else append(ofile);
+      if ioresult>0 then
+        begin
+          write('Error: Cannot create ');
+          if volinfo.FSName='CDFS' then writeln(progpath,result)
+                                   else writeln(cpath,result);
+          halt;
+        end;
+      {$I+}
       if io=0 then begin
                      writeln(ofile);
                      writeln(ofile,'------------------------------------------------------------------------------');
@@ -1006,6 +1058,8 @@ begin
             show:=true;
             garbage:=false;
             dupe:=false;
+            notrenamed:=false;
+            notrepaired:=false;
             if copy(Name,length(Name)-3,4)='.ne~' then show:=false;
             if copy(Name,length(Name)-3,4)='.ba~' then show:=false;
             h:=ReadNesHdr(Name);
@@ -1091,15 +1145,27 @@ begin
                   begin
                     if (repair=true) and ((cmp=false) or (garbage=true)) then
                       begin
-                        rpcount:=rpcount+1;
-                        WriteNesHdr(name,resulthdr);
+                        WriteNesHdr(name,resulthdr,errcode);
+                        if errcode=0 then rpcount:=rpcount+1;
+                        if errcode>0 then notrepaired:=true;
                       end;
                     if (rname=true) and (dupe=false) then
                       if result+'.nes'<>name then
                         begin
-                          rncount:=rncount+1;
-                          LFNRename(name,result+'.ne~');
-                          name:=result+'.ne~';
+                          if (exist(result+'.nes')) or (exist(result+'.ne~')) then
+                            begin
+                              LFNRename(name,result+countryi2s(nes.country)+'.ne~');
+                              errcode:=dos7error;
+                              if errcode=0 then name:=result+countryi2s(nes.country)+'.ne~';
+                            end
+                          else
+                            begin
+                              LFNRename(name,result+'.ne~');
+                              errcode:=dos7error;
+                              if errcode=0 then name:=result+'.ne~';
+                            end;
+                          if errcode=0 then rncount:=rncount+1;
+                          if errcode>0 then notrenamed:=true;
                         end;
                     if (extout=true) and ((cmp=false) or (namematch=false) or (garbage=true)) then
                       begin
@@ -1111,8 +1177,12 @@ begin
                         if nes.other<>null8 then outm[11]:='G';
                         if (nes.vs=1) and (nes.pc10=1) then outm[11]:='G';
                         if garbage=true then outm[12]:=+'F';
-                        if (rname=true) and (namematch=false) then outm:='      Renamed';
-                        if (repair=true) and (cmp=false) then outm:='     Repaired';
+                        if (rname=true) and (namematch=false) then
+                          if notrenamed=false then outm:='      Renamed'
+                                              else outm:=' Can''t Rename';
+                        if (repair=true) and (cmp=false) then
+                          if notrepaired=false then outm:='     Repaired'
+                                               else outm:=' Can''t Repair';
                         out:=out+outm;
                         writeln(out);
                         if out2<>'' then writeln(out2);
@@ -1151,14 +1221,14 @@ begin
     end;
   if romcount=0 then writeln('No roms found') else begin writeln; writeln(romcount,' roms found'); end;
   if matchcount>0 then writeln(matchcount,' roms found in database');
-  if rpcount>0 then writeln(rpcount, ' rom headers repaired');
+  if rpcount>0 then writeln(rpcount, ' roms repaired');
   if rncount>0 then writeln(rncount, ' roms renamed');
   if (outfile=true) and (dbase=false) then
     begin
       if romcount=0 then writeln(ofile,'No roms found')
       else begin writeln(ofile); writeln(ofile,romcount,' roms found'); end;
       if matchcount>0 then writeln(ofile,matchcount,' roms found in database');
-      if rpcount>0 then writeln(ofile,rpcount, ' rom headers repaired');
+      if rpcount>0 then writeln(ofile,rpcount, ' roms repaired');
       if rncount>0 then writeln(ofile,rncount, ' roms renamed');
     end;
   if outfile=true then close(ofile);
