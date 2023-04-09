@@ -3,10 +3,10 @@ program NesToy;
 {$M 40960,0,655360}
 
 uses
-  dos,dos70,crc32new,crt,strings;
+  dos,dos70,crc32new,crt,strings,runtime;
 const
-  maxdbasesize=3500;
-  maxdirsize=3000;
+  maxdbasesize=3200;
+  maxdirsize=3500;
   maxpathnames=100;
 type
   neshdr=record
@@ -37,10 +37,11 @@ const
   cfgfile='NESTOY.CFG';
   outputfile='OUTPUT.TXT';
   logfile='NESTOY.LOG';
-  version='2.82';
+  version='2.9';
   SortType:updown = ascending;
   missingfile:string='MISSING.TXT';
   extparamst:string='';
+  dir_base:string='';
   dir_backup:string='Backup\';
   dir_bad:string='Bad\';
   dir_canada:string='Canada\';
@@ -87,7 +88,7 @@ var
   cfgparam:string;
   flagrom:boolean;
   overwritemissing:boolean;
-  logging,wrotelog,quiet:boolean;
+  logging,wrotelog,quiet,outquiet:boolean;
   lfile:text;
 
 function upcasestr(s:string):string;
@@ -1102,10 +1103,13 @@ begin
     strdispose(clf[counter]);
 end;
 
-function expandwork(pn:string):string;
+function expandwork(pn:string;addbase:boolean):string;
 var
   tp,tf:string;
 begin
+  if addbase=true then
+    if (copy(pn,1,1)<>'\') and (copy(pn,1,2)<>'.\') and (copy(pn,2,2)<>':\') then pn:=dir_base+pn;
+  if pn='' then pn:='.\';
   if (copy(pn,length(pn),1)='\') and (copy(pn,length(pn)-1,2)<>'.\') and (copy(pn,length(pn)-1,2)<>':\')
     then delete(pn,length(pn),1);
   splitpath(pn,tf,tp);
@@ -1117,25 +1121,26 @@ end;
 
 procedure expandpaths;
 begin
-  dir_backup:=expandwork(dir_backup);
-  dir_bad:=expandwork(dir_bad);
-  dir_canada:=expandwork(dir_canada);
-  dir_china:=expandwork(dir_china);
-  dir_dupes:=expandwork(dir_dupes);
-  dir_europe:=expandwork(dir_europe);
-  dir_gamehacks:=expandwork(dir_gamehacks);
-  dir_hacked:=expandwork(dir_hacked);
-  dir_japan:=expandwork(dir_japan);
-  dir_maphacks:=expandwork(dir_maphacks);
-  dir_pc10:=expandwork(dir_pc10);
-  dir_pirate:=expandwork(dir_pirate);
-  dir_repair:=expandwork(dir_repair);
-  dir_sweden:=expandwork(dir_sweden);
-  dir_trans:=expandwork(dir_trans);
-  dir_unknown:=expandwork(dir_unknown);
-  dir_unlicensed:=expandwork(dir_unlicensed);
-  dir_usa:=expandwork(dir_usa);
-  dir_vs:=expandwork(dir_vs);
+  dir_base:=expandwork(dir_base,false);
+  dir_backup:=expandwork(dir_backup,true);
+  dir_bad:=expandwork(dir_bad,true);
+  dir_canada:=expandwork(dir_canada,true);
+  dir_china:=expandwork(dir_china,true);
+  dir_dupes:=expandwork(dir_dupes,true);
+  dir_europe:=expandwork(dir_europe,true);
+  dir_gamehacks:=expandwork(dir_gamehacks,true);
+  dir_hacked:=expandwork(dir_hacked,true);
+  dir_japan:=expandwork(dir_japan,true);
+  dir_maphacks:=expandwork(dir_maphacks,true);
+  dir_pc10:=expandwork(dir_pc10,true);
+  dir_pirate:=expandwork(dir_pirate,true);
+  dir_repair:=expandwork(dir_repair,true);
+  dir_sweden:=expandwork(dir_sweden,true);
+  dir_trans:=expandwork(dir_trans,true);
+  dir_unknown:=expandwork(dir_unknown,true);
+  dir_unlicensed:=expandwork(dir_unlicensed,true);
+  dir_usa:=expandwork(dir_usa,true);
+  dir_vs:=expandwork(dir_vs,true);
 end;
 
 procedure loadcfgfile;
@@ -1153,6 +1158,7 @@ begin
   if ioresult>0 then
     begin
       rewrite(f);
+      writeln(f,'DIR_BASE = ',dir_base);
       writeln(f,'DIR_BACKUP = ',dir_backup);
       writeln(f,'DIR_BAD = ',dir_bad);
       writeln(f,'DIR_CANADA = ',dir_canada);
@@ -1202,8 +1208,8 @@ begin
               if s='CMDLINE' then rp:=false;
               s2:=removespaces(s2,rp);
               if copy(s,1,4)='DIR_' then
-                if s2='' then s2:='.\' else
-                  if s2[length(s2)]<>'\' then s2:=s2+'\';
+                if (s2<>'') and (s2[length(s2)]<>'\') then s2:=s2+'\';
+              if s='DIR_BASE' then dir_base:=s2;
               if s='DIR_BACKUP' then dir_backup:=s2;
               if s='DIR_BAD' then dir_bad:=s2;
               if s='DIR_CANADA' then dir_canada:=s2;
@@ -1678,8 +1684,9 @@ if t=1 then
     writeln('-nobackup      Don''t make backups before repairing or resizing ROMs');
     writeln('-log           Log to ',logfile,' any problems NesToy encounters while sorting,');
     writeln('               renaming, or repairing ROMs.');
-    writeln('-q,-quiet      Suppresses output to the screen (for those of you who would');
+    writeln('-q[o]          Suppresses output to the screen (for those of you who would');
     writeln('               prefer not to see what NesToy is up to.)');
+    writeln('                  o- Suppresses output to the output file as well.');
     writeln('-doall         Enables -c,-i,-ren,-repair,-resize,-sort, and -missing');
     writeln('-h,-?,-help    Displays this screen');
     writeln;
@@ -1785,6 +1792,7 @@ begin
   nobackup:=false;
   logging:=false;
   quiet:=false;
+  outquiet:=false;
   msearch:=-1;
   if extparamcount=0 then usage(0);
   searchps('-h',sps,result);
@@ -1915,8 +1923,6 @@ begin
   if sps>0 then begin resize:=true; extout:=true; docsum:=true; end;
   searchps('-resize',sps,result);
   if sps>0 then begin resize:=true; extout:=true; docsum:=true; end;
-  searchps('-i',sps,result);
-  if sps>0 then begin extout:=true; docsum:=true; end;
   searchps('-u',sps,result);
   if sps>0 then begin unknown:=true; docsum:=true; end;
   searchps('-nobackup',sps,result);
@@ -1936,15 +1942,19 @@ begin
       sort:=true; docsum:=true;
       if pos('M',result)>0 then sortmapper:=true;
     end;
-  searchps('-q',sps,result);
-  if sps>0 then quiet:=true;
-  searchps('-quiet',sps,result);
-  if sps>0 then quiet:=true;
   searchps('-doall',sps,result);
   if sps>0 then begin
                   docsum:=true; rname:=true; repair:=true; resize:=true; extout:=true;
                   dbasemissing:=true; sort:=true;
                 end;
+  searchps('-q*',sps,result);
+  if sps>0 then
+    begin
+      quiet:=true; extout:=false;
+      if pos('O',result)>0 then outquiet:=true;
+    end;
+  searchps('-i',sps,result);
+  if sps>0 then begin extout:=true; docsum:=true; end;
   searchps('-dbase',sps,result);
   if sps>0 then begin
                   dbase:=true; docsum:=true; extout:=false; sort:=false; unknown:=false;
@@ -2058,6 +2068,8 @@ begin
                     if (nes.chr<>0) and (nes.chr<>1) and (nes.chr<>2) and (nes.chr<>4) and
                        (nes.chr<>8) and (nes.chr<>16) and (nes.chr<>32) and (nes.chr<>64) and
                        (nes.chr<>128) then badrom:=true;
+                    fs:=romsize(name);
+                    if fs<nes.prg*2+nes.chr then badrom:=true;
                   end;
                 if dbpos=0 then
                   begin
@@ -2164,11 +2176,20 @@ begin
                     begin
                       if cropped=true then
                         begin
-                          out:=formatoutput(name,oldnes,docsum,' Resized',1,l,view_bl);
-                          checksplit(out,out2);
-                          writeln(out);
-                          if out2<>'' then writeln(out2);
-                          if outfile=true then
+                          if (quiet=false) or (extout=true) then
+                            begin
+                              out:=formatoutput(name,oldnes,docsum,' Resized',1,l,view_bl);
+                              checksplit(out,out2);
+                              if quiet=true then gotoxy(1,wy);
+                              writeln(out);
+                              if out2<>'' then writeln(out2);
+                              if quiet=true then
+                                begin
+                                  if wy=24 then writeln;
+                                  if wy<24 then wy:=wherey;
+                                end;
+                            end;
+                          if (outfile=true) and ((extout=true) or (outquiet=false)) then
                             begin
                               writeln(ofile,out);
                               if out2<>'' then writeln(ofile,out2);
@@ -2217,7 +2238,7 @@ begin
                     writeln(out);
                     if out2<>'' then writeln(out2);
                   end;
-                if outfile=true then
+                if (outfile=true) and (outquiet=false) then
                   begin
                     writeln(ofile,out);
                     if out2<>'' then writeln(ofile,out2);
@@ -2256,6 +2277,17 @@ begin
                         end;
                     if (extout=true) and ((cmp=false) or (namematch=false) or (garbage=true)) then
                       begin
+                        if quiet=true then
+                          begin
+                            gotoxy(1,wy);
+                            writeln(out);
+                            if out2<>'' then writeln(out2);
+                          end;
+                        if (outfile=true) and (outquiet=true) then
+                          begin
+                            writeln(ofile,out);
+                            if out2<>'' then writeln(ofile,out2);
+                          end;
                         out:=formatoutput(result,resulthdr,false,'',0,l,view_bl);
                         checksplit(out,out2);
                         outm:='   Bad [----]';
@@ -2269,12 +2301,10 @@ begin
                         if notrenamed=true then outm:=' Can''t Rename';
                         if notrepaired=true then outm:=' Can''t Repair';
                         out:=out+outm;
-                        if quiet=false then
-                          begin
-                            writeln(out);
-                            if out2<>'' then writeln(out2);
-                            writeln;
-                          end;
+                        writeln(out);
+                        if out2<>'' then writeln(out2);
+                        writeln;
+                        if (quiet=true) and (wy<24) then wy:=wherey-1;
                         if outfile=true then
                           begin
                             writeln(ofile,out);
@@ -2312,6 +2342,7 @@ begin
   patharrayclear(numpaths);
   gettime(hour,min,sec,hund);
   fullendtime:=sec+min*60+hour*3600;
+  if fullendtime<fullstarttime then fullendtime:=fullendtime+86400;
   difftime:=fullendtime-fullstarttime;
   hour:=difftime div 3600;
   difftime:=difftime mod 3600;
