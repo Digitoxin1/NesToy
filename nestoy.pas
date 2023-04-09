@@ -1,37 +1,49 @@
-program nestoy;
+program NesToy;
 uses
   dos,dos70,crc32c,crt;
+
+type
+  neshdr=record
+           hdr:string[4];      {4 byte header string (NES^Z)}
+           prg:byte;           {16k Program Data Blocks}
+           chr:byte;           {8k Chr Data Blocks}
+           mirror:byte;        {Mirroring}
+           sram:byte;          {Battery Backup}
+           trainer:byte;       {Trainer}
+           fourscr:byte;       {Four Screen}
+           mapper:byte;        {Mapper #}
+           vs:byte;            {VS.}
+           pc10:byte;          {Playchoice-10}
+           other:string[8];    {Misc. Header Bytes {Should be $00's)}
+           country:byte;       {Country Code (Not in header)}
+           company:string[25]; {Company (Not in header)}
+         end;
 
 const
   null8=#0+#0+#0+#0+#0+#0+#0+#0;
   hdrstring='NES'+#26;
   dbasefile='ROMDBASE.DAT';
-  version='0.9b';
+  version='1.0b';
 
 var
   hdcsum:boolean;
   csumdbase:array[1..2500] of string[8];
   csumflags:array[1..2500] of boolean;
-  path:array[1..8] of string;
-  clf:array[1..8] of string;
+  path:array[1..12] of string;
+  clf:array[1..12] of string;
   dbasecount,numpaths:integer;
   cpath,progpath:string;
 
-type
-  neshdr=record
-           hdr:string[4];   {4 byte header string (NES^Z)}
-           prg:byte;        {16k Program Data Blocks}
-           chr:byte;        {8k Chr Data Blocks}
-           mirror:byte;     {Mirroring}
-           sram:byte;       {Battery Backup}
-           trainer:byte;    {Trainer}
-           fourscr:byte;    {Four Screen}
-           mapper:byte;     {Mapper #}
-           vs:byte;         {VS.}
-           pc10:byte;       {Playchoice-10}
-           other:string[8]; {Misc. Header Bytes {Should be $00's)}
-           country:byte;    {Country Code (Not in header)}
-         end;
+procedure pause;
+var
+  y:integer;
+begin
+  y:=wherey;
+  write('Press any key to continue');
+  repeat until keypressed=true;
+  gotoxy(1,wherey);
+  clreol;
+end;
 
 function I2S(i: longint): string;
 var
@@ -135,6 +147,46 @@ begin
   extparamstr:=s2;
 end;
 
+function countrys2i(s:string):integer;
+var
+  temp:integer;
+begin
+  temp:=0;
+  if s='J' then temp:=1;
+  if s='U' then temp:=2;
+  if s='JU' then temp:=3;
+  if s='E' then temp:=4;
+  if s='JE' then temp:=5;
+  if s='UE' then temp:=6;
+  if s='JUE' then temp:=7;
+  if s='S' then temp:=8;
+  if s='C' then temp:=16;
+  if s='V' then temp:=98;
+  if s='P' then temp:=99;
+  countrys2i:=temp;
+end;
+
+function countryi2s(i:integer):string;
+var
+  temp:string[7];
+begin
+  temp:='';
+  case i of
+    1: temp:=' (J)';
+    2: temp:=' (U)';
+    3: temp:=' (JU)';
+    4: temp:=' (E)';
+    5: temp:=' (JE)';
+    6: temp:=' (UE)';
+    7: temp:=' (JUE)';
+    8: temp:=' (S)';
+    9: temp:=' (C)';
+    98: temp:=' (VS)';
+    99: temp:=' (PC10)';
+  end;
+  countryi2s:=temp;
+end;
+
 procedure searchps(s:string;var p:integer;var value:string);
 var
   found,count:integer;
@@ -154,8 +206,8 @@ begin
       if flag=true then
         begin
           delete(s3,length(s3),1);
-          valtemp:=copy(s2,3,length(s2)-2);
-          s2:=copy(s2,1,2);
+          valtemp:=copy(s2,length(s3)+1,length(s2)-length(s3));
+          s2:=copy(s2,1,length(s3));
         end;
       if s2=s3 then
         begin
@@ -164,6 +216,60 @@ begin
         end;
     end;
   p:=found;
+end;
+
+procedure splitpath(pathname:string;var fname:string;var path:string);
+var
+  slashflag:boolean;
+  p:integer;
+begin
+  slashflag:=false;
+  fname:='';
+  path:='';
+  while pos('\',pathname)>0 do
+    begin
+      slashflag:=true;
+      p:=pos('\',pathname);
+      path:=path+copy(pathname,1,p);
+      delete(pathname,1,p);
+    end;
+  if slashflag=false then
+    if pos(':',pathname)>0 then
+      begin
+        p:=pos(':',pathname);
+        path:=path+copy(pathname,1,p);
+        delete(pathname,1,p);
+      end;
+  fname:=pathname;
+  if path='' then path:='.\';
+end;
+
+procedure LFNMove(sourcepath,destpath:string;var errcode:byte);
+var
+  sf,df,sresult,dresult,f:word;
+  buf:array[1..16384] of byte;
+  sp,sn,dp,dn:string;
+  dirinfo:tfinddata;
+begin
+  errcode:=0;
+  splitpath(sourcepath,sn,sp);
+  splitpath(destpath,dn,dp);
+  if dn='' then dn:=sn;
+  sourcepath:=sp+sn;
+  destpath:=dp+dn;
+  f:=LFNFindFirst(dp,FA_DIR,FA_DIR,dirinfo);
+  if dos7error<>0 then LFNMkDir(copy(dp,1,length(dp)-1));
+  LFNFindClose(f);
+  sf:=LFNOpenFile(sourcepath,FA_RDONLY,OPEN_RDONLY,1);
+  df:=LFNCreateFile(destpath,FA_NORMAL,OPEN_WRONLY,1);
+  if errcode=0 then
+    repeat
+      sresult:=lfnblockread(sf,buf,sizeof(buf));
+      dresult:=lfnblockwrite(df,buf,sresult);
+    until (sresult=0) or (sresult<>dresult);
+    if dos7error=0 then LFNErase(sourcepath,FA_NORMAL,FA_NORMAL,False);
+  LFNCloseFile(df);
+  LFNCloseFile(sf);
 end;
 
 procedure GetNesHdr(var nh:neshdr;hdr:string);
@@ -187,8 +293,8 @@ begin
   if ord(hdr[8]) div 8 mod 2>0 then garbage:=true;
   for counter:=1 to 8 do
     if ord(hdr[counter+8])>0 then garbage:=true;
-  {if garbage=true then nh.extra:=99;}
   nh.country:=0;
+  nh.company:='';
 end;
 
 function SetNesHdr(nh:neshdr):string;
@@ -229,6 +335,9 @@ begin
   p:=pos(';',ts); ts2:=copy(ts,1,p-1); delete(ts,1,p); val(ts2,x,code); dbaseinfo.prg:=x;
   p:=pos(';',ts); ts2:=copy(ts,1,p-1); delete(ts,1,p); val(ts2,x,code); dbaseinfo.chr:=x;
   p:=pos(';',ts); if p=0 then ts2:=ts else begin ts2:=copy(ts,1,p-1); delete(ts,1,p); end;
+  dbaseinfo.country:=countrys2i(ts2);
+  p:=pos(';',ts); if p=0 then ts2:=ts else begin ts2:=copy(ts,1,p-1); delete(ts,1,p); end;
+  dbaseinfo.company:=ts2;
   dbaseinfo.mirror:=byte7 mod 2;
   dbaseinfo.sram:=byte7 div 2 mod 2;
   dbaseinfo.trainer:=byte7 div 4 mod 2;
@@ -236,18 +345,6 @@ begin
   dbaseinfo.mapper:=byte7 div 16+byte8 div 16*16;
   dbaseinfo.vs:=byte8 mod 2;
   dbaseinfo.pc10:=byte8 div 2 mod 2;
-  dbaseinfo.country:=0;
-  if ts2='J' then dbaseinfo.country:=1;
-  if ts2='U' then dbaseinfo.country:=2;
-  if ts2='JU' then dbaseinfo.country:=3;
-  if ts2='E' then dbaseinfo.country:=4;
-  if ts2='JE' then dbaseinfo.country:=5;
-  if ts2='UE' then dbaseinfo.country:=6;
-  if ts2='JUE' then dbaseinfo.country:=7;
-  if ts2='S' then dbaseinfo.country:=8;
-  if ts2='C' then dbaseinfo.country:=16;
-  if ts2='V' then dbaseinfo.country:=98;
-  if ts2='P' then dbaseinfo.country:=99;
   dbaseinfo.hdr:=hdrstring;
   dbaseinfo.other:=null8;
   close(f);
@@ -368,14 +465,34 @@ function formatoutput(fname:string;minfo:neshdr;docsum:boolean;csum:string;rflag
 var
   out:string;
   ns:string;
+  split:boolean;
+  fname2:string;
+  c:char;
+  count:integer;
 begin
   out:='';
+  split:=false;
+  if length(fname)>l then
+    begin
+      count:=l;
+      split:=true;
+      repeat
+        c:=fname[count];
+        count:=count-1;
+      until (c=' ') or (c='_') or (count=0);
+      if count=0 then split:=false;
+      if split=true then
+        begin
+          fname2:=copy(fname,count+2,length(fname)-count-1);
+          delete(fname,count+1,length(fname)-count);
+        end;
+    end;
   str(minfo.mapper,ns);
   if rflag=0 then out:=out+'  ';
   if rflag=1 then out:=out+'? ';
   if rflag=2 then out:=out+'* ';
   if rflag=3 then out:=out+'x ';
-  out:=out+justify(fname,l,'L',True);
+  out:=out+justify(fname,l,'L',true);
   out:=out+' '+justify(ns,3,'R',False)+' ';
   if minfo.mirror=0 then out:=out+'H' else out:=out+'V';
   if minfo.sram=0 then out:=out+'.' else out:=out+'B';
@@ -402,22 +519,40 @@ begin
     end;
   if docsum=true then
     begin
-      if minfo.country=0 then out:=out+' ???';
-      if minfo.country=1 then out:=out+' '+'J  ';
-      if minfo.country=2 then out:=out+' '+' U ';
-      if minfo.country=3 then out:=out+' '+'JU ';
-      if minfo.country=4 then out:=out+' '+'  E';
-      if minfo.country=5 then out:=out+' '+'J E';
-      if minfo.country=6 then out:=out+' '+' UE';
-      if minfo.country=7 then out:=out+' '+'JUE';
-      if minfo.country=8 then out:=out+' '+'  S';
-      if minfo.country=16 then out:=out+' '+' C ';
-      if minfo.country=98 then out:=out+' '+'VS';
-      if minfo.country=99 then out:=out+' '+'P10';
+      if (minfo.vs=0) and (minfo.pc10=0) then
+        begin
+          if minfo.country=0 then out:=out+' ???';
+          if minfo.country=1 then out:=out+' '+'J  ';
+          if minfo.country=2 then out:=out+' '+' U ';
+          if minfo.country=3 then out:=out+' '+'JU ';
+          if minfo.country=4 then out:=out+' '+'  E';
+          if minfo.country=5 then out:=out+' '+'J E';
+          if minfo.country=6 then out:=out+' '+' UE';
+          if minfo.country=7 then out:=out+' '+'JUE';
+          if minfo.country=8 then out:=out+' '+'  S';
+          if minfo.country=16 then out:=out+' '+' C ';
+        end;
+      if (minfo.country=98) or (minfo.vs=1) then out:=out+' '+'VS ';
+      if (minfo.country=99) or (minfo.pc10=1) then out:=out+' '+'P10';
     end;
   if docsum=true then out:=out+' '+csum;
+  if split=true then out:=out+#27+'     '+fname2;
   formatoutput:=out;
 end;
+
+procedure checksplit(var s1:string;var s2:string);
+var
+  p:integer;
+begin
+  s2:='';
+  p:=pos(#27,s1);
+  if p>0 then
+    begin
+      s2:=copy(s1,p+1,length(s1)-p);
+      delete(s1,p,length(s1)-p+1);
+    end;
+end;
+
 
 function comparehdrs(rh:neshdr;dh:neshdr):boolean;
 var
@@ -473,7 +608,7 @@ var
   f,f2:text;
   io,c,p,x,code:integer;
   byte7,byte8:byte;
-  ts,ts2,fn,out:string;
+  ts,ts2,fn,out,out2:string;
   dbaseinfo:neshdr;
   csum:string[8];
 
@@ -507,6 +642,9 @@ begin
         p:=pos(';',ts); ts2:=copy(ts,1,p-1); delete(ts,1,p); val(ts2,x,code); dbaseinfo.prg:=x;
         p:=pos(';',ts); ts2:=copy(ts,1,p-1); delete(ts,1,p); val(ts2,x,code); dbaseinfo.chr:=x;
         p:=pos(';',ts); if p=0 then ts2:=ts else begin ts2:=copy(ts,1,p-1); delete(ts,1,p); end;
+        dbaseinfo.country:=countrys2i(ts2);
+        p:=pos(';',ts); if p=0 then ts2:=ts else begin ts2:=copy(ts,1,p-1); delete(ts,1,p); end;
+        dbaseinfo.company:=ts2;
         dbaseinfo.mirror:=byte7 mod 2;
         dbaseinfo.sram:=byte7 div 2 mod 2;
         dbaseinfo.trainer:=byte7 div 4 mod 2;
@@ -514,22 +652,12 @@ begin
         dbaseinfo.mapper:=byte7 div 16+byte8 div 16*16;
         dbaseinfo.vs:=byte8 mod 2;
         dbaseinfo.pc10:=byte8 div 2 mod 2;
-        dbaseinfo.country:=0;
-        if ts2='J' then dbaseinfo.country:=1;
-        if ts2='U' then dbaseinfo.country:=2;
-        if ts2='JU' then dbaseinfo.country:=3;
-        if ts2='E' then dbaseinfo.country:=4;
-        if ts2='JE' then dbaseinfo.country:=5;
-        if ts2='UE' then dbaseinfo.country:=6;
-        if ts2='JUE' then dbaseinfo.country:=7;
-        if ts2='S' then dbaseinfo.country:=8;
-        if ts2='C' then dbaseinfo.country:=16;
-        if ts2='V' then dbaseinfo.country:=98;
-        if ts2='P' then dbaseinfo.country:=99;
         dbaseinfo.hdr:=hdrstring;
         dbaseinfo.other:=null8;
         out:=formatoutput(fn,dbaseinfo,true,csum,0,41,false);
+        checksplit(out,out2);
         writeln(f2,out);
+        if out2<>'' then writeln(f2,out2);
       end;
   end;
   close(f);
@@ -537,17 +665,18 @@ begin
 end;
 
 
-function uscvt(o:string):string;
+function spcvt(o:string;i:integer):string;
 var
   p:integer;
 begin
   p:=pos(' ',o);
   while p>0 do
     begin
-      o[p]:='_';
+      if i=1 then o[p]:='_';
+      if i=2 then delete(o,p,1);
       p:=pos(' ',o);
     end;
-  uscvt:=o;
+  spcvt:=o;
 end;
 
 procedure usage(t:byte);
@@ -566,21 +695,21 @@ if t=1 then
     writeln('-c             Calculate Checksums (CRC 32)');
     writeln('-hc            Calculate Checksums with header');
     writeln('-i             Outputs extended info if header or name are not correct');
-    writeln('-f             Sends output to OUTPUT.TXT');
-    {writeln('-x             Creates a list of missing roms in MISSING.TXT');}
-    writeln('-ren,-rename   Renames roms to names stored in database (enables -c)');
-    writeln('-renu,-renameu Same as above, but spaces are replaced with underscores');
+    writeln('-o[file]       Sends output to file (DOS 8.3 filenames for now)');
+    writeln('-ren[usc]      Renames roms to names stored in database (enables -c)');
+    writeln('                  u- Replace spaces with underscores');
+    writeln('                  s- Remove spaces completely from filename');
+    writeln('                  c- Attach country codes to end of filenames');
     writeln('-rep,-repair   Repairs rom headers with those found in database (enables -c)');
     writeln('-m#            Filter listing by mapper #');
-    writeln('-s[hvbt4]      Filter listing by mapper data');
+    writeln('-f[hvbt4]      Filter listing by mapper data');
     writeln('                  h- Horizontal Mirroring     t- Trainer Present');
     writeln('                  v- Vertical Mirroring       4- 4 Screen Buffer');
     writeln('                  b- Contains SRAM (Battery backup)');
     writeln('-u             Only display unknown roms (enables -c)');
-    writeln('-t             Every output line is truncated to 80 columns, this');
-    writeln('               turns it off.');
     writeln('-h,-?,-help    Displays this screen');
     writeln;
+    pause;
     writeln('Filename can include wildcards (*,?) anywhere inside the filename.  Long');
     writeln('file names are allowed.  If no filename is given, (*.nes) is assumed.');
     writeln('Up to 8 different pathnames may be specified.');
@@ -597,22 +726,22 @@ var
   DirInfo: TFindData;
   f:word;
   h,ns,csum:string;
-  clfname:string;
+  clfname,pathname,sortdir:string;
   nes,resulthdr:NesHdr;
   byte7,byte8:byte;
   l,ctr,csumpos,sps,err:integer;
   msearch,rflag:integer;
   romcount,matchcount,rncount,rpcount:integer;
   dbpos,io,pc:integer;
-  docsum,show,show_h,show_v,show_b,show_4,show_t,view_bl,tr,outfile,extout,unknown:boolean;
-  rname,namematch,uscore,dbase,repair,cmp,abort,dbasemissing,garbage:boolean;
-  slashflag:boolean;
-  result:string;
-  pathname:string;
+  docsum,show,show_h,show_v,show_b,show_4,show_t,view_bl,outfile,extout,unknown:boolean;
+  rname,namematch,dbase,repair,cmp,abort,dbasemissing,garbage,sort:boolean;
+  uscore,ccode,remspace:boolean;
+  result,rtmp:string;
   key:char;
-  out:string;
+  out,out2:string;
   outm:string[13];
   ofile:text;
+  errcode:byte;
 begin
   checkbreak:=false;
   progpath:=paramstr(0);
@@ -621,6 +750,7 @@ begin
   loaddbase;
   cpath:=getfullpathname('.\',false);
   pathname:='';
+  out2:='';
   view_bl:=false;
   show_h:=false;
   show_v:=false;
@@ -638,13 +768,15 @@ begin
   hdcsum:=false;
   rname:=false;
   uscore:=false;
+  ccode:=false;
+  remspace:=false;
   unknown:=false;
   dbase:=false;
   repair:=false;
   abort:=false;
   dbasemissing:=false;
+  sort:=false;
   msearch:=-1;
-  tr:=true;
   if extparamcount=0 then usage(0);
   searchps('-h',sps,result);
   if sps>0 then usage(1);
@@ -655,27 +787,11 @@ begin
   for pc:=1 to extparamcount do
     begin
       clfname:=extparamstr(pc);
-      if (clfname[1]<>'-') and (numpaths<8) then
+      if (clfname[1]<>'-') and (numpaths<12) then
         begin
           numpaths:=numpaths+1;
-          slashflag:=false;
-          pathname:='';
-          while pos('\',clfname)>0 do
-            begin
-              slashflag:=true;
-              ctr:=pos('\',clfname);
-              pathname:=pathname+copy(clfname,1,ctr);
-              delete(clfname,1,ctr);
-            end;
-          if slashflag=false then
-            if pos(':',clfname)>0 then
-              begin
-                ctr:=pos(':',clfname);
-                pathname:=pathname+copy(clfname,1,ctr);
-                delete(clfname,1,ctr);
-              end;
+          splitpath(clfname,clfname,pathname);
           if clfname='' then clfname:='*.nes';
-          if pathname='' then pathname:='.\';
           clf[numpaths]:=clfname;
           path[numpaths]:=pathname;
         end;
@@ -693,9 +809,7 @@ begin
     end;
   searchps('-b',sps,result);
   if sps>0 then view_bl:=true;
-  searchps('-t',sps,result);
-  if sps>0 then tr:=false;
-  searchps('-s*',sps,result);
+  searchps('-f*',sps,result);
   if sps>0 then
     begin
       if pos('H',result)>0 then show_h:=true;
@@ -704,19 +818,20 @@ begin
       if pos('T',result)>0 then show_t:=true;
       if pos('4',result)>0 then show_4:=true;
     end;
-  searchps('-ren',sps,result);
-  if sps>0 then begin rname:=true; docsum:=true; end;
-  searchps('-rename',sps,result);
-  if sps>0 then begin rname:=true; docsum:=true; end;
-  searchps('-renu',sps,result);
-  if sps>0 then begin rname:=true; docsum:=true; uscore:=true; end;
-  searchps('-renameu',sps,result);
-  if sps>0 then begin rname:=true; docsum:=true; uscore:=true; end;
-  searchps('-f',sps,result);
-  if sps>0 then outfile:=true;
-  if outfile=true then
+  searchps('-ren*',sps,result);
+  if sps>0 then
     begin
-      assign(ofile,cpath+'\OUTPUT.TXT');
+      rname:=true; docsum:=true;
+      if pos('U',result)>0 then uscore:=true;
+      if pos('S',result)>0 then remspace:=true;
+      if pos('C',result)>0 then ccode:=true;
+    end;
+  searchps('-o*',sps,result);
+  if sps>0 then
+    begin
+      outfile:=true;
+      if result='' then result:='OUTPUT.TXT';
+      assign(ofile,cpath+result);
       {$I-}
       reset(ofile);
       {$I+}
@@ -739,6 +854,8 @@ begin
   if sps>0 then begin dbase:=true; docsum:=true; extout:=false; end;
   searchps('-missing',sps,result);
   if sps>0 then begin dbasemissing:=true; end;
+  searchps('-sort',sps,result);
+  if sps>0 then begin sort:=true; end;
   if docsum=false then l:=55 else l:=40;
   for pc:=1 to numpaths do
     begin
@@ -797,16 +914,34 @@ begin
                     rflag:=2;
                     matchcount:=matchcount+1;
                     getdbaseinfo(dbpos,result,resulthdr);
-                    if uscore=true then result:=uscvt(result);
+                    if (resulthdr.vs=1) and (resulthdr.pc10=1) then
+                      begin
+                        writeln('ERROR IN DATABASE 01 -- ',csumdbase[dbpos],' ',result); {Has both VS and PC10 bits set}
+                        halt;
+                      end;
                     nes.country:=resulthdr.country;
+                    nes.company:=resulthdr.company;
+                    if ccode=true then result:=result+countryi2s(nes.country);
+                    if remspace=true then result:=spcvt(result,2);
+                    if uscore=true then result:=spcvt(result,1);
                     cmp:=comparehdrs(nes,resulthdr);
                     if result+'.nes'<>dirinfo.name then namematch:=false else namematch:=true;
+                    if (namematch=false) and (rname=false) then
+                      begin
+                        rtmp:=result+countryi2s(nes.country);
+                        if spcvt(result,1)+'.nes'=dirinfo.name then namematch:=true else
+                        if spcvt(result,2)+'.nes'=dirinfo.name then namematch:=true else
+                        if rtmp+'.nes'=dirinfo.name then namematch:=true else
+                        if spcvt(rtmp,1)+'.nes'=dirinfo.name then namematch:=true else
+                        if spcvt(rtmp,2)+'.nes'=dirinfo.name then namematch:=true;
+                      end;
                     if (namematch=false) or (cmp=false) or (garbage=true) then rflag:=3;
                   end;
                 if dbase=false
                   then
                     begin
                       out:=formatoutput(dirinfo.name,nes,docsum,csum,rflag,l,view_bl);
+                      checksplit(out,out2);
                     end
                   else
                     begin
@@ -820,7 +955,12 @@ begin
                       out:=out+';'+i2s(nes.chr);
                     end;
                 writeln(out);
-                if outfile=true then writeln(ofile,out);
+                if out2<>'' then writeln(out2);
+                if outfile=true then
+                  begin
+                    writeln(ofile,out);
+                    if out2<>'' then writeln(ofile,out2);
+                  end;
                 if (dbpos>0) and (dbase=false) then
                   begin
                     if (repair=true) and ((cmp=false) or (garbage=true)) then
@@ -837,20 +977,39 @@ begin
                     if (extout=true) and ((cmp=false) or (namematch=false) or (garbage=true)) then
                       begin
                         out:=formatoutput(result,resulthdr,false,'',0,l,view_bl);
+                        checksplit(out,out2);
                         outm:='   Bad [----]';
                         if namematch=false then outm[9]:='N';
                         if cmp=false then outm[10]:='H';
                         if nes.other<>null8 then outm[11]:='G';
+                        if (nes.vs=1) and (nes.pc10=1) then outm[11]:='G';
                         if garbage=true then outm[12]:=+'F';
                         if (rname=true) and (namematch=false) then outm:='      Renamed';
                         if (repair=true) and (cmp=false) then outm:='     Repaired';
                         out:=out+outm;
-                        writeln(out); writeln;
+                        writeln(out);
+                        if out2<>'' then writeln(out2);
+                        writeln;
                         if outfile=true then
                           begin
                             writeln(ofile,out);
+                            if out2<>'' then writeln(ofile,out2);
                             writeln(ofile);
                           end;
+                      end;
+                    if sort=true then
+                      begin
+                        sortdir:='';
+                        if (nes.country=1) or (nes.country=5) then sortdir:='Japan\';
+                        if (nes.country=2) or (nes.country=3) or
+                           (nes.country=6) or (nes.country=7) then sortdir:='USA\';
+                        if nes.country=4 then sortdir:='Europe\';
+                        if nes.country=16 then sortdir:='Canada\';
+                        if nes.country=8 then sortdir:='Sweden\';
+                        if nes.country=0 then sortdir:='Unknown\';
+                        if (nes.country=99) or (nes.pc10=1) then sortdir:='Playchoice 10\';
+                        if (nes.country=98) or (nes.vs=1) then sortdir:='VS\';
+                        LFNMove(dirinfo.name,sortdir,errcode);
                       end;
                   end;
               end;
