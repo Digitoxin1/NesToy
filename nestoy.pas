@@ -1,5 +1,6 @@
 program NesToy;
 {$X+}
+{$M 40960,0,655360}
 uses
   dos,dos70,crc32c,crt,strings;
 
@@ -29,9 +30,23 @@ const
   null8=#0+#0+#0+#0+#0+#0+#0+#0;
   hdrstring='NES'+#26;
   dbasefile='ROMDBASE.DAT';
-  version='1.6b';
+  cfgfile='NESTOY.CFG';
+  missingfile='MISSING.TXT';
+  version='1.7b';
   maxsize:Word = 3000;
   SortType:updown = ascending;
+  dir_bad:string='Bad\';
+  dir_unknown:string='Unknown\';
+  dir_japan:string='Japan\';
+  dir_usa:string='USA\';
+  dir_europe:string='Europe\';
+  dir_sweden:string='Sweden\';
+  dir_canada:string='Canada\';
+  dir_unlicensed:string='Unlicensed\';
+  dir_vs:string='VS\';
+  dir_pc10:string='Playchoice 10\';
+  dir_dupes:string='Dupes\';
+  dir_repair:string='Repair\';
 
 var
   hdcsum:boolean;
@@ -314,46 +329,114 @@ begin
   if path='' then path:='.\';
 end;
 
-procedure LFNMove(sourcepath,destpath:string;var errcode:byte);
+function getsortdir(code:integer):string;
+begin
+  getsortdir:='';
+  case code of
+   -1:getsortdir:=dir_bad;
+    0:getsortdir:=dir_unknown;
+    1,5:getsortdir:=dir_japan;
+    2,3,6,7:getsortdir:=dir_usa;
+    4:getsortdir:=dir_europe;
+    8:getsortdir:=dir_sweden;
+    16:getsortdir:=dir_canada;
+    97:getsortdir:=dir_unlicensed;
+    98:getsortdir:=dir_vs;
+    99:getsortdir:=dir_pc10;
+  end;
+end;
+
+procedure getcrc(fname:string;var retcrc:string;var garbage:boolean);
+var
+  crc:longint;
+  f,result:word;
+  buf:array[1..16384] of byte;
+  ctr,g:integer;
+begin
+  garbage:=false;
+  g:=0;
+  crc:=crcseed;
+  f:=LFNOpenFile(fname,FA_NORMAL,OPEN_RDONLY,1);
+  if hdcsum=false then result:=lfnblockread(f,buf,16);
+  repeat
+    result:=lfnblockread(f,buf,sizeof(buf));
+    g:=result mod 8192;
+    if g=512 then g:=0;
+    if g>0 then garbage:=true;
+    for ctr:=1 to result-g do crc:=crc32(buf[ctr],crc);
+  until result=0;
+  LFNCloseFile(f);
+  crc:=crcend(crc);
+  retcrc:=crchex(crc);
+end;
+
+procedure LFNMove(sourcepath,destpath,crc:string;var errcode:byte);
 var
   sf,df,sresult,dresult,f:word;
   buf:array[1..16384] of byte;
   sp,sn,dp,dn:string;
   dirinfo:tfinddata;
-  existb:boolean;
+  existb,garbage:boolean;
   ctr:integer;
+  newcrc:string;
+
+procedure parsedp;
+begin
+  if copy(dp,1,2)='.\' then delete(dp,1,2);
+  if (dp[2]<>':') and (dp[1]<>'\') then dp:=cpath+dp;
+  if dp[1]='\' then dp:=copy(cpath,1,2)+dp;
+end;
+
 begin
   errcode:=0;
   ctr:=0;
   splitpath(sourcepath,sn,sp);
   splitpath(destpath,dn,dp);
-  if dn='' then dn:=sn;
-  if copy(dn,length(dn)-3,4)='.ne~' then dn[length(dn)]:='s';
-  sourcepath:=sp+sn;
-  destpath:=dp+dn;
-  f:=LFNFindFirst(dp,FA_DIR,FA_DIR,dirinfo);
-  if dos7error<>0 then LFNMkDir(copy(dp,1,length(dp)-1));
-  LFNFindClose(f);
-  sf:=LFNOpenFile(sourcepath,FA_RDONLY,OPEN_RDONLY,1);
-  repeat
-    ctr:=ctr+1;
-    existb:=exist(destpath);
-    if existb=true then
-      begin
-        if ctr<10 then delete(destpath,length(destpath),1);
-        if ctr>=10 then delete(destpath,length(destpath)-1,2);
-        destpath:=destpath+i2s(ctr);
-      end;
-  until existb=false;
-  df:=LFNCreateFile(destpath,FA_NORMAL,OPEN_WRONLY,1);
-  if errcode=0 then
-    repeat
-      sresult:=lfnblockread(sf,buf,sizeof(buf));
-      dresult:=lfnblockwrite(df,buf,sresult);
-    until (sresult=0) or (sresult<>dresult);
-    if dos7error=0 then LFNErase(sourcepath,FA_NORMAL,FA_NORMAL,False);
-  LFNCloseFile(df);
-  LFNCloseFile(sf);
+  sp:=getlongpathname(sp,false);
+  parsedp;
+  if upcasestr(sp)<>upcasestr(dp) then
+    begin
+      if dn='' then dn:=sn;
+      if copy(dn,length(dn)-3,4)='.ne~' then dn[length(dn)]:='s';
+      sourcepath:=sp+sn;
+      destpath:=dp+dn;
+      if crc<>'' then
+        if exist(destpath) then
+          begin
+            getcrc(destpath,newcrc,garbage);
+            if newcrc=crc then
+              begin
+                dp:=dir_dupes;
+                parsedp;
+                destpath:=dp+dn;
+              end;
+          end;
+      f:=LFNFindFirst(dp,FA_DIR,FA_DIR,dirinfo);
+      if dos7error<>0 then LFNMkDir(copy(dp,1,length(dp)-1));
+      LFNFindClose(f);
+      sf:=LFNOpenFile(sourcepath,FA_RDONLY,OPEN_RDONLY,1);
+      repeat
+        ctr:=ctr+1;
+        existb:=exist(destpath);
+        if existb=true then
+          begin
+            if ctr<10 then delete(destpath,length(destpath),1);
+            if ctr>=10 then delete(destpath,length(destpath)-1,2);
+            destpath:=destpath+i2s(ctr);
+          end;
+      until existb=false;
+      df:=LFNCreateFile(destpath,FA_NORMAL,OPEN_WRONLY,1);
+      if dos7error<>0 then errcode:=1;
+      if errcode=0 then
+        repeat
+          sresult:=lfnblockread(sf,buf,sizeof(buf));
+          dresult:=lfnblockwrite(df,buf,sresult);
+        until (sresult=0) or (sresult<>dresult);
+        if dos7error=0 then LFNErase(sourcepath,FA_NORMAL,FA_NORMAL,False)
+                       else errcode:=1;
+      LFNCloseFile(df);
+      LFNCloseFile(sf);
+    end else errcode:=1;
 end;
 
 procedure GetNesHdr(var nh:neshdr;hdr:string);
@@ -453,30 +536,6 @@ begin
   if found=true then fnd:=mid;
 end;
 
-procedure getcrc(fname:string;var retcrc:string;var garbage:boolean);
-var
-  crc:longint;
-  f,result:word;
-  buf:array[1..16384] of byte;
-  ctr,g:integer;
-begin
-  garbage:=false;
-  g:=0;
-  crc:=crcseed;
-  f:=LFNOpenFile(fname,FA_NORMAL,OPEN_RDONLY,1);
-  if hdcsum=false then result:=lfnblockread(f,buf,16);
-  repeat
-    result:=lfnblockread(f,buf,sizeof(buf));
-    g:=result mod 8192;
-    if g=512 then g:=0;
-    if g>0 then garbage:=true;
-    for ctr:=1 to result-g do crc:=crc32(buf[ctr],crc);
-  until result=0;
-  LFNCloseFile(f);
-  crc:=crcend(crc);
-  retcrc:=crchex(crc);
-end;
-
 procedure checkbanks(fname:string;prg:integer;chr:integer;var newprg:byte;var newchr:byte);
 var
   prgcrc:array[1..128] of string[8];
@@ -559,7 +618,7 @@ begin
   readneshdr:=hdr;
 end;
 
-procedure WriteNesHdr(fname:string;nhdr:neshdr;errcode:byte);
+procedure WriteNesHdr(fname:string;nhdr:neshdr;var errcode:byte);
 var
   f,f2,result,result2:word;
   hdr:array[1..16] of char;
@@ -569,7 +628,7 @@ var
   rfname:string;
 begin
   rfname:=fname;
-  if copy(rfname,length(fname)-3,1)='.' then rfname:=copy(fname,1,length(fname)-4);
+  if copy(rfname,length(rfname)-3,1)='.' then rfname:=copy(rfname,1,length(rfname)-4);
   rfname:=rfname+'.ba~';
   LFNRename(fname,rfname);
   errcode:=dos7error;
@@ -593,7 +652,7 @@ begin
     end;
 end;
 
-procedure CropRom(fname:string;nhdr:neshdr;var prg:byte;var chr:byte;newprg:byte;newchr:byte;errcode:byte);
+procedure CropRom(fname:string;nhdr:neshdr;var prg:byte;var chr:byte;newprg:byte;newchr:byte;var errcode:byte);
 var
   f,f2,result,result2:word;
   hdr:array[1..16] of char;
@@ -604,7 +663,7 @@ var
   rfname:string;
 begin
   rfname:=fname;
-  if copy(rfname,length(fname)-3,1)='.' then rfname:=copy(fname,1,length(fname)-4);
+  if copy(rfname,length(rfname)-3,1)='.' then rfname:=copy(rfname,1,length(rfname)-4);
   rfname:=rfname+'.ba~';
   LFNRename(fname,rfname);
   errcode:=dos7error;
@@ -666,6 +725,74 @@ var
 begin
   for counter:=count downto 1 do
     strdispose(dirarray[counter]);
+end;
+
+function removespaces(instr:string):string;
+begin
+  while instr[1]=' ' do delete(instr,1,1);
+  while instr[length(instr)]=' ' do delete(instr,length(instr),1);
+  if instr[1]='"' then
+    begin
+      delete(instr,1,1);
+      if instr[length(instr)]='"' then delete(instr,length(instr),1);
+    end;
+  removespaces:=instr;
+end;
+
+procedure loadcfgfile;
+var
+  f:text;
+  s,s2:string;
+  p:integer;
+begin
+  assign(f,progpath+cfgfile);
+  {$I-}
+  reset(f);
+  {$I+}
+  if ioresult>0 then
+    begin
+      rewrite(f);
+      writeln(f,'DIR_BAD = ',dir_bad);
+      writeln(f,'DIR_CANADA = ',dir_canada);
+      writeln(f,'DIR_DUPLICATES = ',dir_dupes);
+      writeln(f,'DIR_EUROPE = ',dir_europe);
+      writeln(f,'DIR_JAPAN = ',dir_japan);
+      writeln(f,'DIR_PC10 = ',dir_pc10);
+      writeln(f,'DIR_SWEDEN = ',dir_sweden);
+      writeln(f,'DIR_UNKNOWN = ',dir_unknown);
+      writeln(f,'DIR_UNLICENSED = ',dir_unlicensed);
+      writeln(f,'DIR_USA = ',dir_usa);
+      writeln(f,'DIR_VS = ',dir_vs);
+      close(f);
+    end else
+    begin
+      while not eof(f) do
+        begin
+          readln(f,s);
+          p:=pos('=',s);
+          if p>0 then
+            begin
+              s2:=copy(s,p+1,length(s)-p);
+              s2:=removespaces(s2);
+              s:=copy(s,1,p-1);
+              s:=removespaces(s);
+              s:=upcasestr(s);
+              if s2[length(s2)]<>'\' then s2:=s2+'\';
+              if s='DIR_BAD' then dir_bad:=s2;
+              if s='DIR_CANADA' then dir_canada:=s2;
+              if s='DIR_DUPLICATES' then dir_dupes:=s2;
+              if s='DIR_EUROPE' then dir_europe:=s2;
+              if s='DIR_JAPAN' then dir_japan:=s2;
+              if s='DIR_PC10' then dir_pc10:=s2;
+              if s='DIR_SWEDEN' then dir_sweden:=s2;
+              if s='DIR_UNKNOWN' then dir_unknown:=s2;
+              if s='DIR_UNLICENSED' then dir_unlicensed:=s2;
+              if s='DIR_USA' then dir_usa:=s2;
+              if s='DIR_VS' then dir_vs:=s2;
+            end;
+        end;
+      close(f);
+    end;
 end;
 
 procedure loaddbase;
@@ -765,22 +892,19 @@ begin
     end;
   if docsum=true then
     begin
-      if (minfo.vs=0) and (minfo.pc10=0) then
-        begin
-          if minfo.country=0 then out:=out+' ???';
-          if minfo.country=1 then out:=out+' '+'J  ';
-          if minfo.country=2 then out:=out+' '+' U ';
-          if minfo.country=3 then out:=out+' '+'JU ';
-          if minfo.country=4 then out:=out+' '+'  E';
-          if minfo.country=5 then out:=out+' '+'J E';
-          if minfo.country=6 then out:=out+' '+' UE';
-          if minfo.country=7 then out:=out+' '+'JUE';
-          if minfo.country=8 then out:=out+' '+'  S';
-          if minfo.country=16 then out:=out+' '+' C ';
-          if minfo.country=97 then out:=out+' '+'Unl';
-        end;
-      if (minfo.country=98) or (minfo.vs=1) then out:=out+' '+'VS ';
-      if (minfo.country=99) or (minfo.pc10=1) then out:=out+' '+'P10';
+      if minfo.country=0 then out:=out+' ???';
+      if minfo.country=1 then out:=out+' '+'J  ';
+      if minfo.country=2 then out:=out+' '+' U ';
+      if minfo.country=3 then out:=out+' '+'JU ';
+      if minfo.country=4 then out:=out+' '+'  E';
+      if minfo.country=5 then out:=out+' '+'J E';
+      if minfo.country=6 then out:=out+' '+' UE';
+      if minfo.country=7 then out:=out+' '+'JUE';
+      if minfo.country=8 then out:=out+' '+'  S';
+      if minfo.country=16 then out:=out+' '+' C ';
+      if minfo.country=97 then out:=out+' '+'Unl';
+      if minfo.country=98 then out:=out+' '+'VS ';
+      if minfo.country=99 then out:=out+' '+'P10';
     end;
   if docsum=true then out:=out+' '+csum;
   if split=true then out:=out+#27+'     '+fname2;
@@ -820,7 +944,7 @@ begin
   comparehdrs:=tbool;
 end;
 
-procedure cleanrn(rn,rp:integer);
+procedure cleanrn(rn:integer);
 var
   f:word;
   DirInfo:SearchRec;
@@ -838,18 +962,66 @@ begin
           FindNext(DirInfo);
         end;
     end;
-  if rp>0 then
+end;
+
+procedure parsemissing(missingpath:string);
+var
+  f2:text;
+  flags:array[1..2500] of boolean;
+  ctr,result:integer;
+  s:string;
+begin
+  for ctr:=1 to dbasecount do
+    flags[ctr]:=false;
+  assign(f2,missingpath);
+  reset(f2);
+  while not eof(f2) do
     begin
-      findfirst('*.ba~',Archive,DirInfo);
-      while DosError = 0 do
+      readln(f2,s);
+      s:=copy(s,70,8);
+      searchdbase(s,result);
+      if result>0 then flags[result]:=true;
+    end;
+  close(f2);
+  for ctr:=1 to dbasecount do
+    if flags[ctr]=false then csumdbase[ctr].flag:=true;
+end;
+
+function shortparse(name:string;shorten:boolean):string;
+var
+  n1,n2:string;
+  p,p2,t:integer;
+begin
+  n1:='';
+  n2:='';
+  t:=0;
+  p:=pos('<',name);
+  if p>0 then
+    begin
+      delete(name,p,1);
+      if shorten=true then
         begin
-          s:=getlongpathname(dirinfo.name,false);
-          s:=copy(s,1,length(s)-4)+'.bak';
-          splitpath(s,fs,ps);
-          LFNMove(DirInfo.name,'Backup\'+fs,errcode);
-          FindNext(DirInfo);
+          n1:=copy(name,1,p-1);
+          delete(name,1,p-1);
+          p2:=pos(',',name);
+          if p2=0 then
+            begin
+              p2:=pos('(',name);
+              if p2>0 then n1:=n1+' ';
+            end;
+          if p2>0 then
+            n2:=copy(name,p2,length(name)-p2+1);
+          name:=n1+n2;
         end;
     end;
+  p:=pos('>',name);
+  if p>0 then
+    begin
+      delete(name,p,1);
+      if shorten=true then
+        name:=copy(name,p,length(name)-p+1);
+    end;
+  shortparse:=name;
 end;
 
 procedure listmissing;
@@ -865,24 +1037,28 @@ var
   dbasearray:array[1..2500] of pchar;
   charout:array[0..255] of char;
   volinfo:tvolinfo;
+  missingpath:string;
+
 begin
   acount:=0;
   badcount:=0;
   getvolumeinformation(copy(cpath,1,3),volinfo);
-  if volinfo.FSName='CDFS' then assign(f2,progpath+'\MISSING.TXT')
-                           else assign(f2,cpath+'\MISSING.TXT');
+  if volinfo.FSName='CDFS' then missingpath:=progpath+'\'+missingfile
+                           else missingpath:=cpath+'\'+missingfile;
+  assign(f2,missingpath);
   {$I-}
   reset(f2);
   io:=ioresult;
-  if io>0 then rewrite(f2) else append(f2);
+  if io>0 then rewrite(f2) else
+    begin
+      close(f2);
+      parsemissing(missingpath);
+      rewrite(f2);
+    end;
   io2:=ioresult;
   {$I+}
   if io2=0 then
     begin
-      if io=0 then begin
-                     writeln(f2);
-                     writeln(f2,'------------------------------------------------------------------------------');
-                   end;
       assign(f,progpath+dbasefile);
       reset(f);
       for c:=1 to dbasecount do
@@ -898,6 +1074,7 @@ begin
                   fn:=copy(ts,1,p-1);
                   delete(ts,1,p);
                 end;
+              fn:=shortparse(fn,false);
               if pos('(Bad Dump)',fn)>0 then badcount:=badcount+1;
               if pos('(Bad Dump)',fn)=0 then
                 begin
@@ -946,8 +1123,8 @@ begin
     begin
       writeln;
       write('Error: Cannot create ');
-      if volinfo.FSName='CDFS' then writeln(progpath,'MISSING.TXT')
-                               else writeln(cpath,'MISSING.TXT');
+      if volinfo.FSName='CDFS' then writeln(progpath,missingfile)
+                               else writeln(cpath,missingfile);
     end;
 end;
 
@@ -997,7 +1174,7 @@ if t=1 then
     writeln('                  v- Vertical Mirroring       4- 4 Screen Buffer');
     writeln('                  b- Contains SRAM (Battery backup)');
     writeln('-u             Only display unknown roms (enables -c)');
-    writeln('-missing       Creates a list of missing roms in MISSING.TXT');
+    writeln('-missing       Creates a list of missing roms in ',missingfile);
     pause;
     writeln('-doall         Enables -c,-i,-ren,-repair,-resize,-sort, and -missing');
     writeln('-h,-?,-help    Displays this screen');
@@ -1032,8 +1209,8 @@ var
   fcpos:integer;
   docsum,show,show_h,show_v,show_b,show_4,show_t,view_bl,outfile,extout,unknown:boolean;
   rname,namematch,dbase,repair,cmp,abort,dbasemissing,garbage,sort:boolean;
-  uscore,ccode,remspace,dupe,notrenamed,notrepaired,cropped,resize:boolean;
-  booltemp,badrom:boolean;
+  uscore,ccode,remspace,notrenamed,notrepaired,cropped,resize,sorted:boolean;
+  booltemp,badrom,dupe,shortname:boolean;
   result,rtmp:string;
   key:char;
   out,out2:string;
@@ -1043,6 +1220,7 @@ var
   name:string;
   volinfo:tvolinfo;
   newprg,newchr:byte;
+  sortcode:integer;
 
 begin
   checkbreak:=false;
@@ -1051,6 +1229,7 @@ begin
   while copy(progpath,length(progpath),1)<>'\' do
     delete(progpath,length(progpath),1);
   loaddbase;
+  loadcfgfile;
   cpath:=getfullpathname('.\',false);
   pathname:='';
   out2:='';
@@ -1082,6 +1261,7 @@ begin
   dbasemissing:=false;
   sort:=false;
   dupe:=false;
+  shortname:=false;
   msearch:=-1;
   if extparamcount=0 then usage(0);
   searchps('-h',sps,result);
@@ -1132,6 +1312,8 @@ begin
       if pos('S',result)>0 then remspace:=true;
       if pos('C',result)>0 then ccode:=true;
     end;
+  searchps('-sn',sps,result);
+  if sps>0 then shortname:=true;
   searchps('-o*',sps,result);
   if sps>0 then
     begin
@@ -1170,9 +1352,9 @@ begin
   searchps('-u',sps,result);
   if sps>0 then begin unknown:=true; docsum:=true; end;
   searchps('-missing',sps,result);
-  if sps>0 then begin dbasemissing:=true; docsum:=true end;
+  if sps>0 then begin dbasemissing:=true; docsum:=true; end;
   searchps('-sort',sps,result);
-  if sps>0 then begin sort:=true; docsum:=true end;
+  if sps>0 then begin sort:=true; docsum:=true; end;
   searchps('-doall',sps,result);
   if sps>0 then begin
                   docsum:=true; rname:=true; repair:=true; resize:=true; extout:=true;
@@ -1220,6 +1402,7 @@ begin
             notrepaired:=false;
             cropped:=false;
             badrom:=false;
+            sorted:=false;
             fcpos:=0;
             if copy(Name,length(Name)-3,4)='.ne~' then show:=false;
             if copy(Name,length(Name)-3,4)='.ba~' then show:=false;
@@ -1253,11 +1436,13 @@ begin
                             CropRom(Name,nes,nes.prg,nes.chr,newprg,newchr,errcode);
                             if errcode=0 then
                               begin
+                                if copy(name,length(name)-3,1)='.' then rtmp:=copy(name,1,length(name)-4);
+                                LFNMove(rtmp+'.ba~','Backup\'+rtmp+'.bak','',errcode);
                                 rscount:=rscount+1;
                                 cropped:=true;
                                 getcrc(Name,csum,garbage);
                                 searchdbase(csum,dbpos);
-                              end;
+                              end else notrepaired:=true;
                           end;
                       end;
                   end;
@@ -1269,6 +1454,8 @@ begin
                     if (nes.chr<>0) and (nes.chr<>1) and (nes.chr<>2) and (nes.chr<>4) and
                        (nes.chr<>8) and (nes.chr<>16) and (nes.chr<>32) and (nes.chr<>64) and
                        (nes.chr<>128) then badrom:=true;
+                    if nes.vs=1 then nes.country:=98;
+                    if nes.pc10=1 then nes.country:=99;
                   end;
                 if dbpos>0 then
                   begin
@@ -1288,6 +1475,7 @@ begin
                     rflag:=2;
                     matchcount:=matchcount+1;
                     getdbaseinfo(dbpos,result,resulthdr);
+                    result:=shortparse(result,shortname);
                     if pos('(Bad Dump)',result)>0 then badrom:=true;
                     if (resulthdr.vs=1) and (resulthdr.pc10=1) then
                       begin
@@ -1344,6 +1532,8 @@ begin
                       out:=out+';'+i2s(nes.prg);
                       out:=out+';'+i2s(nes.chr);
                     end;
+                sortcode:=nes.country;
+                if badrom=true then sortcode:=-1;
                 writeln(out);
                 if out2<>'' then writeln(out2);
                 if outfile=true then
@@ -1356,10 +1546,15 @@ begin
                     if (repair=true) and ((cmp=false) or (garbage=true)) then
                       begin
                         WriteNesHdr(name,resulthdr,errcode);
-                        if errcode=0 then rpcount:=rpcount+1;
+                        if errcode=0 then
+                          begin
+                            rpcount:=rpcount+1;
+                            if copy(name,length(name)-3,1)='.' then rtmp:=copy(name,1,length(name)-4);
+                            LFNMove(rtmp+'.ba~','Backup\'+rtmp+'.bak','',errcode);
+                          end;
                         if errcode>0 then notrepaired:=true;
                       end;
-                    if (rname=true) and (dupe=false) then
+                    if (rname=true) and (dupe=false) and (sort=false) then
                       if result+'.nes'<>name then
                         begin
                           booltemp:=false;
@@ -1376,8 +1571,16 @@ begin
                               errcode:=dos7error;
                               if errcode=0 then name:=result+'.ne~';
                             end;
-                          if errcode=0 then rncount:=rncount+1;
-                          if errcode>0 then notrenamed:=true;
+                          if errcode=0 then rncount:=rncount+1 else notrenamed:=true;
+                        end;
+                    if (rname=true) and (dupe=false) and (sort=true) then
+                      if result+'.nes'<>name then
+                        begin
+                           sorted:=true;
+                           sortdir:=getsortdir(sortcode);
+                           if notrepaired=true then sortdir:=dir_repair;
+                           LFNMove(name,sortdir+result+'.nes',csum,errcode);
+                           if errcode=0 then rncount:=rncount+1 else notrenamed:=true;
                         end;
                     if (extout=true) and ((cmp=false) or (namematch=false) or (garbage=true)) then
                       begin
@@ -1408,26 +1611,20 @@ begin
                       end;
                   end;
                 if dupe=true then
-                  LFNMove(name,'Dupes\',errcode);
-                if (sort=true) and (dupe=false) then
+                  if (rname=true) and (result+'.nes'<>name) then
+                    begin
+                      LFNMove(name,dir_dupes+result+'.nes','',errcode);
+                      if errcode=0 then rncount:=rncount+1;
+                    end else LFNMove(name,dir_dupes,'',errcode);
+                if (sort=true) and (dupe=false) and (sorted=false) then
                   begin
-                    sortdir:='';
-                    if (nes.country=1) or (nes.country=5) then sortdir:='Japan\';
-                    if (nes.country=2) or (nes.country=3) or
-                       (nes.country=6) or (nes.country=7) then sortdir:='USA\';
-                    if nes.country=4 then sortdir:='Europe\';
-                    if nes.country=16 then sortdir:='Canada\';
-                    if nes.country=8 then sortdir:='Sweden\';
-                    if nes.country=0 then sortdir:='Unknown\';
-                    if nes.country=97 then sortdir:='Unlicensed\';
-                    if (nes.country=99) or (nes.pc10=1) then sortdir:='Playchoice 10\';
-                    if (nes.country=98) or (nes.vs=1) then sortdir:='VS\';
-                    if badrom=true then sortdir:='Bad\';
-                    LFNMove(name,sortdir,errcode);
+                    sortdir:=getsortdir(sortcode);
+                    if notrepaired=true then sortdir:=dir_repair;
+                    LFNMove(name,sortdir,csum,errcode);
                   end;
               end;
           end;
-        if (rncount>0) or (rpcount>0) or (rscount>0) then cleanrn(rncount,rpcount+rscount);
+        if rncount>0 then cleanrn(rncount);
         LFNChDir(cpath);
       end;
       readdirclose(f);
