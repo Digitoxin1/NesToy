@@ -29,7 +29,7 @@ const
   null8=#0+#0+#0+#0+#0+#0+#0+#0;
   hdrstring='NES'+#26;
   dbasefile='ROMDBASE.DAT';
-  version='1.3b';
+  version='1.4b';
   maxsize:Word = 3000;
   SortType:updown = ascending;
 
@@ -450,7 +450,6 @@ procedure getcrc(fname:string;var retcrc:string;var garbage:boolean);
 var
   crc:longint;
   f,result:word;
-  fn:file;
   buf:array[1..16384] of byte;
   ctr,g:integer;
 begin
@@ -469,6 +468,77 @@ begin
   LFNCloseFile(f);
   crc:=crcend(crc);
   retcrc:=crchex(crc);
+end;
+
+procedure checkbanks(fname:string;prg:integer;chr:integer;var newprg:byte;var newchr:byte);
+var
+  prgcrc:array[1..128] of string[8];
+  chrcrc:array[1..128] of string[8];
+  crc:longint;
+  f,result:word;
+  fn:file;
+  buf1:array[1..16384] of byte;
+  buf2:array[1..8192] of byte;
+  ctr,ctr2:integer;
+  prgmatch,chrmatch:boolean;
+begin
+  if prg>128 then prg:=128;
+  if chr>128 then chr:=128;
+  prgmatch:=true;
+  chrmatch:=true;
+  f:=LFNOpenFile(fname,FA_NORMAL,OPEN_RDONLY,1);
+  result:=lfnblockread(f,buf1,16);
+  if prg>1 then
+    for ctr:=1 to prg do
+      begin
+        crc:=crcseed;
+        result:=lfnblockread(f,buf1,sizeof(buf1));
+        for ctr2:=1 to result do crc:=crc32(buf1[ctr2],crc);
+        crc:=crcend(crc);
+        prgcrc[ctr]:=crchex(crc);
+      end;
+  if chr>1 then
+    for ctr:=1 to chr do
+      begin
+        crc:=crcseed;
+        result:=lfnblockread(f,buf2,sizeof(buf2));
+        for ctr2:=1 to result do crc:=crc32(buf2[ctr2],crc);
+        crc:=crcend(crc);
+        chrcrc[ctr]:=crchex(crc);
+      end;
+  LFNCloseFile(f);
+  if (prg>1) and (prg mod 2=0) then
+    begin
+      prg:=prg div 2;
+      ctr:=0;
+      repeat
+        if (ctr=prg) and (prgmatch=true) then
+          begin
+            ctr:=0;
+            prg:=prg div 2;
+          end;
+        ctr:=ctr+1;
+        if prgcrc[ctr]<>prgcrc[ctr+prg] then prgmatch:=false;
+      until (prgmatch=false) or (prg=1);
+      if (prg=1) and (prgmatch=true) then prg:=1 else prg:=prg*2;
+    end;
+  if (chr>1) and (chr mod 2=0) then
+    begin
+      chr:=chr div 2;
+      ctr:=0;
+      repeat
+        if (ctr=chr) and (chrmatch=true) then
+          begin
+            ctr:=0;
+            chr:=chr div 2;
+          end;
+        ctr:=ctr+1;
+        if chrcrc[ctr]<>chrcrc[ctr+chr] then chrmatch:=false;
+      until (chrmatch=false) or (chr=1);
+      if (chr=1) and (chrmatch=true) then chr:=1 else chr:=chr*2;
+    end;
+  newprg:=prg;
+  newchr:=chr;
 end;
 
 function ReadNesHdr(fname:string):string;
@@ -513,6 +583,48 @@ begin
       until (result2=0) or (result<>result2);
       LFNCloseFile(f);
       LFNCloseFile(f2);
+    end;
+end;
+
+procedure CropRom(fname:string;nhdr:neshdr;var prg:byte;var chr:byte;newprg:byte;newchr:byte;errcode:byte);
+var
+  f,f2,result,result2:word;
+  hdr:array[1..16] of char;
+  buf:array[1..16384] of char;
+  buf2:array[1..8192] of char;
+  tstr:string[16];
+  c:integer;
+  rfname:string;
+begin
+  rfname:=fname;
+  if copy(rfname,length(fname)-3,1)='.' then rfname:=copy(fname,1,length(fname)-4);
+  rfname:=rfname+'.ba~';
+  LFNRename(fname,rfname);
+  errcode:=dos7error;
+  if errcode=0 then
+    begin
+      f:=LFNOpenFile(fname,FA_NORMAL,OPEN_WRONLY+OPEN_AUTOCREATE,1);
+      f2:=LFNOpenFile(rfname,FA_NORMAL,OPEN_RDONLY,1);
+      nhdr.prg:=newprg;
+      nhdr.chr:=newchr;
+      tstr:=setneshdr(nhdr);
+      for c:=1 to 16 do hdr[c]:=tstr[c];
+      result:=lfnblockwrite(f,hdr,16);
+      result2:=lfnblockread(f2,hdr,16);
+      for c:=1 to prg do
+        begin
+          result2:=lfnblockread(f2,buf,sizeof(buf));
+          if c<=newprg then result:=lfnblockwrite(f,buf,result2);
+        end;
+      for c:=1 to chr do
+        begin
+          result2:=lfnblockread(f2,buf2,sizeof(buf2));
+          if c<=newchr then result:=lfnblockwrite(f,buf2,result2);
+        end;
+      LFNCloseFile(f);
+      LFNCloseFile(f2);
+      prg:=newprg;
+      chr:=newchr;
     end;
 end;
 
@@ -850,6 +962,8 @@ if t=1 then
     writeln('                  s- Remove spaces completely from filename');
     writeln('                  c- Attach country codes to end of filenames');
     writeln('-rep,-repair   Repairs rom headers with those found in database (enables -c)');
+    writeln('-res,-resize   Automatically resizes roms if they contain duplicate banks');
+    writeln('               of data.');
     writeln('-m#            Filter listing by mapper #');
     writeln('-f[hvbt4]      Filter listing by mapper data');
     writeln('                  h- Horizontal Mirroring     t- Trainer Present');
@@ -858,9 +972,9 @@ if t=1 then
     writeln('-u             Only display unknown roms (enables -c)');
     writeln('-missing       Creates a list of missing roms in MISSING.TXT');
     writeln('-sort          Sorts ROMS into directories by country or type');
+    pause;
     writeln('-h,-?,-help    Displays this screen');
     writeln;
-    pause;
     writeln('Filename can include wildcards (*,?) anywhere inside the filename.  Long');
     writeln('file names are allowed.  If no filename is given, (*.nes) is assumed.');
     writeln('Up to 12 different pathnames may be specified.');
@@ -882,15 +996,15 @@ var
   f:word;
   h,ns,csum:string;
   clfname,pathname,sortdir:string;
-  nes,resulthdr:NesHdr;
+  nes,oldnes,resulthdr:NesHdr;
   byte7,byte8:byte;
   l,ctr,csumpos,sps,err:integer;
   msearch,rflag,counter:integer;
-  romcount,matchcount,rncount,rpcount:integer;
+  romcount,matchcount,rncount,rpcount,rscount:integer;
   dbpos,io,pc:integer;
   docsum,show,show_h,show_v,show_b,show_4,show_t,view_bl,outfile,extout,unknown:boolean;
   rname,namematch,dbase,repair,cmp,abort,dbasemissing,garbage,sort:boolean;
-  uscore,ccode,remspace,dupe,notrenamed,notrepaired:boolean;
+  uscore,ccode,remspace,dupe,notrenamed,notrepaired,cropped,resize:boolean;
   result,rtmp:string;
   key:char;
   out,out2:string;
@@ -899,6 +1013,7 @@ var
   errcode:byte;
   name:string;
   volinfo:tvolinfo;
+  newprg,newchr:byte;
 
 begin
   checkbreak:=false;
@@ -923,6 +1038,7 @@ begin
   matchcount:=0;
   rncount:=0;
   rpcount:=0;
+  rscount:=0;
   docsum:=false;
   hdcsum:=false;
   rname:=false;
@@ -932,6 +1048,7 @@ begin
   unknown:=false;
   dbase:=false;
   repair:=false;
+  resize:=false;
   abort:=false;
   dbasemissing:=false;
   sort:=false;
@@ -1015,6 +1132,10 @@ begin
   if sps>0 then begin repair:=true; extout:=true; docsum:=true end;
   searchps('-repair',sps,result);
   if sps>0 then begin repair:=true; extout:=true; docsum:=true end;
+  searchps('-res',sps,result);
+  if sps>0 then begin resize:=true; extout:=true; docsum:=true; end;
+  searchps('-resize',sps,result);
+  if sps>0 then begin resize:=true; extout:=true; docsum:=true; end;
   searchps('-i',sps,result);
   if sps>0 then begin extout:=true; docsum:=true; end;
   searchps('-u',sps,result);
@@ -1060,6 +1181,7 @@ begin
             dupe:=false;
             notrenamed:=false;
             notrepaired:=false;
+            cropped:=false;
             if copy(Name,length(Name)-3,4)='.ne~' then show:=false;
             if copy(Name,length(Name)-3,4)='.ba~' then show:=false;
             h:=ReadNesHdr(Name);
@@ -1075,6 +1197,22 @@ begin
               begin
                 getcrc(Name,csum,garbage);
                 searchdbase(csum,dbpos);
+                if (dbpos=0) and (resize=true) then
+                  begin
+                    checkbanks(Name,nes.prg,nes.chr,newprg,newchr);
+                    if (nes.prg<>newprg) or (nes.chr<>newchr) then
+                      begin
+                        oldnes:=nes;
+                        CropRom(Name,nes,nes.prg,nes.chr,newprg,newchr,errcode);
+                        if errcode=0 then
+                          begin
+                            rscount:=rscount+1;
+                            cropped:=true;
+                            getcrc(Name,csum,garbage);
+                            searchdbase(csum,dbpos);
+                          end;
+                      end;
+                  end;
                 if dbpos>0 then
                   begin
                     if csumdbase[dbpos].flag=true then dupe:=true;
@@ -1120,6 +1258,18 @@ begin
                 if dbase=false
                   then
                     begin
+                      if cropped=true then
+                        begin
+                          out:=formatoutput(name,oldnes,docsum,' Resized',1,l,view_bl);
+                          checksplit(out,out2);
+                          writeln(out);
+                          if out2<>'' then writeln(out2);
+                          if outfile=true then
+                            begin
+                              writeln(ofile,out);
+                              if out2<>'' then writeln(ofile,out2);
+                            end;
+                        end;
                       out:=formatoutput(name,nes,docsum,csum,rflag,l,view_bl);
                       checksplit(out,out2);
                     end
@@ -1214,7 +1364,7 @@ begin
                   end;
               end;
           end;
-        if (rname=true) or (repair=true) then cleanrn(rncount,rpcount);
+        if (rncount>0) or (rpcount>0) or (rscount>0) then cleanrn(rncount,rpcount+rscount);
         LFNChDir(cpath);
       end;
       readdirclose(f);
@@ -1223,6 +1373,7 @@ begin
   if matchcount>0 then writeln(matchcount,' roms found in database');
   if rpcount>0 then writeln(rpcount, ' roms repaired');
   if rncount>0 then writeln(rncount, ' roms renamed');
+  if rscount>0 then writeln(rscount, ' roms resized');
   if (outfile=true) and (dbase=false) then
     begin
       if romcount=0 then writeln(ofile,'No roms found')
@@ -1230,6 +1381,7 @@ begin
       if matchcount>0 then writeln(ofile,matchcount,' roms found in database');
       if rpcount>0 then writeln(ofile,rpcount, ' roms repaired');
       if rncount>0 then writeln(ofile,rncount, ' roms renamed');
+      if rscount>0 then writeln(ofile,rscount, ' roms resized');
     end;
   if outfile=true then close(ofile);
   if dbasemissing=true then listmissing;
