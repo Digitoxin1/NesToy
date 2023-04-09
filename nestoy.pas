@@ -3,6 +3,10 @@ program NesToy;
 {$M 40960,0,655360}
 uses
   dos,dos70,crc32new,crt,strings;
+const
+  maxdbasesize=3000;
+  maxdirsize=4000;
+  maxpathnames=50;
 
 type
   neshdr=record
@@ -17,13 +21,13 @@ type
            vs:byte;            {VS.}
            pc10:byte;          {Playchoice-10}
            other:string[8];    {Misc. Header Bytes {Should be $00's)}
-           country:byte;       {Country Code (Not in header)}
+           country:integer;    {Country Code (Not in header)}
            company:string[25]; {Company (Not in header)}
          end;
   updown   = (ascending,descending);
   dataType = array[0..255] of char;     { the Type of data to be sorted }
   dataptr  = ^dataType;
-  ptrArray = Array[1..4000] of dataptr;
+  ptrArray = Array[1..maxdirsize] of dataptr;
   Arrayptr = ^ptrArray;
 
 const
@@ -32,45 +36,47 @@ const
   dbasefile='NESDBASE.DAT';
   cfgfile='NESTOY.CFG';
   missingfile='MISSING.TXT';
-  version='2.3b';
-  maxsize:Word = 4000;
+  version='2.4b';
   SortType:updown = ascending;
   extparamst:string='';
   dir_bad:string='Bad\';
-  dir_unknown:string='Unknown\';
-  dir_japan:string='Japan\';
-  dir_usa:string='USA\';
-  dir_europe:string='Europe\';
-  dir_sweden:string='Sweden\';
   dir_canada:string='Canada\';
   dir_china:string='China\';
-  dir_unlicensed:string='Unlicensed\';
-  dir_vs:string='VS\';
-  dir_pc10:string='Playchoice 10\';
   dir_dupes:string='Dupes\';
-  dir_repair:string='Repair\';
-  dir_trans:string='Translated\';
+  dir_europe:string='Europe\';
+  dir_gamehacks:string='Game Hacks\';
   dir_hacked:string='Hacked\';
+  dir_japan:string='Japan\';
+  dir_maphacks:string='Mapper Hacks\';
+  dir_pc10:string='Playchoice 10\';
   dir_pirate:string='Pirate\';
+  dir_repair:string='Repair\';
+  dir_sweden:string='Sweden\';
+  dir_trans:string='Translated\';
+  dir_unknown:string='Unknown\';
+  dir_unlicensed:string='Unlicensed\';
+  dir_usa:string='USA\';
+  dir_vs:string='VS Unisystem\';
   move_bad:boolean=true;
   move_hacked:boolean=true;
   move_pirate:boolean=true;
   missing_bad:boolean=false;
+  missing_gamehacks:boolean=true;
   missing_hacked:boolean=true;
   missing_pirate:boolean=true;
-  missing_trans:boolean=false;
+  missing_trans:boolean=true;
 
 var
   hdcsum:boolean;
-  csumdbase:array[1..2500] of record
-                                str:string[8];
-                                flag:boolean;
-                                resize:integer;
-                              end;
-  dirarray:array[1..4000] of pchar;
+  csumdbase:array[1..maxdbasesize] of record
+                                        str:pchar;
+                                        flag:boolean;
+                                        resize:integer;
+                                      end;
+  dirarray:array[1..maxdirsize] of pchar;
   FCPrg,FCChr:array[1..100] of byte;
-  path:array[1..12] of string;
-  clf:array[1..12] of string;
+  path:array[1..maxpathnames] of string;
+  clf:array[1..maxpathnames] of string[64];
   dbasecount,FCCount,numpaths:integer;
   cpath,progpath:string;
   cfgparam:string;
@@ -170,6 +176,22 @@ begin
   if i=1 then sstr:=str else sstr:=str+'s';
 end;
 
+function find(substr:string;str:string):boolean;
+var
+  op,cp:integer;
+  ptemp:boolean;
+begin
+  ptemp:=false;
+  op:=pos('(',str);
+  cp:=pos(')',str);
+  if (op>0) and (cp>op) then
+    begin
+      str:=copy(str,op,cp-op+1);
+      if pos(substr,str)>0 then ptemp:=true;
+    end;
+  find:=ptemp;
+end;
+
 function justify(s:string;i:integer;jtype:char;trflag:boolean):string;
 var
   counter:integer;
@@ -201,6 +223,20 @@ begin
     if (ord(s[i])>64) and (ord(s[i])<91) then s[i]:=chr(ord(s[i])+32);
   lowcasestr:=s;
 end;
+
+function movethe(instr:string):string;
+var
+  p:integer;
+begin
+  p:=pos(', The',instr);
+  if p>0 then
+    begin
+      delete(instr,p,5);
+      instr:='The '+instr;
+    end;
+  movethe:=instr;
+end;
+
 
 function paramstrparse:string;
 var
@@ -309,20 +345,21 @@ var
   temp:integer;
 begin
   temp:=0;
-  if s='J' then temp:=1;
-  if s='U' then temp:=2;
-  if s='JU' then temp:=3;
-  if s='E' then temp:=4;
-  if s='JE' then temp:=5;
-  if s='UE' then temp:=6;
-  if s='JUE' then temp:=7;
-  if s='S' then temp:=8;
-  if s='F' then temp:=16;
-  if s='C' then temp:=32;
-  if s='T' then temp:=96;
-  if s='X' then temp:=97;
-  if s='V' then temp:=98;
-  if s='P' then temp:=99;
+  if pos('J',s)>0 then temp:=temp+1;     {Japan}
+  if pos('U',s)>0 then temp:=temp+2;     {USA}
+  if pos('E',s)>0 then temp:=temp+4;     {Europe}
+  if pos('S',s)>0 then temp:=temp+8;     {Sweden}
+  if pos('F',s)>0 then temp:=temp+16;    {French-Canadian}
+  if pos('C',s)>0 then temp:=temp+32;    {China}
+  if pos('X',s)>0 then temp:=temp+64;    {Unlicensed}
+  if pos('V',s)>0 then temp:=temp+128;   {VS Unisystem}
+  if pos('P',s)>0 then temp:=temp+256;   {Playchoice-10}
+  if pos('T',s)>0 then temp:=temp+512;   {Translated}
+  if pos('Z',s)>0 then temp:=temp+1024;  {Pirate}
+  if pos('M',s)>0 then temp:=temp+2048;  {Mapper Hack}
+  if pos('G',s)>0 then temp:=temp+4096;  {Game Hack}
+  if pos('H',s)>0 then temp:=temp+8192;  {Hacked}
+  if pos('B',s)>0 then temp:=temp+16384; {Bad Dump}
   countrys2i:=temp;
 end;
 
@@ -331,6 +368,7 @@ var
   temp:string[7];
 begin
   temp:='';
+  i:=i mod 512;
   case i of
     1: temp:=' (J)';
     2: temp:=' (U)';
@@ -342,9 +380,9 @@ begin
     8: temp:=' (S)';
     16: temp:=' (F)';
     32: temp:=' (C)';
-    97: temp:=' (UNL)';
-    98: temp:=' (VS)';
-    99: temp:=' (PC10)';
+    64: temp:=' (UNL)';
+    128: temp:=' (VS)';
+    256: temp:=' (PC10)';
   end;
   countryi2s:=temp;
 end;
@@ -420,8 +458,11 @@ end;
 function getsortdir(code:integer):string;
 begin
   getsortdir:='';
+  if code>0 then code:=code mod 1024;
   case code of
-   -3:getsortdir:=dir_pirate;
+   -5:getsortdir:=dir_pirate;
+   -4:getsortdir:=dir_maphacks;
+   -3:getsortdir:=dir_gamehacks;
    -2:getsortdir:=dir_hacked;
    -1:getsortdir:=dir_bad;
     0:getsortdir:=dir_unknown;
@@ -431,10 +472,10 @@ begin
     8:getsortdir:=dir_sweden;
     16:getsortdir:=dir_canada;
     32:getsortdir:=dir_china;
-    96:getsortdir:=dir_trans;
-    97:getsortdir:=dir_unlicensed;
-    98:getsortdir:=dir_vs;
-    99:getsortdir:=dir_pc10;
+    64:getsortdir:=dir_unlicensed;
+    128:getsortdir:=dir_vs;
+    256:getsortdir:=dir_pc10;
+    512:getsortdir:=dir_trans;
   end;
 end;
 
@@ -622,8 +663,8 @@ begin
     begin
       low2:=low;
       mid:=(high-low) div 2+low;
-      if csumdbase[mid].str=cs then found:=true
-        else if csumdbase[mid].str>cs then high:=mid
+      if strpas(csumdbase[mid].str)=cs then found:=true
+        else if strpas(csumdbase[mid].str)>cs then high:=mid
           else low:=mid;
     end;
   if found=true then fnd:=mid;
@@ -806,7 +847,7 @@ var
 begin
   count:=0;
   f:=lfnfindfirst(pathname,FA_NORMAL,FA_NORMAL,dirinfo);
-  while (dos7error=0) and (count<4000) do
+  while (dos7error=0) and (count<maxdirsize) do
     begin
       count:=count+1;
       strtemp:=dirinfo.name;
@@ -849,8 +890,10 @@ begin
       writeln(f,'DIR_CHINA = ',dir_china);
       writeln(f,'DIR_DUPLICATES = ',dir_dupes);
       writeln(f,'DIR_EUROPE = ',dir_europe);
+      writeln(f,'DIR_GAMEHACKS = ',dir_gamehacks);
       writeln(f,'DIR_HACKED = ',dir_hacked);
       writeln(f,'DIR_JAPAN = ',dir_japan);
+      writeln(f,'DIR_MAPHACKS = ',dir_maphacks);
       writeln(f,'DIR_PC10 = ',dir_pc10);
       writeln(f,'DIR_PIRATE = ',dir_pirate);
       writeln(f,'DIR_SWEDEN = ',dir_sweden);
@@ -859,10 +902,13 @@ begin
       writeln(f,'DIR_UNLICENSED = ',dir_unlicensed);
       writeln(f,'DIR_USA = ',dir_usa);
       writeln(f,'DIR_VS = ',dir_vs);
+      writeln(f);
       writeln(f,'MOVE_BAD = ',move_bad);
       writeln(f,'MOVE_HACKED = ',move_hacked);
       writeln(f,'MOVE_PIRATE = ',move_pirate);
+      writeln(f);
       writeln(f,'MISSING_BAD = ',missing_bad);
+      writeln(f,'MISSING_GAMEHACKS = ',missing_gamehacks);
       writeln(f,'MISSING_HACKED = ',missing_hacked);
       writeln(f,'MISSING_PIRATE = ',missing_pirate);
       writeln(f,'MISSING_TRANS = ',missing_trans);
@@ -894,11 +940,13 @@ begin
               if s='DIR_CHINA' then dir_china:=s2;
               if s='DIR_DUPLICATES' then dir_dupes:=s2;
               if s='DIR_EUROPE' then dir_europe:=s2;
-              if s='DIR_HACKED' then dir_hacked:=s2;
+              if s='DIR_GAMEHACKS' then dir_gamehacks:=s2;
               if s='DIR_JAPAN' then dir_japan:=s2;
+              if s='DIR_MAPHACKS' then dir_maphacks:=s2;
               if s='DIR_PC10' then dir_pc10:=s2;
               if s='DIR_PIRATE' then dir_pirate:=s2;
               if s='DIR_SWEDEN' then dir_sweden:=s2;
+              if s='DIR_HACKED' then dir_hacked:=s2;
               if s='DIR_TRANS' then dir_trans:=s2;
               if s='DIR_UNKNOWN' then dir_unknown:=s2;
               if s='DIR_UNLICENSED' then dir_unlicensed:=s2;
@@ -912,6 +960,8 @@ begin
                 if upcasestr(s2)='TRUE' then move_pirate:=true;
               if s='MISSING_BAD' then if upcasestr(s2)='FALSE' then missing_bad:=false else
                 if upcasestr(s2)='TRUE' then missing_bad:=true;
+              if s='MISSING_GAMEHACKS' then if upcasestr(s2)='FALSE' then missing_gamehacks:=false else
+                if upcasestr(s2)='TRUE' then missing_gamehacks:=true;
               if s='MISSING_HACKED' then if upcasestr(s2)='FALSE' then missing_hacked:=false else
                 if upcasestr(s2)='TRUE' then missing_hacked:=true;
               if s='MISSING_PIRATE' then if upcasestr(s2)='FALSE' then missing_pirate:=false else
@@ -929,6 +979,7 @@ procedure loaddbase;
 var
   f:text;
   s:string;
+  cs:array[0..8] of char;
   p,code:integer;
 begin
   dbasecount:=0;
@@ -946,7 +997,8 @@ begin
     begin
       dbasecount:=dbasecount+1;
       readln(f,s);
-      csumdbase[dbasecount].str:=copy(s,1,8);
+      strpcopy(cs,copy(s,1,8));
+      csumdbase[dbasecount].str:=strnew(cs);
       csumdbase[dbasecount].flag:=false;
       csumdbase[dbasecount].resize:=0;
       if s[9]='*' then
@@ -961,6 +1013,15 @@ begin
   close(f);
 end;
 
+procedure dbaseclose;
+var
+  counter:integer;
+begin
+  for counter:=dbasecount downto 1 do
+    strdispose(csumdbase[counter].str);
+end;
+
+
 function formatoutput(fname:string;minfo:neshdr;docsum:boolean;csum:string;rflag:integer;l:integer;view_bl:boolean):string;
 var
   out:string;
@@ -969,6 +1030,7 @@ var
   fname2:string;
   c:char;
   count:integer;
+  ctemp:integer;
 begin
   out:='';
   split:=false;
@@ -1022,21 +1084,22 @@ begin
     end;
   if docsum=true then
     begin
-      if minfo.country=0 then out:=out+' ???';
-      if minfo.country=1 then out:=out+' '+'J  ';
-      if minfo.country=2 then out:=out+' '+' U ';
-      if minfo.country=3 then out:=out+' '+'JU ';
-      if minfo.country=4 then out:=out+' '+'  E';
-      if minfo.country=5 then out:=out+' '+'J E';
-      if minfo.country=6 then out:=out+' '+' UE';
-      if minfo.country=7 then out:=out+' '+'JUE';
-      if minfo.country=8 then out:=out+' '+'  S';
-      if minfo.country=16 then out:=out+' '+' F ';
-      if minfo.country=32 then out:=out+' '+'C  ';
-      if minfo.country=96 then out:=out+' '+'TR ';
-      if minfo.country=97 then out:=out+' '+'Unl';
-      if minfo.country=98 then out:=out+' '+'VS ';
-      if minfo.country=99 then out:=out+' '+'P10';
+      ctemp:=minfo.country mod 1024;
+      if ctemp=0 then out:=out+' ???';
+      if ctemp=1 then out:=out+' '+'J  ';
+      if ctemp=2 then out:=out+' '+' U ';
+      if ctemp=3 then out:=out+' '+'JU ';
+      if ctemp=4 then out:=out+' '+'  E';
+      if ctemp=5 then out:=out+' '+'J E';
+      if ctemp=6 then out:=out+' '+' UE';
+      if ctemp=7 then out:=out+' '+'JUE';
+      if ctemp=8 then out:=out+' '+'  S';
+      if ctemp=16 then out:=out+' '+' F ';
+      if ctemp=32 then out:=out+' '+'C  ';
+      if ctemp=64 then out:=out+' '+'Unl';
+      if ctemp=128 then out:=out+' '+'VS ';
+      if ctemp=256 then out:=out+' '+'P10';
+      if ctemp=512 then out:=out+' '+'TR ';
     end;
   if docsum=true then out:=out+' '+csum;
   if split=true then out:=out+#27+'     '+fname2;
@@ -1079,7 +1142,7 @@ end;
 procedure parsemissing(missingpath:string);
 var
   f2:text;
-  flags:array[1..2500] of boolean;
+  flags:array[1..maxdbasesize] of boolean;
   ctr,result:integer;
   s:string;
 begin
@@ -1102,37 +1165,18 @@ end;
 
 function shortparse(name:string;shorten:boolean):string;
 var
-  n1,n2:string;
-  p,p2,t:integer;
+  p,p2:integer;
 begin
-  n1:='';
-  n2:='';
-  t:=0;
   p:=pos('<',name);
-  if p>0 then
+  p2:=pos('>',name);
+  while (p>0) and (p2>p) do
     begin
+      delete(name,p2,1);
       delete(name,p,1);
       if shorten=true then
-        begin
-          n1:=copy(name,1,p-1);
-          delete(name,1,p-1);
-          p2:=pos(',',name);
-          if p2=0 then
-            begin
-              p2:=pos('(',name);
-              if p2>0 then n1:=n1+' ';
-            end;
-          if p2>0 then
-            n2:=copy(name,p2,length(name)-p2+1);
-          name:=n1+n2;
-        end;
-    end;
-  p:=pos('>',name);
-  if p>0 then
-    begin
-      delete(name,p,1);
-      if shorten=true then
-        name:=copy(name,p,length(name)-p+1);
+        delete(name,p,p2-p-1);
+      p:=pos('<',name);
+      p2:=pos('>',name);
     end;
   shortparse:=name;
 end;
@@ -1147,7 +1191,7 @@ var
   ts,ts2,fn,out,out2:string;
   dbaseinfo:neshdr;
   csum:string[8];
-  dbasearray:array[1..2500] of pchar;
+  dbasearray:array[1..maxdbasesize] of pchar;
   charout:array[0..255] of char;
   volinfo:tvolinfo;
   missingpath:string;
@@ -1191,24 +1235,26 @@ begin
               delete(ts,1,p);
             end;
           fn:=shortparse(fn,false);
+          p:=pos(';',ts); ts2:=copy(ts,1,p-1); delete(ts,1,p); val(ts2,x,code); byte7:=x;
+          p:=pos(';',ts); ts2:=copy(ts,1,p-1); delete(ts,1,p); val(ts2,x,code); byte8:=x;
+          p:=pos(';',ts); ts2:=copy(ts,1,p-1); delete(ts,1,p); val(ts2,x,code); dbaseinfo.prg:=x;
+          p:=pos(';',ts); ts2:=copy(ts,1,p-1); delete(ts,1,p); val(ts2,x,code); dbaseinfo.chr:=x;
+          p:=pos(';',ts); if p=0 then ts2:=ts else begin ts2:=copy(ts,1,p-1); delete(ts,1,p); end;
+          dbaseinfo.country:=countrys2i(ts2);
+          p:=pos(';',ts); if p=0 then ts2:=ts else begin ts2:=copy(ts,1,p-1); delete(ts,1,p); end;
+          dbaseinfo.company:=ts2;
           skipflag:=false;
-          if (pos('(Bad Dump',fn)>0) and (missing_bad=false) then skipflag:=true;
-          if ((pos('(Translated',fn)>0) or (pos('Translated)',fn)>0)) and (missing_trans=false) then skipflag:=true;
-          if ((pos('(Hack',fn)>0) or (pos('Hack)',fn)>0)) and (missing_hacked=false) then skipflag:=true;
-          if ((pos('(Pirate',fn)>0) or (pos('Pirate)',fn)>0)) and (missing_pirate=false) then skipflag:=true;
+          if (dbaseinfo.country div 16384=1) and (missing_bad=false) then skipflag:=true;
+          if (dbaseinfo.country mod 1024 div 512=1) and (missing_trans=false) then skipflag:=true;
+          if (dbaseinfo.country mod 2048 div 1024=1) and (missing_pirate=false) then skipflag:=true;
+          if (dbaseinfo.country mod 4096 div 2048=1) and (missing_hacked=false) then skipflag:=true;
+          if (dbaseinfo.country mod 8192 div 4096=1) and (missing_gamehacks=false) then skipflag:=true;
+          if (dbaseinfo.country mod 16384 div 8192=1) and (missing_hacked=false) then skipflag:=true;
           if csumdbase[c].resize>0 then skipflag:=true;
           if skipflag=true then badcount:=badcount+1;
           if (csumdbase[c].flag=false) and (skipflag=false) then
             begin
               acount:=acount+1;
-              p:=pos(';',ts); ts2:=copy(ts,1,p-1); delete(ts,1,p); val(ts2,x,code); byte7:=x;
-              p:=pos(';',ts); ts2:=copy(ts,1,p-1); delete(ts,1,p); val(ts2,x,code); byte8:=x;
-              p:=pos(';',ts); ts2:=copy(ts,1,p-1); delete(ts,1,p); val(ts2,x,code); dbaseinfo.prg:=x;
-              p:=pos(';',ts); ts2:=copy(ts,1,p-1); delete(ts,1,p); val(ts2,x,code); dbaseinfo.chr:=x;
-              p:=pos(';',ts); if p=0 then ts2:=ts else begin ts2:=copy(ts,1,p-1); delete(ts,1,p); end;
-              dbaseinfo.country:=countrys2i(ts2);
-              p:=pos(';',ts); if p=0 then ts2:=ts else begin ts2:=copy(ts,1,p-1); delete(ts,1,p); end;
-              dbaseinfo.company:=ts2;
               dbaseinfo.mirror:=byte7 mod 2;
               dbaseinfo.sram:=byte7 div 2 mod 2;
               dbaseinfo.trainer:=byte7 div 4 mod 2;
@@ -1298,11 +1344,13 @@ if t=1 then
     writeln('-hc            Calculate Checksums with header');
     writeln('-i             Outputs extended info if header or name are not correct');
     writeln('-o[file]       Sends output to file (DOS 8.3 filenames for now)');
-    writeln('-ren[uscl]     Renames ROMs to names stored in database (enables -c)');
+    writeln('-ren[usclt]    Renames ROMs to names stored in database (enables -c)');
     writeln('                  u- Replace spaces with underscores');
     writeln('                  s- Remove spaces completely from filename');
     writeln('                  c- Attach country codes to end of filenames');
     writeln('                  l- Convert ROMs to all lowercase names');
+    writeln('                  t- Places the word "The" at the beginning of ROM names');
+    writeln('                     instead of at the end.');
     writeln('-sn            Use shorter names for some game titles');
     writeln('-rep,-repair   Repairs ROM headers with those found in database (enables -c)');
     writeln('-res,-resize   Automatically resizes ROMs if they contain duplicate banks');
@@ -1311,21 +1359,22 @@ if t=1 then
     writeln('-m#            Filter listing by mapper #');
     writeln('-f[hvbt4]      Filter listing by mapper data');
     writeln('                  h- Horizontal Mirroring     t- Trainer Present');
+    pause;
     writeln('                  v- Vertical Mirroring       4- 4 Screen Buffer');
     writeln('                  b- Contains SRAM (Battery backup)');
-    pause;
     writeln('-u             Only display unknown ROMs (enables -c)');
+    writeln('-sub           Process all subdirecories under directories specified on path');
     writeln('-missing[cbn]  Creates a list of missing ROMs in ',missingfile);
     writeln('                  c- Sort missing list by country');
     writeln('                  b- Bare listing (Name, country codes, and checksum only)');
-    writeln('                  n- Force NesToy to create a new MISSING.TXT, even if one');
+    writeln('                  n- Force NesToy to create a new ',missingfile,', even if one');
     writeln('                     already exists (It will be overwritten.)');
     writeln('-doall         Enables -c,-i,-ren,-repair,-resize,-sort, and -missing');
     writeln('-h,-?,-help    Displays this screen');
     writeln;
     writeln('Filename can include wildcards (*,?) anywhere inside the filename.  Long');
     writeln('file names are allowed.  If no filename is given, (*.nes) is assumed.');
-    writeln('Up to 12 different pathnames may be specified.');
+    writeln('Up to ',maxpathnames,' different pathnames may be specified.');
   end;
 if t=2 then
   begin
@@ -1337,11 +1386,13 @@ if t=3 then
     writeln('NesToy only runs under Windows 95/98.');
     writeln;
   end;
+  dbaseclose;
   halt;
 end;
 
 var
-  f:word;
+  f,f2:word;
+  dirinfo:tfinddata;
   h,ns,csum:string;
   clfname,pathname,sortdir:string;
   nes,oldnes,resulthdr:NesHdr;
@@ -1353,9 +1404,9 @@ var
   fcpos:integer;
   docsum,show,show_h,show_v,show_b,show_4,show_t,view_bl,outfile,extout,unknown:boolean;
   rname,namematch,dbase,extdbase,repair,cmp,abort,dbasemissing,garbage,sort:boolean;
-  uscore,ccode,remspace,notrenamed,notrepaired,cropped,resize,sorted:boolean;
-  booltemp,dupe,shortname,allmissing,missingsort,lowcasename:boolean;
-  badrom,hackedrom,piraterom:boolean;
+  mthe,uscore,ccode,remspace,notrenamed,notrepaired,cropped,resize,sorted:boolean;
+  booltemp,dupe,shortname,allmissing,missingsort,lowcasename,subdir:boolean;
+  badrom,mhackedrom,ghackedrom,hackedrom,piraterom:boolean;
   result,rtmp:string;
   key:char;
   out,out2:string;
@@ -1399,6 +1450,7 @@ begin
   docsum:=false;
   hdcsum:=false;
   rname:=false;
+  mthe:=false;
   uscore:=false;
   ccode:=false;
   remspace:=false;
@@ -1416,6 +1468,7 @@ begin
   missingsort:=false;
   lowcasename:=false;
   overwritemissing:=false;
+  subdir:=false;
   msearch:=-1;
   if extparamcount=0 then usage(0);
   searchps('-h',sps,result);
@@ -1424,16 +1477,34 @@ begin
   if sps>0 then usage(1);
   searchps('-help',sps,result);
   if sps>0 then usage(1);
+  searchps('-sub',sps,result);
+  if sps>0 then subdir:=true;
   for pc:=1 to extparamcount do
     begin
       clfname:=extparamstr(pc);
-      if (clfname[1]<>'-') and (numpaths<12) then
+      if (clfname[1]<>'-') and (numpaths<maxpathnames) then
         begin
           numpaths:=numpaths+1;
           splitpath(clfname,clfname,pathname);
           if clfname='' then clfname:='*.nes';
           clf[numpaths]:=clfname;
+          pathname:=getfullpathname(pathname,false);
           path[numpaths]:=pathname;
+          if subdir=true then
+            begin
+              f2:=lfnfindfirst(pathname+'*.*',FA_DIR,FA_DIR,dirinfo);
+              while (dos7error=0) and (numpaths<maxpathnames) do
+                begin
+                  if (dirinfo.name<>'.') and (dirinfo.name<>'..') then
+                    begin
+                      numpaths:=numpaths+1;
+                      clf[numpaths]:=clfname;
+                      path[numpaths]:=pathname+dirinfo.name+'\';
+                    end;
+                  lfnfindnext(f2,dirinfo);
+                end;
+              lfnfindclose(f2);
+            end;
         end;
     end;
   if numpaths=0 then usage(2);
@@ -1466,6 +1537,7 @@ begin
       if pos('S',result)>0 then remspace:=true;
       if pos('C',result)>0 then ccode:=true;
       if pos('L',result)>0 then lowcasename:=true;
+      if pos('T',result)>0 then mthe:=true;
     end;
   searchps('-sn',sps,result);
   if sps>0 then shortname:=true;
@@ -1537,7 +1609,7 @@ begin
   fullstarttime:=sec+min*60+hour*3600;
   for pc:=1 to numpaths do
     begin
-      pathname:=getfullpathname(path[pc],false);
+      pathname:=path[pc];
       clfname:=clf[pc];
       writeln;
       if outfile=true then writeln(ofile);
@@ -1571,6 +1643,8 @@ begin
             notrepaired:=false;
             cropped:=false;
             badrom:=false;
+            mhackedrom:=false;
+            ghackedrom:=false;
             hackedrom:=false;
             piraterom:=false;
             sorted:=false;
@@ -1643,25 +1717,30 @@ begin
                     matchcount:=matchcount+1;
                     getdbaseinfo(dbpos,result,resulthdr);
                     result:=shortparse(result,shortname);
-                    if pos('(Bad Dump',result)>0 then badrom:=true;
-                    if (pos('(Hack',result)>0) or (pos('Hack)',result)>0) then hackedrom:=true;
-                    if (pos('(Pirate',result)>0) or (pos('Pirate)',result)>0) then piraterom:=true;
                     if (resulthdr.vs=1) and (resulthdr.pc10=1) then
                       begin
-                        writeln('ERROR IN DATABASE 01 -- ',csumdbase[dbpos].str,' ',result); {Has both VS and PC10 bits set}
+                        writeln('ERROR IN DATABASE 01 -- ',strpas(csumdbase[dbpos].str),' ',result);
                         halt;
                       end;
                     nes.country:=resulthdr.country;
                     nes.company:=resulthdr.company;
+                    if nes.country mod 2048 div 1024=1 then piraterom:=true;
+                    if nes.country mod 4096 div 2048=1 then mhackedrom:=true;
+                    if nes.country mod 8192 div 4096=1 then ghackedrom:=true;
+                    if nes.country mod 16384 div 8192=1 then hackedrom:=true;
+                    if nes.country div 16384=1 then badrom:=true;
                     if ccode=true then result:=result+countryi2s(nes.country);
                     if lowcasename=true then result:=lowcasestr(result);
                     if remspace=true then result:=spcvt(result,2);
                     if uscore=true then result:=spcvt(result,1);
+                    if mthe=true then result:=movethe(result);
                     cmp:=comparehdrs(nes,resulthdr);
                     if result+'.nes'<>name then namematch:=false else namematch:=true;
                     if (namematch=false) and (rname=false) then
                       begin
                         rtmp:=result;
+                        if mthe=false then
+                          if lowcasestr(copy(name,1,3))='the' then rtmp:=movethe(result);
                         if name=lowcasestr(name) then rtmp:=lowcasestr(rtmp);
                         if rtmp+'.nes'=name then namematch:=true else
                         if spcvt(rtmp,1)+'.nes'=name then namematch:=true else
@@ -1723,9 +1802,11 @@ begin
                         out:=out+'",'+i2s(nes.prg)+','+i2s(nes.chr);
                       end;
                 sortcode:=nes.country;
-                if (badrom=true) and (move_bad=true) then sortcode:=-1;
+                if (piraterom=true) and (move_pirate=true) then sortcode:=-5;
+                if (mhackedrom=true) and (move_hacked=true) then sortcode:=-4;
+                if ghackedrom=true then sortcode:=-3;
                 if (hackedrom=true) and (move_hacked=true) then sortcode:=-2;
-                if (piraterom=true) and (move_pirate=true) then sortcode:=-3;
+                if (badrom=true) and (move_bad=true) then sortcode:=-1;
                 writeln(out);
                 if out2<>'' then writeln(out2);
                 if outfile=true then
@@ -1853,4 +1934,5 @@ begin
     end;
   if outfile=true then close(ofile);
   if dbasemissing=true then listmissing(allmissing,missingsort);
+  dbaseclose;
 end.
