@@ -78,7 +78,7 @@ const
   missing_hacked:boolean=true;
   missing_pirate:boolean=true;
   missing_trans:boolean=false;
-  joliet:boolean=true;
+  joliet:boolean=false;
   shortname:boolean=false;
   tagunl:boolean=false;
   win2000:boolean=false;
@@ -1344,6 +1344,7 @@ begin
       writeln(f);
       writeln(f,'FILE_MISSING = ',missingfile);
       writeln(f,'SHORT_NAMES = ',shortname);
+      writeln(f,'JOLIET = ',joliet);
       writeln(f,'TAG_UNLICENSED = ',tagunl);
       writeln(f,'WIN2000 = ',win2000);
       writeln(f);
@@ -1396,6 +1397,8 @@ begin
                 if upcasestr(s2)='TRUE' then tagunl:=true;
               if s='SHORT_NAMES' then if upcasestr(s2)='FALSE' then shortname:=false else
                 if upcasestr(s2)='TRUE' then shortname:=true;
+              if s='JOLIET' then if upcasestr(s2)='FALSE' then joliet:=false else
+                if upcasestr(s2)='TRUE' then joliet:=true;
               if s='WIN2000' then if upcasestr(s2)='FALSE' then win2000:=false else
                 if upcasestr(s2)='TRUE' then win2000:=true;
               if s='MOVE_BAD' then if upcasestr(s2)='FALSE' then move_bad:=false else
@@ -1891,7 +1894,7 @@ var
   arraytemp:charstr;
   nes,oldnes,resulthdr:NesHdr;
   byte7,byte8:byte;
-  l,ctr,csumpos,sps,err:integer;
+  l,ctr,csumpos,sps,err,lr:integer;
   msearch,rflag,counter:integer;
   romcount,matchcount,rncount,rpcount,rscount,nomove,prgcount,dirromcount:integer;
   dbpos,io,pc,wy:integer;
@@ -2273,7 +2276,9 @@ begin
                     if prgfound=false then matchcount:=matchcount+1;
                     getdbaseinfo(dbpos,result,resulthdr);
                     shorten:=shortname;
-                    if (joliet=true) and (length(result)>61) then shorten:=true;
+                    lr:=length(result);
+                    if pos('<',result)>0 then lr:=lr-2;
+                    if (joliet=true) and (lr>60) then shorten:=true;
                     result:=shortparse(result,shorten);
                     if pos('(UNL',upcasestr(result))=0 then unlflag:=true;
                     if (unlflag=true) and (tagunl=true) and (resulthdr.country[10]='1')
