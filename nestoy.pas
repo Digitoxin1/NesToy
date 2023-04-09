@@ -36,7 +36,8 @@ const
   dbasefile='NESDBASE.DAT';
   cfgfile='NESTOY.CFG';
   outputfile='OUTPUT.TXT';
-  version='2.4b';
+  logfile='NESTOY.LOG';
+  version='2.5b';
   SortType:updown = ascending;
   missingfile:string='MISSING.TXT';
   extparamst:string='';
@@ -83,6 +84,8 @@ var
   cpath,progpath:string;
   cfgparam:string;
   overwritemissing:boolean;
+  logging,wrotelog:boolean;
+  lfile:text;
 
 function upcasestr(s:string):string;
 var
@@ -466,23 +469,20 @@ var
   slashflag:boolean;
   p:integer;
 begin
-  slashflag:=false;
   fname:='';
   path:='';
+  if pathname[2]=':' then
+    begin
+       path:=path+copy(pathname,1,2);
+       if pathname[3]<>'\' then path:=path+'.\';
+       delete(pathname,1,2);
+    end;
   while pos('\',pathname)>0 do
     begin
-      slashflag:=true;
       p:=pos('\',pathname);
       path:=path+copy(pathname,1,p);
       delete(pathname,1,p);
     end;
-  if slashflag=false then
-    if pos(':',pathname)>0 then
-      begin
-        p:=pos(':',pathname);
-        path:=path+copy(pathname,1,p);
-        delete(pathname,1,p);
-      end;
   fname:=pathname;
   if path='' then path:='.\';
 end;
@@ -540,6 +540,44 @@ begin
   retcrc:=crchex(crc);
 end;
 
+procedure logoutput(str:string);
+var
+  p:integer;
+  flag:boolean;
+  Year,Month,Day,DOW:word;
+  Hour,Min,Sec,Sec100:word;
+begin
+  if wrotelog=false then
+    begin
+      getdate(year,month,day,dow);
+      gettime(hour,min,sec,sec100);
+      writeln(lfile,'------------------------------------------------------------------------------');
+      if month<10 then write(lfile,'0',month,'/') else write(lfile,month,'/');
+      if day<10 then write(lfile,'0',day,'/') else write(lfile,day,'/');
+      write(lfile,year,' - ');
+      if hour<10 then write(lfile,'0',hour,':') else write(lfile,hour,':');
+      if min<10 then write(lfile,'0',min,':') else write(lfile,min,':');
+      if sec<10 then writeln(lfile,'0',sec) else writeln(lfile,sec);
+      writeln(lfile,'------------------------------------------------------------------------------');
+      wrotelog:=true;
+    end;
+  flag:=false;
+  repeat
+    if length(str)<79 then
+      begin
+        writeln(lfile,str);
+        flag:=true;
+      end else
+      begin
+        p:=78;
+        while (str[p]<>' ') and (p>1) do p:=p-1;
+        writeln(lfile,copy(str,1,p-1));
+        delete(str,1,p);
+      end;
+  until flag=true;
+  writeln(lfile);
+end;
+
 function LFNMD(newdir:string):word;
 var
   f,err:word;
@@ -547,7 +585,7 @@ var
 begin
   f:=LFNFindFirst(newdir,FA_DIR,FA_DIR,dirinfo);
   err:=dos7error;
-  if err=2 then
+  if (err=2) or (err=3) then
     begin
       LFNMkDir(newdir);
       err:=dos7error;
@@ -560,10 +598,10 @@ procedure LFNMove(sourcepath,destpath,crc,ccode:string;var errcode:word);
 var
   sf,df,sresult,dresult:word;
   buf:array[1..16384] of byte;
-  sp,sn,dp,dn:string;
+  sp,sn,dp,dn,sptemp,dptemp:string;
   existb,garbage:boolean;
-  ctr:integer;
-  newcrc:string;
+  ctr,p:integer;
+  newcrc,dnc:string;
 
 begin
   errcode:=0;
@@ -578,46 +616,92 @@ begin
       if dn='' then dn:=sn;
       sourcepath:=sp+sn;
       destpath:=dp+dn;
+      dnc:=dn;
       if upcasestr(sourcepath)<>upcasestr(destpath) then
         begin
           if crc<>'' then
-            if exist(destpath) then
-              begin
-                getcrc(destpath,newcrc,garbage);
-                if newcrc=crc then
-                  begin
-                    dp:=dir_dupes;
-                    destpath:=dp+dn;
-                    errcode:=LFNMD(copy(dp,1,length(dp)-1));
-                  end else
-                if ccode<>'' then
-                  if copy(destpath,length(destpath)-3,1)='.'
-                    then insert(ccode,destpath,length(destpath)-3)
-                    else destpath:=destpath+ccode;
-              end;
-          sf:=LFNOpenFile(sourcepath,FA_RDONLY,OPEN_RDONLY,1);
-          repeat
-            ctr:=ctr+1;
-            existb:=exist(destpath);
-            if existb=true then
-              begin
-                if ctr<10 then delete(destpath,length(destpath),1);
-                if ctr>=10 then delete(destpath,length(destpath)-1,2);
-                destpath:=destpath+i2s(ctr);
-              end;
-          until existb=false;
-          df:=LFNCreateFile(destpath,FA_NORMAL,OPEN_WRONLY,1);
-          if dos7error<>0 then errcode:=1;
+            begin
+              if ccode<>'' then
+                begin
+                  p:=pos(ccode,upcasestr(dnc));
+                  if p>0 then delete(dnc,p,length(ccode)) else
+                  if copy(dnc,length(dnc)-3,1)='.'
+                    then insert(ccode,dnc,length(dnc)-3)
+                      else dnc:=dnc+ccode;
+                end;
+              if exist(destpath) then
+                begin
+                  getcrc(destpath,newcrc,garbage);
+                  if newcrc=crc then
+                    begin
+                      dp:=dir_dupes;
+                      destpath:=dp+dn;
+                      errcode:=LFNMD(copy(dp,1,length(dp)-1));
+                    end else
+                    if ccode<>'' then
+                      begin
+                        destpath:=dp+dnc;
+                        if upcasestr(sourcepath)<>upcasestr(destpath) then
+                          begin
+                            if exist(destpath) then
+                              begin
+                                getcrc(destpath,newcrc,garbage);
+                                if newcrc=crc then
+                                  begin
+                                    dp:=dir_dupes;
+                                    destpath:=dp+dn;
+                                    errcode:=LFNMD(copy(dp,1,length(dp)-1));
+                                 end else errcode:=5;
+                              end;
+                          end else errcode:=5;
+                      end else errcode:=5;
+                end;
+            end;
           if errcode=0 then
-            repeat
-              sresult:=lfnblockread(sf,buf,sizeof(buf));
-              dresult:=lfnblockwrite(df,buf,sresult);
-            until (sresult=0) or (sresult<>dresult);
-          if dos7error=0 then LFNErase(sourcepath,FA_NORMAL,FA_NORMAL,False)
-                         else errcode:=1;
-          LFNCloseFile(df);
-          LFNCloseFile(sf);
-        end else errcode:=1;
+            begin
+              repeat
+                ctr:=ctr+1;
+                existb:=exist(destpath);
+                if existb=true then
+                  begin
+                    if ctr<10 then delete(destpath,length(destpath),1);
+                    if ctr>=10 then delete(destpath,length(destpath)-1,2);
+                   destpath:=destpath+i2s(ctr);
+                 end;
+              until existb=false;
+              if upcasestr(sp)=upcasestr(dp) then
+                begin
+                  LFNRename(sourcepath,destpath);
+                  errcode:=dos7error;
+                end else
+                begin
+                  sf:=LFNOpenFile(sourcepath,FA_RDONLY,OPEN_RDONLY,1);
+                  df:=LFNCreateFile(destpath,FA_NORMAL,OPEN_WRONLY,1);
+                  errcode:=dos7error;
+                  if errcode=0 then
+                    begin
+                      repeat
+                        sresult:=lfnblockread(sf,buf,sizeof(buf));
+                        dresult:=lfnblockwrite(df,buf,sresult);
+                      until (sresult=0) or (sresult<>dresult);
+                      errcode:=dos7error;
+                      if errcode=0 then LFNErase(sourcepath,FA_NORMAL,FA_NORMAL,False);
+                      LFNCloseFile(df);
+                    end;
+                  LFNCloseFile(sf);
+                end;
+            end;
+        end else errcode:=100;
+    end;
+  if (errcode>0) and (errcode<>100) and (logging=true) then
+    begin
+      sp:=getlongpathname(sp,false);
+      if exist(dp) then dp:=getlongpathname(dp,false) else dp:=getfullpathname(dp,false);
+      sptemp:=upcasestr(sp);
+      dptemp:=upcasestr(dp);
+      if (sptemp=dptemp) and (sn<>dn) then logoutput('Unable to rename '+sn+' to '+dn+' in '+sp+'.');
+      if (sptemp<>dptemp) and (sn=dn) then logoutput('Unable to move '+sn+' from '+sp+' to '+dp+'.');
+      if (sptemp<>dptemp) and (sn<>dn) then logoutput('Unable to move '+sp+sn+' to '+dp+dn+'.');
     end;
 end;
 
@@ -833,7 +917,8 @@ begin
       until (result2=0) or (result<>result2);
       LFNCloseFile(f);
       LFNCloseFile(f2);
-    end;
+    end else
+      if logging=true then logoutput('Unable to repair '+getlongpathname('.\',false)+fname+'.');
 end;
 
 procedure CropRom(fname:string;nhdr:neshdr;var prg:byte;var chr:byte;newprg:byte;newchr:byte;var errcode:word);
@@ -895,7 +980,8 @@ begin
       LFNCloseFile(f2);
       prg:=newprg;
       chr:=newchr;
-    end;
+    end else
+      if logging=true then logoutput('Unable to resize '+getlongpathname('.\',false)+fname+'.');
 end;
 
 function readdir(pathname:string):word;
@@ -1299,7 +1385,6 @@ var
   csum:string[8];
   dbasearray:array[1..maxdbasesize] of pchar;
   charout:array[0..255] of char;
-  volinfo:tvolinfo;
   missingpath:string;
   missingtemp:string;
   country:string[3];
@@ -1308,13 +1393,11 @@ var
 begin
   acount:=0;
   badcount:=0;
-  getvolumeinformation(copy(cpath,1,3),volinfo);
-  if volinfo.FSName='CDFS' then missingpath:=progpath
-                           else missingpath:=getshortpathname(cpath,false);
+  missingpath:=getshortpathname(cpath,false);
   missingtemp:=missingpath+'TEMP$.$$$';
   missingpath:=missingpath+missingfile;
   if exist(missingtemp) then LFNErase(missingtemp,FA_NORMAL,FA_NORMAL,false);
-  lfnrename(missingpath,missingtemp);
+  LFNRename(missingpath,missingtemp);
   assign(f2,missingtemp);
   {$I-}
   if overwritemissing=true then rewrite(f2) else
@@ -1414,7 +1497,7 @@ begin
       close(f2);
       for c:=acount downto 1 do
          strdispose(dbasearray[c]);
-      lfnrename(missingtemp,missingpath);
+      LFNRename(missingtemp,missingpath);
     end;
   if io2>0 then
     begin
@@ -1478,12 +1561,14 @@ if t=1 then
     writeln('-u             Only display unknown ROMs (enables -c)');
     writeln('-sub           Process all subdirecories under directories specified on path');
     writeln('-missing[cbn]  Create a listing of missing ROMs.  If listing exists, it will be');
-    writeln('               updated.  Filename is defined in nestoy.cfg.');
+    writeln('               updated.  Filename is defined in ',cfgfile,'.');
     writeln('                  c- Sort missing list by country');
     writeln('                  b- Bare listing (Name, country codes, and checksum only)');
     writeln('                  n- Force NesToy to create a new missing list, even if one');
     writeln('                     already exists (It will be overwritten.)');
     writeln('-nobackup      Don''t make backups before repairing or resizing ROMs');
+    writeln('-log           Log to ',logfile,' any problems NesToy encounters while sorting,');
+    writeln('               renaming, or repairing ROMs.');
     writeln('-doall         Enables -c,-i,-ren,-repair,-resize,-sort, and -missing');
     writeln('-h,-?,-help    Displays this screen');
     writeln;
@@ -1491,11 +1576,6 @@ if t=1 then
     writeln('file names are allowed.  If no filename is given, (*.nes) is assumed.');
   end;
 if t=2 then
-  begin
-    writeln('Error: You must specify a filename!');
-    writeln;
-  end;
-if t=3 then
   begin
     writeln('NesToy only runs under Windows 95/98.');
     writeln;
@@ -1514,7 +1594,7 @@ var
   byte7,byte8:byte;
   l,ctr,csumpos,sps,err:integer;
   msearch,rflag,counter:integer;
-  romcount,matchcount,rncount,rpcount,rscount:integer;
+  romcount,matchcount,rncount,rpcount,rscount,nomove:integer;
   dbpos,io,pc:integer;
   fcpos:integer;
   docsum,show,show_h,show_v,show_b,show_4,show_t,view_bl,outfile,extout,unknown:boolean;
@@ -1529,7 +1609,6 @@ var
   ofile:text;
   errcode:word;
   name:string;
-  volinfo:tvolinfo;
   newprg,newchr:byte;
   sortcode:integer;
   hour,min,sec,hund:word;
@@ -1537,7 +1616,7 @@ var
 
 begin
   checkbreak:=false;
-  if IsDOS70=false then usage(3);
+  if IsDOS70=false then usage(2);
   cfgparam:='';
   progpath:=paramstr(0);
   while copy(progpath,length(progpath),1)<>'\' do
@@ -1562,6 +1641,7 @@ begin
   rncount:=0;
   rpcount:=0;
   rscount:=0;
+  nomove:=0;
   docsum:=false;
   hdcsum:=false;
   rname:=false;
@@ -1585,6 +1665,7 @@ begin
   overwritemissing:=false;
   subdir:=false;
   nobackup:=false;
+  logging:=false;
   msearch:=-1;
   if extparamcount=0 then usage(0);
   searchps('-h',sps,result);
@@ -1601,7 +1682,7 @@ begin
       if (clfname[1]<>'-') and (numpaths<maxpathnames) then
         begin
           splitpath(clfname,clfname,pathname);
-          pathname:=getlongpathname(pathname,false);
+          pathname:=getfullpathname(pathname,false);
           if clfname='' then clfname:='*.nes';
           if subdir=true then
             begin
@@ -1629,7 +1710,14 @@ begin
           path[numpaths]:=strnew(arraytemp);
         end;
     end;
-  if numpaths=0 then usage(2);
+  if numpaths=0 then
+    begin
+      numpaths:=1;
+      str2chr('*.nes',arraytemp);
+      clf[numpaths]:=strnew(arraytemp);
+      str2chr(cpath,arraytemp);
+      path[numpaths]:=strnew(arraytemp);
+    end;
   searchps('-c',sps,result);
   if sps>0 then docsum:=true;
   searchps('-hc',sps,result);
@@ -1668,9 +1756,7 @@ begin
     begin
       outfile:=true;
       if result='' then result:=outputfile;
-      getvolumeinformation(copy(cpath,1,3),volinfo);
-      if volinfo.FSName='CDFS' then result:=progpath+result
-                               else result:=getshortpathname(cpath,false)+result;
+      result:=getshortpathname(cpath,false)+result;
       assign(ofile,result);
       {$I-}
       reset(ofile);
@@ -1687,6 +1773,25 @@ begin
                      writeln(ofile,'------------------------------------------------------------------------------');
                    end;
     end;
+  searchps('-log',sps,result);
+  if sps>0 then
+    begin
+      logging:=true;
+      wrotelog:=false;
+      result:=logfile;
+      result:=getshortpathname(cpath,false)+result;
+      assign(lfile,result);
+      {$I-}
+      reset(lfile);
+      io:=ioresult;
+      if io>0 then rewrite(lfile) else append(lfile);
+      if ioresult>0 then
+        begin
+          write('Error: Cannot create ',result);
+          halt;
+        end;
+      {$I+}
+    end;
   searchps('-rep',sps,result);
   if sps>0 then begin repair:=true; extout:=true; docsum:=true end;
   searchps('-repair',sps,result);
@@ -1700,7 +1805,7 @@ begin
   searchps('-u',sps,result);
   if sps>0 then begin unknown:=true; docsum:=true; end;
   searchps('-nobackup',sps,result);
-  if sps>0 then begin nobackup:=true; end;
+  if sps>0 then nobackup:=true;
   searchps('-missing*',sps,result);
   if sps>0 then
     begin
@@ -1956,33 +2061,21 @@ begin
                           end;
                         if errcode>0 then notrepaired:=true;
                       end;
-                    if (rname=true) and (dupe=false) and (sort=false) then
+                    if (rname=true) and (dupe=false) then
                       if result+'.nes'<>name then
                         begin
-                          booltemp:=false;
-                          if upcasestr(result+'.nes')=upcasestr(name) then booltemp:=true;
-                          if (exist(result+'.nes')) and (booltemp=false) then
+                          if sort=true then
                             begin
-                              LFNRename(name,result+countryi2s(nes.country)+'.nes');
-                              errcode:=dos7error;
-                              if errcode=0 then name:=result+countryi2s(nes.country)+'.nes';
-                            end
-                          else
+                              sorted:=true;
+                              sortdir:=getsortdir(sortcode);
+                              if notrepaired=true then sortdir:=dir_repair;
+                            end else sortdir:='.\';
+                          LFNMove(name,sortdir+result+'.nes',csum,countryi2s(nes.country),errcode);
+                          if errcode=0 then rncount:=rncount+1 else
                             begin
-                              LFNRename(name,result+'.nes');
-                              errcode:=dos7error;
-                              if errcode=0 then name:=result+'.nes';
+                              notrenamed:=true;
+                              if errcode<>100 then nomove:=nomove+1;
                             end;
-                          if errcode=0 then rncount:=rncount+1 else notrenamed:=true;
-                        end;
-                    if (rname=true) and (dupe=false) and (sort=true) then
-                      if result+'.nes'<>name then
-                        begin
-                           sorted:=true;
-                           sortdir:=getsortdir(sortcode);
-                           if notrepaired=true then sortdir:=dir_repair;
-                           LFNMove(name,sortdir+result+'.nes',csum,countryi2s(nes.country),errcode);
-                           if errcode=0 then rncount:=rncount+1 else notrenamed:=true;
                         end;
                     if (extout=true) and ((cmp=false) or (namematch=false) or (garbage=true)) then
                       begin
@@ -1996,10 +2089,8 @@ begin
                         if nes.other<>null8 then outm[11]:='G';
                         if (nes.vs=1) and (nes.pc10=1) then outm[11]:='G';
                         if garbage=true then outm[12]:='T';
-                        if (rname=true) and (namematch=false) then
-                          if notrenamed=true then outm:=' Can''t Rename';
-                        if (repair=true) and (cmp=false) then
-                          if notrepaired=true then outm:=' Can''t Repair';
+                        if notrenamed=true then outm:=' Can''t Rename';
+                        if notrepaired=true then outm:=' Can''t Repair';
                         out:=out+outm;
                         writeln(out);
                         if out2<>'' then writeln(out2);
@@ -2012,18 +2103,19 @@ begin
                           end;
                       end;
                   end;
+                if (sort=true) and (dupe=false) and (sorted=false) then
+                  begin
+                    sortdir:=getsortdir(sortcode);
+                    if notrepaired=true then sortdir:=dir_repair;
+                    LFNMove(name,sortdir,csum,countryi2s(nes.country),errcode);
+                    if (errcode>0) and (errcode<>100) then nomove:=nomove+1;
+                  end;
                 if dupe=true then
                   if (rname=true) and (result+'.nes'<>name) then
                     begin
                       LFNMove(name,dir_dupes+result+'.nes','','',errcode);
                       if errcode=0 then rncount:=rncount+1;
                     end else LFNMove(name,dir_dupes,'','',errcode);
-                if (sort=true) and (dupe=false) and (sorted=false) then
-                  begin
-                    sortdir:=getsortdir(sortcode);
-                    if notrepaired=true then sortdir:=dir_repair;
-                    LFNMove(name,sortdir,csum,countryi2s(nes.country),errcode);
-                  end;
               end;
           end;
         LFNChDir(cpath);
@@ -2043,6 +2135,7 @@ begin
   if rpcount>0 then writeln(rpcount,sstr(' ROM',rpcount),' repaired');
   if rncount>0 then writeln(rncount,sstr(' ROM',rncount),' renamed');
   if rscount>0 then writeln(rscount,sstr(' ROM',rscount),' resized');
+  if nomove>0 then writeln('Unable to sort ',nomove,sstr(' ROM',nomove));
   writeln;
   write('Finished in ');
   if hour>0 then write(hour,sstr(' hour',hour),', ');
@@ -2056,6 +2149,7 @@ begin
       if rpcount>0 then writeln(ofile,rpcount,sstr(' ROM',rpcount),' repaired');
       if rncount>0 then writeln(ofile,rncount,sstr(' ROM',rncount),' renamed');
       if rscount>0 then writeln(ofile,rscount,sstr(' ROM',rscount),' resized');
+      if nomove>0 then writeln(ofile,'Unable to sort ',nomove,sstr(' ROM',nomove));
       writeln(ofile);
       write(ofile,'Finished in ');
       if hour>0 then write(ofile,hour,sstr(' hour',hour),', ');
@@ -2063,6 +2157,7 @@ begin
       writeln(ofile,sec,sstr(' second',sec),'.');
     end;
   if outfile=true then close(ofile);
+  if logging=true then close(lfile);
   if dbasemissing=true then listmissing(allmissing,missingsort);
   dbaseclose;
 end.
