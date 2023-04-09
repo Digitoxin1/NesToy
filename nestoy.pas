@@ -5,11 +5,13 @@ program NesToy;
 uses
   dos,dos70,crc32new,crt,strings,runtime;
 const
+  dirlimit=6;
   maxdbasesize=3200;
   maxdirsize=3500;
   maxpathnames=100;
-  empty='000000000000000';
+  empty='0000000000';
 type
+  country=string[10];
   neshdr=record
            hdr:string[4];      {4 byte header string (NES^Z)}
            prg:byte;           {16k Program Data Blocks}
@@ -22,7 +24,7 @@ type
            vs:byte;            {VS.}
            pc10:byte;          {Playchoice-10}
            other:string[8];    {Misc. Header Bytes {Should be $00's)}
-           country:integer;    {Country Code (Not in header)}
+           country:country;    {Country Code (Not in header)}
            company:string[25]; {Company (Not in header)}
          end;
   updown   = (ascending,descending);
@@ -38,7 +40,7 @@ const
   cfgfile='NESTOY.CFG';
   outputfile='OUTPUT.TXT';
   logfile='NESTOY.LOG';
-  version='3.2';
+  version='4.1';
   SortType:updown = ascending;
   missingfile:string='MISSING.TXT';
   extparamst:string='';
@@ -46,24 +48,23 @@ const
   param_missing:string[10]='';
   param_sort:string[10]='';
   dir_base:string='';
+  dir_asia:string='Asia\';
   dir_backup:string='Backup\';
   dir_bad:string='Bad\';
-  dir_canada:string='Canada\';
-  dir_china:string='China\';
   dir_dupes:string='Dupes\';
   dir_europe:string='Europe\';
   dir_gamehacks:string='Game Hacks\';
   dir_hacked:string='Hacked\';
   dir_japan:string='Japan\';
   dir_maphacks:string='Mapper Hacks\';
+  dir_other:string='Other\';
   dir_pc10:string='Playchoice 10\';
+  dir_pd:string='PD\';
   dir_pirate:string='Pirate\';
   dir_repair:string='Repair\';
-  dir_sweden:string='Sweden\';
   dir_trans:string='Translated\';
   dir_unknown:string='Unknown\';
-  dir_unlicensed:string='Unlicensed\';
-  dir_usa:string='USA\';
+  dir_northamerica:string='North America\';
   dir_vs:string='VS Unisystem\';
   dir_savestates:string='';
   dir_patches:string='';
@@ -71,12 +72,15 @@ const
   move_hacked:boolean=true;
   move_pirate:boolean=true;
   sort_trans:boolean=true;
+  sort_unlicensed:boolean=true;
   missing_bad:boolean=false;
   missing_gamehacks:boolean=false;
   missing_hacked:boolean=true;
   missing_pirate:boolean=true;
   missing_trans:boolean=false;
+  joliet:boolean=true;
   shortname:boolean=false;
+  tagunl:boolean=false;
   win2000:boolean=false;
   badchr:string=' (Bad CHR';
 
@@ -269,6 +273,38 @@ begin
   if i=1 then sstr:=str else sstr:=str+'s';
 end;
 
+
+procedure loaddirs(inpath,clfname:string;limit:integer);
+var
+  f,f2:word;
+  dirinfo,dirinfo2:tfinddata;
+  arraytemp:charstr;
+begin
+  f:=lfnfindfirst(inpath+'*.*',FA_DIR,FA_DIR,dirinfo);
+  while (dos7error=0) and (numpaths<maxpathnames-1) do
+    begin
+      if (dirinfo.name<>'.') and (dirinfo.name<>'..') and (limit>0) then
+        if (upcasestr(inpath+dirinfo.name+'\')<>upcasestr(dir_dupes)) and
+           (upcasestr(inpath+dirinfo.name+'\')<>upcasestr(dir_backup)) then
+          begin
+            f2:=lfnfindfirst(inpath+dirinfo.name+'\'+clfname,FA_NORMAL,FA_NORMAL,dirinfo2);
+            if dos7error=0 then
+              begin
+                numpaths:=numpaths+1;
+                str2chr(clfname,arraytemp);
+                clf[numpaths]:=strnew(arraytemp);
+                str2chr(inpath+dirinfo.name+'\',arraytemp);
+                path[numpaths]:=strnew(arraytemp);
+              end;
+            lfnfindclose(f2);
+            loaddirs(inpath+dirinfo.name+'\',clfname,limit-1);
+          end;
+      lfnfindnext(f,dirinfo);
+    end;
+  lfnfindclose(f);
+end;
+
+
 function find(substr:string;str:string):boolean;
 var
   op,cp:integer;
@@ -414,50 +450,58 @@ begin
   extparamstr:=s2;
 end;
 
-function countrys2i(s:string):integer;
+function countrys2i(s:string):country;
 var
-  temp:integer;
+  c:string[10];
 begin
-  temp:=0;
-  if pos('J',s)>0 then temp:=temp+1;     {Japan}
-  if pos('U',s)>0 then temp:=temp+2;     {USA}
-  if pos('E',s)>0 then temp:=temp+4;     {Europe}
-  if pos('S',s)>0 then temp:=temp+8;     {Sweden}
-  if pos('F',s)>0 then temp:=temp+16;    {French-Canadian}
-  if pos('C',s)>0 then temp:=temp+32;    {China}
-  if pos('X',s)>0 then temp:=temp+64;    {Unlicensed}
-  if pos('V',s)>0 then temp:=temp+128;   {VS Unisystem}
-  if pos('P',s)>0 then temp:=temp+256;   {Playchoice-10}
-  if pos('T',s)>0 then temp:=temp+512;   {Translated}
-  if pos('Z',s)>0 then temp:=temp+1024;  {Pirate}
-  if pos('M',s)>0 then temp:=temp+2048;  {Mapper Hack}
-  if pos('G',s)>0 then temp:=temp+4096;  {Game Hack}
-  if pos('H',s)>0 then temp:=temp+8192;  {Hacked}
-  if pos('B',s)>0 then temp:=temp+16384; {Bad Dump}
-  countrys2i:=temp;
+  c:=empty;
+  if pos('J',s)>0 then c[1]:='1';  {Japan}
+  if pos('U',s)>0 then c[2]:='1';  {USA}
+  if pos('C',s)>0 then c[2]:='2';  {Canada}
+  if pos('E',s)>0 then c[3]:='1';  {Europe}
+  if pos('F',s)>0 then c[3]:='2';  {France}
+  if pos('Ge',s)>0 then c[3]:='3'; {Germany}
+  if pos('Sp',s)>0 then c[3]:='4'; {Spain}
+  if pos('Sw',s)>0 then c[3]:='5'; {Sweden}
+  if pos('I',s)>0 then c[3]:='6';  {Italy}
+  if pos('Au',s)>0 then c[3]:='7'; {Australia}
+  if pos('As',s)>0 then c[4]:='1'; {Asia}
+  if pos('V',s)>0 then c[5]:='1';  {Vs. Unisystem}
+  if pos('P',s)>0 then c[5]:='2';  {Playchoice-10}
+  if pos('PD',s)>0 then c[5]:='3'; {Public Domain}
+  if pos('T',s)>0 then c[6]:='1';  {Translations}
+  if pos('Z',s)>0 then c[7]:='1';  {Pirates}
+  if pos('H',s)>0 then c[8]:='1';  {Hacked}
+  if pos('M',s)>0 then c[8]:='2';  {Mapper Hacks}
+  if pos('GH',s)>0 then c[8]:='3'; {Game Hacks}
+  if pos('O',s)>0 then c[8]:='4';  {Other}
+  if pos('B',s)>0 then c[9]:='1';  {Bad Dumps}
+  if pos('X',s)>0 then c[10]:='1'; {Unlicensed}
+  countrys2i:=c;
 end;
 
-function countryi2s(i:integer):string;
+function countryi2s(c:country):string;
 var
-  temp:string[7];
+  temp:string;
 begin
   temp:='';
-  i:=i mod 512;
-  case i of
-    1: temp:=' (J)';
-    2: temp:=' (U)';
-    3: temp:=' (JU)';
-    4: temp:=' (E)';
-    5: temp:=' (JE)';
-    6: temp:=' (UE)';
-    7: temp:=' (JUE)';
-    8: temp:=' (S)';
-    16: temp:=' (F)';
-    32: temp:=' (C)';
-    64: temp:=' (UNL)';
-    128: temp:=' (VS)';
-    256: temp:=' (PC10)';
-  end;
+  temp:=' (';
+  if c[1]='1' then temp:=temp+'J';
+  if c[2]='1' then temp:=temp+'U';
+  if c[3]='1' then temp:=temp+'E';
+  temp:=temp+')';
+  if c[2]='2' then temp:=' (Canada)';
+  if c[3]='2' then temp:=' (France)';
+  if c[3]='3' then temp:=' (Germany)';
+  if c[3]='4' then temp:=' (Spain)';
+  if c[3]='5' then temp:=' (Sweden)';
+  if c[3]='6' then temp:=' (Italy)';
+  if c[3]='7' then temp:=' (Australia)';
+  if c[4]='1' then temp:=' (Asia)';
+  if c[5]='1' then temp:=' (VS)';
+  if c[5]='2' then temp:=' (PC10)';
+  if c[5]='3' then temp:=' (PD)';
+  if temp=' ()' then temp:='';
   countryi2s:=temp;
 end;
 
@@ -556,30 +600,31 @@ begin
   if path='' then path:='.\';
 end;
 
-function getsortdir(code:integer):string;
+function getsortdir(code:string):string;
 var
   tempdir:string;
 begin
   tempdir:='';
-  if code>0 then code:=code mod 1024;
-  case code of
-   -5:tempdir:=dir_pirate;
-   -4:tempdir:=dir_maphacks;
-   -3:tempdir:=dir_gamehacks;
-   -2:tempdir:=dir_hacked;
-   -1:tempdir:=dir_bad;
-    0:tempdir:=dir_unknown;
-    1,5:tempdir:=dir_japan;
-    2,3,6,7:tempdir:=dir_usa;
-    4:tempdir:=dir_europe;
-    8:tempdir:=dir_sweden;
-    16:tempdir:=dir_canada;
-    32:tempdir:=dir_china;
-    64:tempdir:=dir_unlicensed;
-    128:tempdir:=dir_vs;
-    256:tempdir:=dir_pc10;
-    512:tempdir:=dir_trans;
-  end;
+  if code=empty then tempdir:=dir_unknown;
+  if code[8]='4' then tempdir:=dir_other;
+  if code[7]='1' then tempdir:=dir_pirate;
+  if code[8]='2' then tempdir:=dir_maphacks;
+  if code[8]='3' then tempdir:=dir_gamehacks;
+  if code[8]='1' then tempdir:=dir_hacked;
+  if code[9]='1' then tempdir:=dir_bad;
+  if code[3]>'0' then tempdir:=dir_europe;
+  if code[1]>'0' then tempdir:=dir_japan;
+  if code[2]>'0' then tempdir:=dir_northamerica;
+  if code[4]>'0' then tempdir:=dir_asia;
+  if code[5]='1' then tempdir:=dir_vs;
+  if code[5]='2' then tempdir:=dir_pc10;
+  if code[5]='3' then tempdir:=dir_pd;
+  if code[6]='1' then tempdir:=dir_trans;
+  if code='PIRATE' then tempdir:=dir_pirate;
+  if code='MAPHACKS' then tempdir:=dir_maphacks;
+  if code='GAMEHACKS' then tempdir:=dir_gamehacks;
+  if code='HACKED' then tempdir:=dir_hacked;
+  if code='BAD' then tempdir:=dir_bad;
   getsortdir:=tempdir;
 end;
 
@@ -876,7 +921,7 @@ begin
   nh.other:=copy(hdr,9,8);
   nh.vs:=ord(hdr[8]) mod 2;
   nh.pc10:=ord(hdr[8]) div 2 mod 2;
-  nh.country:=0;
+  nh.country:=empty;
   nh.company:='';
 end;
 
@@ -1228,25 +1273,24 @@ end;
 
 procedure expandpaths;
 begin
+  dir_asia:=expandwork(dir_asia,true);
   dir_base:=expandwork(dir_base,false);
   dir_backup:=expandwork(dir_backup,true);
   dir_bad:=expandwork(dir_bad,true);
-  dir_canada:=expandwork(dir_canada,true);
-  dir_china:=expandwork(dir_china,true);
   dir_dupes:=expandwork(dir_dupes,true);
   dir_europe:=expandwork(dir_europe,true);
   dir_gamehacks:=expandwork(dir_gamehacks,true);
   dir_hacked:=expandwork(dir_hacked,true);
   dir_japan:=expandwork(dir_japan,true);
   dir_maphacks:=expandwork(dir_maphacks,true);
+  dir_northamerica:=expandwork(dir_northamerica,true);
+  dir_other:=expandwork(dir_other,true);
   dir_pc10:=expandwork(dir_pc10,true);
+  dir_pd:=expandwork(dir_pd,true);
   dir_pirate:=expandwork(dir_pirate,true);
   dir_repair:=expandwork(dir_repair,true);
-  dir_sweden:=expandwork(dir_sweden,true);
   dir_trans:=expandwork(dir_trans,true);
   dir_unknown:=expandwork(dir_unknown,true);
-  dir_unlicensed:=expandwork(dir_unlicensed,true);
-  dir_usa:=expandwork(dir_usa,true);
   dir_vs:=expandwork(dir_vs,true);
   if dir_savestates<>'' then dir_savestates:=expandwork(dir_savestates,true);
   if dir_patches<>'' then dir_patches:=expandwork(dir_patches,true);
@@ -1268,23 +1312,22 @@ begin
     begin
       rewrite(f);
       writeln(f,'DIR_BASE = ',dir_base);
+      writeln(f,'DIR_ASIA = ',dir_asia);
       writeln(f,'DIR_BACKUP = ',dir_backup);
       writeln(f,'DIR_BAD = ',dir_bad);
-      writeln(f,'DIR_CANADA = ',dir_canada);
-      writeln(f,'DIR_CHINA = ',dir_china);
       writeln(f,'DIR_DUPLICATES = ',dir_dupes);
       writeln(f,'DIR_EUROPE = ',dir_europe);
       writeln(f,'DIR_GAMEHACKS = ',dir_gamehacks);
       writeln(f,'DIR_HACKED = ',dir_hacked);
       writeln(f,'DIR_JAPAN = ',dir_japan);
       writeln(f,'DIR_MAPHACKS = ',dir_maphacks);
+      writeln(f,'DIR_NORTHAMERICA = ',dir_northamerica);
+      writeln(f,'DIR_OTHER = ',dir_other);
       writeln(f,'DIR_PC10 = ',dir_pc10);
+      writeln(f,'DIR_PD = ',dir_pd);
       writeln(f,'DIR_PIRATE = ',dir_pirate);
-      writeln(f,'DIR_SWEDEN = ',dir_sweden);
       writeln(f,'DIR_TRANS = ',dir_trans);
       writeln(f,'DIR_UNKNOWN = ',dir_unknown);
-      writeln(f,'DIR_UNLICENSED = ',dir_unlicensed);
-      writeln(f,'DIR_USA = ',dir_usa);
       writeln(f,'DIR_VS = ',dir_vs);
       writeln(f,'DIR_SAVESTATES = ',dir_savestates);
       writeln(f,'DIR_PATCHES = ',dir_patches);
@@ -1293,17 +1336,19 @@ begin
       writeln(f,'MOVE_HACKED = ',move_hacked);
       writeln(f,'MOVE_PIRATE = ',move_pirate);
       writeln(f,'SORT_TRANS = ',sort_trans);
+      writeln(f,'SORT_UNLICENSED = ',sort_unlicensed);
       writeln(f);
       writeln(f,'MISSING_BAD = ',missing_bad);
       writeln(f,'MISSING_HACKED = ',missing_hacked);
       writeln(f,'MISSING_PIRATE = ',missing_pirate);
       writeln(f);
-      writeln(f,'PARAM_MISSING = ',param_missing);
-      writeln(f,'PARAM_REN = ',param_ren);
-      writeln(f);
       writeln(f,'FILE_MISSING = ',missingfile);
       writeln(f,'SHORT_NAMES = ',shortname);
+      writeln(f,'TAG_UNLICENSED = ',tagunl);
       writeln(f,'WIN2000 = ',win2000);
+      writeln(f);
+      writeln(f,'PARAM_MISSING = ',param_missing);
+      writeln(f,'PARAM_REN = ',param_ren);
       writeln(f);
       writeln(f,'CMDLINE =');
       close(f);
@@ -1325,29 +1370,30 @@ begin
               if copy(s,1,4)='DIR_' then
                 if (s2<>'') and (s2[length(s2)]<>'\') then s2:=s2+'\';
               if s='DIR_BASE' then dir_base:=s2;
+              if s='DIR_ASIA' then dir_asia:=s2;
               if s='DIR_BACKUP' then dir_backup:=s2;
               if s='DIR_BAD' then dir_bad:=s2;
-              if s='DIR_CANADA' then dir_canada:=s2;
-              if s='DIR_CHINA' then dir_china:=s2;
               if s='DIR_DUPLICATES' then dir_dupes:=s2;
               if s='DIR_EUROPE' then dir_europe:=s2;
               if s='DIR_GAMEHACKS' then dir_gamehacks:=s2;
               if s='DIR_JAPAN' then dir_japan:=s2;
               if s='DIR_MAPHACKS' then dir_maphacks:=s2;
+              if s='DIR_NORTHAMERICA' then dir_northamerica:=s2;
+              if s='DIR_OTHER' then dir_other:=s2;
               if s='DIR_PC10' then dir_pc10:=s2;
+              if s='DIR_PD' then dir_pd:=s2;
               if s='DIR_PIRATE' then dir_pirate:=s2;
-              if s='DIR_SWEDEN' then dir_sweden:=s2;
               if s='DIR_HACKED' then dir_hacked:=s2;
               if s='DIR_TRANS' then dir_trans:=s2;
               if s='DIR_UNKNOWN' then dir_unknown:=s2;
-              if s='DIR_UNLICENSED' then dir_unlicensed:=s2;
-              if s='DIR_USA' then dir_usa:=s2;
               if s='DIR_VS' then dir_vs:=s2;
               if s='DIR_SAVESTATES' then dir_savestates:=s2;
               if s='DIR_PATCHES' then dir_patches:=s2;
               if s='FILE_MISSING' then missingfile:=s2;
               if s='PARAM_MISSING' then param_missing:=upcasestr(s2);
               if s='PARAM_REN' then param_ren:=upcasestr(s2);
+              if s='TAG_UNLICENSED' then if upcasestr(s2)='FALSE' then tagunl:=false else
+                if upcasestr(s2)='TRUE' then tagunl:=true;
               if s='SHORT_NAMES' then if upcasestr(s2)='FALSE' then shortname:=false else
                 if upcasestr(s2)='TRUE' then shortname:=true;
               if s='WIN2000' then if upcasestr(s2)='FALSE' then win2000:=false else
@@ -1360,6 +1406,8 @@ begin
                 if upcasestr(s2)='TRUE' then move_pirate:=true;
               if s='SORT_TRANS' then if upcasestr(s2)='FALSE' then sort_trans:=false else
                 if upcasestr(s2)='TRUE' then sort_trans:=true;
+              if s='SORT_UNLICENSED' then if upcasestr(s2)='FALSE' then sort_unlicensed:=false else
+                if upcasestr(s2)='TRUE' then sort_unlicensed:=true;
               if s='MISSING_BAD' then if upcasestr(s2)='FALSE' then missing_bad:=false else
                 if upcasestr(s2)='TRUE' then missing_bad:=true;
               if s='MISSING_HACKED' then if upcasestr(s2)='FALSE' then missing_hacked:=false else
@@ -1441,7 +1489,7 @@ var
   fname2:string;
   c:char;
   count:integer;
-  ctemp:integer;
+  otemp:string[5];
 begin
   out:='';
   split:=false;
@@ -1495,24 +1543,28 @@ begin
     end;
   if docsum=true then
     begin
-      ctemp:=minfo.country mod 1024;
-      if ctemp=0 then out:=out+' ???';
-      if ctemp=1 then out:=out+' '+'J  ';
-      if ctemp=2 then out:=out+' '+' U ';
-      if ctemp=3 then out:=out+' '+'JU ';
-      if ctemp=4 then out:=out+' '+'  E';
-      if ctemp=5 then out:=out+' '+'J E';
-      if ctemp=6 then out:=out+' '+' UE';
-      if ctemp=7 then out:=out+' '+'JUE';
-      if ctemp=8 then out:=out+' '+'  S';
-      if ctemp=16 then out:=out+' '+' F ';
-      if ctemp=32 then out:=out+' '+'C  ';
-      if ctemp=64 then out:=out+' '+'Unl';
-      if ctemp=128 then out:=out+' '+'VS ';
-      if ctemp=256 then out:=out+' '+'P10';
-      if ctemp=512 then out:=out+' '+'TR ';
+      otemp:='     ';
+      if copy(minfo.country,1,5)='00000' then otemp:=' ??? ';
+      if minfo.country[1]='1' then otemp[2]:='J';
+      if minfo.country[2]='1' then otemp[3]:='U';
+      if minfo.country[3]='1' then otemp[4]:='E';
+      if minfo.country[10]='1' then otemp[5]:='@';
+      if minfo.country[2]='2' then otemp:=' Can ';
+      if minfo.country[3]='2' then otemp:=' Fra ';
+      if minfo.country[3]='3' then otemp:=' Ger ';
+      if minfo.country[3]='4' then otemp:=' Spa ';
+      if minfo.country[3]='5' then otemp:=' Swe ';
+      if minfo.country[3]='6' then otemp:=' Ita ';
+      if minfo.country[3]='7' then otemp:=' Aus ';
+      if minfo.country[4]='1' then otemp:=' Asi ';
+      if minfo.country[5]='1' then otemp:=' VS  ';
+      if minfo.country[5]='2' then otemp:=' P10 ';
+      if minfo.country[5]='3' then otemp:=' PD  ';
+      if minfo.country[6]='1' then otemp:=' TR  ';
+      if minfo.country[8]='3' then otemp:=' GH  ';
+      out:=out+otemp;
     end;
-  if docsum=true then out:=out+' '+csum;
+  if docsum=true then out:=out+csum;
   if split=true then out:=out+#27+'     '+fname2;
   formatoutput:=out;
 end;
@@ -1673,12 +1725,12 @@ begin
           p:=pos(';',ts); if p=0 then ts2:=ts else begin ts2:=copy(ts,1,p-1); delete(ts,1,p); end;
           dbaseinfo.company:=ts2;
           skipflag:=false;
-          if (dbaseinfo.country div 16384=1) and (missing_bad=false) then skipflag:=true;
-          if (dbaseinfo.country mod 1024 div 512=1) and (missing_trans=false) then skipflag:=true;
-          if (dbaseinfo.country mod 2048 div 1024=1) and (missing_pirate=false) then skipflag:=true;
-          if (dbaseinfo.country mod 4096 div 2048=1) and (missing_hacked=false) then skipflag:=true;
-          if (dbaseinfo.country mod 8192 div 4096=1) and (missing_gamehacks=false) then skipflag:=true;
-          if (dbaseinfo.country mod 16384 div 8192=1) and (missing_hacked=false) then skipflag:=true;
+          if (dbaseinfo.country[6]='1') and (missing_trans=false) then skipflag:=true;
+          if (dbaseinfo.country[7]='1') and (missing_pirate=false) then skipflag:=true;
+          if (dbaseinfo.country[8]='1') and (missing_hacked=false) then skipflag:=true;
+          if (dbaseinfo.country[8]='2') and (missing_gamehacks=false) then skipflag:=true;
+          if (dbaseinfo.country[8]='3') and (missing_hacked=false) then skipflag:=true;
+          if (dbaseinfo.country[9]='1') and (missing_bad=false) then skipflag:=true;
           if csumdbase[c].resize>0 then skipflag:=true;
           if skipflag=true then badcount:=badcount+1;
           if (csumdbase[c].flag=false) and (skipflag=false) then
@@ -1789,7 +1841,7 @@ if t=1 then
     writeln('-rep,-repair   Repairs ROM headers with those found in database (enables -c)');
     writeln('-res,-resize   Automatically resizes ROMs if they contain duplicate or');
     writeln('               unused banks of data.');
-    writeln('-sort[m]       Sorts ROMs into directories by country or type');
+    writeln('-sort[m]       Sorts ROMs into directories by region or type');
     writeln('                  m- Sorts ROMs by mapper # as well');
     writeln('-m#            Filter listing by mapper #');
     writeln('-f[hvbt4]      Filter listing by mapper data');
@@ -1832,8 +1884,7 @@ if t=2 then
 end;
 
 var
-  f,f2:word;
-  dirinfo:tfinddata;
+  f:word;
   attrib:word;
   h,ns,csum,prgcsum:string;
   clfname,pathname,sortdir:string;
@@ -1848,8 +1899,8 @@ var
   docsum,show,show_h,show_v,show_b,show_4,show_t,view_bl,outfile,extout,unknown:boolean;
   rname,namematch,dbase,extdbase,repair,cmp,abort,dbasemissing,garbage,sort,sortmapper:boolean;
   mthe,uscore,ccode,remspace,notrenamed,notrepaired,cropped,resize,sorted:boolean;
-  booltemp,dupe,allmissing,missingsort,lowcasename,subdir:boolean;
-  nobackup,badrom,mhackedrom,ghackedrom,hackedrom,piraterom,prgfound,remperiod:boolean;
+  booltemp,dupe,allmissing,missingsort,lowcasename,subdir,shorten:boolean;
+  nobackup,badrom,mhackedrom,ghackedrom,hackedrom,piraterom,prgfound,remperiod,unlflag:boolean;
   result,rtmp,rtmp2,ralt:string;
   key:char;
   out,out2:string;
@@ -1858,7 +1909,7 @@ var
   errcode:word;
   name:string;
   newprg,newchr:byte;
-  sortcode:integer;
+  sortcode:string[10];
   filedt:NewDateTime;
   hour,min,sec,hund:word;
   Year,Month,Day,DOW:word;
@@ -1941,25 +1992,7 @@ begin
           splitpath(clfname,clfname,pathname);
           pathname:=getfullpathname(pathname,false);
           if clfname='' then clfname:='*.nes';
-          if subdir=true then
-            begin
-              f2:=lfnfindfirst(pathname+'*.*',FA_DIR,FA_DIR,dirinfo);
-              while (dos7error=0) and (numpaths<maxpathnames) do
-                begin
-                  if (dirinfo.name<>'.') and (dirinfo.name<>'..') then
-                    if (upcasestr(pathname+dirinfo.name+'\')<>upcasestr(dir_dupes)) and
-                       (upcasestr(pathname+dirinfo.name+'\')<>upcasestr(dir_backup)) then
-                      begin
-                        numpaths:=numpaths+1;
-                        str2chr(clfname,arraytemp);
-                        clf[numpaths]:=strnew(arraytemp);
-                        str2chr(pathname+dirinfo.name+'\',arraytemp);
-                        path[numpaths]:=strnew(arraytemp);
-                      end;
-                  lfnfindnext(f2,dirinfo);
-                end;
-              lfnfindclose(f2);
-            end;
+          if subdir=true then loaddirs(pathname,clfname,dirlimit);
           numpaths:=numpaths+1;
           str2chr(clfname,arraytemp);
           clf[numpaths]:=strnew(arraytemp);
@@ -2142,6 +2175,7 @@ begin
             sorted:=false;
             flagrom:=true;
             prgfound:=false;
+            unlflag:=false;
             fcpos:=0;
             h:=ReadNesHdr(Name);
             attrib:=LFNGetAttrib(Name);
@@ -2238,7 +2272,12 @@ begin
                     rflag:=2;
                     if prgfound=false then matchcount:=matchcount+1;
                     getdbaseinfo(dbpos,result,resulthdr);
-                    result:=shortparse(result,shortname);
+                    shorten:=shortname;
+                    if (joliet=true) and (length(result)>61) then shorten:=true;
+                    result:=shortparse(result,shorten);
+                    if pos('(UNL',upcasestr(result))=0 then unlflag:=true;
+                    if (unlflag=true) and (tagunl=true) and (resulthdr.country[10]='1')
+                      then result:=result+' (Unl)';
                     if prgfound=true then
                       begin
                         result:=result+badchr+' '+csum+')';
@@ -2251,13 +2290,14 @@ begin
                       end;
                     nes.country:=resulthdr.country;
                     nes.company:=resulthdr.company;
-                    if nes.country mod 2048 div 1024=1 then piraterom:=true;
-                    if nes.country mod 4096 div 2048=1 then mhackedrom:=true;
-                    if nes.country mod 8192 div 4096=1 then ghackedrom:=true;
-                    if nes.country mod 16384 div 8192=1 then hackedrom:=true;
-                    if nes.country div 16384=1 then badrom:=true;
+                    if nes.country[7]='1' then piraterom:=true;
+                    if nes.country[8]='2' then mhackedrom:=true;
+                    if nes.country[8]='3' then ghackedrom:=true;
+                    if nes.country[8]='1' then hackedrom:=true;
+                    if nes.country[9]='1' then badrom:=true;
                     if mthe=true then result:=movethe(result);
-                    if ccode=true then result:=result+countryi2s(nes.country);
+                    if (ccode=true) or (nes.country[2]>'1') or (nes.country[3]>'1')
+                      then result:=result+countryi2s(nes.country);
                     if lowcasename=true then result:=lowcasestr(result);
                     if remspace=true then result:=spcvt(result,2);
                     if uscore=true then result:=spcvt(result,1);
@@ -2356,11 +2396,11 @@ begin
                         out:=out+'",'+i2s(nes.prg,0)+','+i2s(nes.chr,0);
                       end;
                 sortcode:=nes.country;
-                if (piraterom=true) and (move_pirate=true) then sortcode:=-5;
-                if (mhackedrom=true) and (move_hacked=true) then sortcode:=-4;
-                if ghackedrom=true then sortcode:=-3;
-                if (hackedrom=true) and (move_hacked=true) then sortcode:=-2;
-                if (badrom=true) and (move_bad=true) then sortcode:=-1;
+                if (piraterom=true) and (move_pirate=true) then sortcode:='PIRATE';
+                if (mhackedrom=true) and (move_hacked=true) then sortcode:='MAPHACKS';
+                if ghackedrom=true then sortcode:='GAMEHACKS';
+                if (hackedrom=true) and (move_hacked=true) then sortcode:='HACKED';
+                if (badrom=true) and (move_bad=true) then sortcode:='BAD';
                 if (quiet=true) and (dbase=false) then
                   begin
                     gotoxy(1,wy);
@@ -2397,7 +2437,9 @@ begin
                             begin
                               sorted:=true;
                               sortdir:=getsortdir(sortcode);
-                              if (sort_trans=true) and (nes.country=512) then sortdir:=sortdir+transdir(result)+'\';
+                              if (sort_trans=true) and (nes.country[6]='1') then sortdir:=sortdir+transdir(result)+'\';
+                              if (sort_unlicensed=true) and (copy(nes.country,5,6)='000001')
+                                 then sortdir:=sortdir+'Unlicensed\';
                               if sortmapper=true then sortdir:=sortdir+i2s(resulthdr.mapper,3)+'\';
                               if notrepaired=true then sortdir:=dir_repair;
                             end else sortdir:='.\';
@@ -2449,8 +2491,10 @@ begin
                 if (sort=true) and (dupe=false) and (sorted=false) then
                   begin
                     sortdir:=getsortdir(sortcode);
-                    if (sort_trans=true) and (dbpos>0) and (nes.country=512)
+                    if (sort_trans=true) and (dbpos>0) and (nes.country[6]='1')
                       then sortdir:=sortdir+transdir(result)+'\';
+                    if (sort_unlicensed=true) and (dbpos>0) and (copy(nes.country,5,6)='000001')
+                      then sortdir:=sortdir+'Unlicensed\';
                     if sortmapper=true then
                       begin
                         if dbpos>0 then sortdir:=sortdir+i2s(resulthdr.mapper,3)+'\'
