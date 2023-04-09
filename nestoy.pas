@@ -29,7 +29,7 @@ type
 const
   null8=#0+#0+#0+#0+#0+#0+#0+#0;
   hdrstring='NES'+#26;
-  dbasefile='ROMDBASE.DAT';
+  dbasefile='NESDBASE.DAT';
   cfgfile='NESTOY.CFG';
   missingfile='MISSING.TXT';
   version='2.1b';
@@ -100,12 +100,12 @@ begin
   Repeat
     Case SortType of
     ascending :begin
-                 While strcomp(d[lower]^,pivot)<0 do inc(lower);
-                 While strcomp(pivot,d[upper]^)<0 do dec(upper);
+                 While stricomp(d[lower]^,pivot)<0 do inc(lower);
+                 While stricomp(pivot,d[upper]^)<0 do dec(upper);
                end;
     descending:begin
-                 While strcomp(d[lower]^,pivot)>0 do inc(lower);
-                 While strcomp(pivot,d[upper]^)>0 do dec(upper);
+                 While stricomp(d[lower]^,pivot)>0 do inc(lower);
+                 While stricomp(pivot,d[upper]^)>0 do dec(upper);
                end;
     end; { Case}
     if lower <= upper then begin
@@ -1357,6 +1357,8 @@ var
   volinfo:tvolinfo;
   newprg,newchr:byte;
   sortcode:integer;
+  hour,min,sec,hund:word;
+  fullstarttime,fullendtime,difftime:longint;
 
 begin
   checkbreak:=false;
@@ -1515,6 +1517,8 @@ begin
                   rname:=false; repair:=false; resize:=false; dbasemissing:=false;
                 end;
   if docsum=false then l:=55 else l:=40;
+  gettime(hour,min,sec,hund);
+  fullstarttime:=sec+min*60+hour*3600;
   for pc:=1 to numpaths do
     begin
       pathname:=getfullpathname(path[pc],false);
@@ -1603,8 +1607,6 @@ begin
                     if (nes.chr<>0) and (nes.chr<>1) and (nes.chr<>2) and (nes.chr<>4) and
                        (nes.chr<>8) and (nes.chr<>16) and (nes.chr<>32) and (nes.chr<>64) and
                        (nes.chr<>128) then badrom:=true;
-                    if nes.vs=1 then nes.country:=98;
-                    if nes.pc10=1 then nes.country:=99;
                   end;
                 if dbpos>0 then
                   begin
@@ -1788,11 +1790,23 @@ begin
       end;
       readdirclose(f);
     end;
+  gettime(hour,min,sec,hund);
+  fullendtime:=sec+min*60+hour*3600;
+  difftime:=fullendtime-fullstarttime;
+  hour:=difftime div 3600;
+  difftime:=difftime mod 3600;
+  min:=difftime div 60;
+  sec:=difftime mod 60;
   if romcount=0 then writeln('No ROMs found') else begin writeln; writeln(romcount,romstr(romcount),' found'); end;
   if matchcount>0 then writeln(matchcount,romstr(matchcount),' found in database');
   if rpcount>0 then writeln(rpcount,romstr(rpcount),' repaired');
   if rncount>0 then writeln(rncount,romstr(rncount),' renamed');
   if rscount>0 then writeln(rscount,romstr(rscount),' resized');
+  writeln;
+  write('Finished in ');
+  if hour>0 then write(hour,' hours, ');
+  if min>0 then write(min,' minutes and ');
+  writeln(sec,' seconds.');
   if (outfile=true) and (dbase=false) then
     begin
       if romcount=0 then writeln(ofile,'No ROMs found')
@@ -1801,6 +1815,11 @@ begin
       if rpcount>0 then writeln(ofile,rpcount,romstr(rpcount),' repaired');
       if rncount>0 then writeln(ofile,rncount,romstr(rncount),' renamed');
       if rscount>0 then writeln(ofile,rscount,romstr(rscount),' resized');
+      writeln(ofile);
+      write(ofile,'Finished in ');
+      if hour>0 then write(ofile,hour,' hours, ');
+      if min>0 then write(ofile,min,' minutes and ');
+      writeln(ofile,sec,' seconds.');
     end;
   if outfile=true then close(ofile);
   if dbasemissing=true then listmissing(allmissing,missingsort);
