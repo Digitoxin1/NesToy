@@ -32,9 +32,10 @@ const
   dbasefile='ROMDBASE.DAT';
   cfgfile='NESTOY.CFG';
   missingfile='MISSING.TXT';
-  version='1.7b';
+  version='1.8b';
   maxsize:Word = 3000;
   SortType:updown = ascending;
+  extparamst:string='';
   dir_bad:string='Bad\';
   dir_unknown:string='Unknown\';
   dir_japan:string='Japan\';
@@ -61,6 +62,7 @@ var
   clf:array[1..12] of string;
   dbasecount,FCCount,numpaths:integer;
   cpath,progpath:string;
+  cfgparam:string;
 
 Procedure swap(Var a,b : dataptr);  { Swap the Pointers }
 Var  t:dataptr;
@@ -117,6 +119,19 @@ begin
   clreol;
 end;
 
+function removespaces(instr:string;rp:boolean):string;
+begin
+  while instr[1]=' ' do delete(instr,1,1);
+  while instr[length(instr)]=' ' do delete(instr,length(instr),1);
+  if rp=true then
+    if instr[1]='"' then
+      begin
+        delete(instr,1,1);
+        if instr[length(instr)]='"' then delete(instr,length(instr),1);
+      end;
+  removespaces:=instr;
+end;
+
 function I2S(i: longint): string;
 var
   s:string[11];
@@ -148,10 +163,20 @@ begin
   upcasestr:=s;
 end;
 
+function lowcasestr(s:string):string;
+var
+  i:integer;
+begin
+  for i:=1 to length(s) do
+    if (ord(s[i])>64) and (ord(s[i])<91) then s[i]:=chr(ord(s[i])+32);
+  lowcasestr:=s;
+end;
+
 function paramstrparse:string;
 var
   s1,s2:string;
-  counter:integer;
+  cp:string;
+  counter,p:integer;
   flag:boolean;
 begin
   flag:=false;
@@ -179,6 +204,36 @@ begin
       s1:=s1+',';
     end;
   if s1=',' then s1:='';
+  flag:=false;
+  cp:=cfgparam;
+  if cp>'' then
+    repeat
+      p:=pos(' ',cp);
+      if p=0 then
+        begin
+          if copy(cp,length(cp),1)='"' then delete(cp,length(cp),1);
+          s1:=s1+cp+','
+        end else
+        begin
+          s2:=copy(cp,1,p-1);
+          delete(cp,1,p);
+          if copy(s2,1,1)='"' then
+            begin
+              flag:=true;
+              delete(s2,1,1);
+            end;
+          if copy(s2,length(s2),1)='"' then
+            begin
+              flag:=false;
+              delete(s2,length(s2),1);
+            end;
+          if flag=true then s1:=s1+s2+' ' else
+            begin
+              s1:=s1+s2+',';
+              while cp[1]=' ' do delete(cp,1,1);
+            end;
+        end;
+    until p=0;
   paramstrparse:=s1;
 end;
 
@@ -188,7 +243,7 @@ var
   i:integer;
 begin
   i:=0;
-  s:=paramstrparse;
+  s:=extparamst;
   while pos(',',s)>0 do
     begin
       delete(s,1,pos(',',s));
@@ -202,7 +257,7 @@ var
   s1,s2:string;
   count,p:integer;
 begin
-  s1:=paramstrparse;
+  s1:=extparamst;
   count:=extparamcount;
   if pnum>count then
     begin
@@ -727,24 +782,14 @@ begin
     strdispose(dirarray[counter]);
 end;
 
-function removespaces(instr:string):string;
-begin
-  while instr[1]=' ' do delete(instr,1,1);
-  while instr[length(instr)]=' ' do delete(instr,length(instr),1);
-  if instr[1]='"' then
-    begin
-      delete(instr,1,1);
-      if instr[length(instr)]='"' then delete(instr,length(instr),1);
-    end;
-  removespaces:=instr;
-end;
-
 procedure loadcfgfile;
 var
   f:text;
   s,s2:string;
   p:integer;
+  rp:boolean;
 begin
+  rp:=true;
   assign(f,progpath+cfgfile);
   {$I-}
   reset(f);
@@ -763,6 +808,8 @@ begin
       writeln(f,'DIR_UNLICENSED = ',dir_unlicensed);
       writeln(f,'DIR_USA = ',dir_usa);
       writeln(f,'DIR_VS = ',dir_vs);
+      writeln(f);
+      writeln(f,'CMDLINE =');
       close(f);
     end else
     begin
@@ -773,11 +820,13 @@ begin
           if p>0 then
             begin
               s2:=copy(s,p+1,length(s)-p);
-              s2:=removespaces(s2);
               s:=copy(s,1,p-1);
-              s:=removespaces(s);
+              s:=removespaces(s,true);
               s:=upcasestr(s);
-              if s2[length(s2)]<>'\' then s2:=s2+'\';
+              if s='CMDLINE' then rp:=false;
+              s2:=removespaces(s2,rp);
+              if copy(s,1,4)='DIR_' then
+                if s2[length(s2)]<>'\' then s2:=s2+'\';
               if s='DIR_BAD' then dir_bad:=s2;
               if s='DIR_CANADA' then dir_canada:=s2;
               if s='DIR_DUPLICATES' then dir_dupes:=s2;
@@ -789,6 +838,7 @@ begin
               if s='DIR_UNLICENSED' then dir_unlicensed:=s2;
               if s='DIR_USA' then dir_usa:=s2;
               if s='DIR_VS' then dir_vs:=s2;
+              if s='CMDLINE' then cfgparam:=s2;
             end;
         end;
       close(f);
@@ -978,7 +1028,8 @@ begin
   while not eof(f2) do
     begin
       readln(f2,s);
-      s:=copy(s,70,8);
+      while s[length(s)]=' ' do delete(s,length(s),1);
+      s:=copy(s,length(s)-7,8);
       searchdbase(s,result);
       if result>0 then flags[result]:=true;
     end;
@@ -1024,10 +1075,10 @@ begin
   shortparse:=name;
 end;
 
-procedure listmissing;
+procedure listmissing(showall,csort:boolean);
 var
   f,f2:text;
-  io,io2,c,p,x,code,acount:integer;
+  io,io2,c,x,p,code,acount:integer;
   counter:integer;
   badcount:integer;
   byte7,byte8:byte;
@@ -1038,13 +1089,14 @@ var
   charout:array[0..255] of char;
   volinfo:tvolinfo;
   missingpath:string;
+  country:string[3];
 
 begin
   acount:=0;
   badcount:=0;
   getvolumeinformation(copy(cpath,1,3),volinfo);
-  if volinfo.FSName='CDFS' then missingpath:=progpath+'\'+missingfile
-                           else missingpath:=cpath+'\'+missingfile;
+  if volinfo.FSName='CDFS' then missingpath:=progpath+missingfile
+                           else missingpath:=cpath+missingfile;
   assign(f2,missingpath);
   {$I-}
   reset(f2);
@@ -1098,6 +1150,18 @@ begin
                   dbaseinfo.other:=null8;
                   out:=formatoutput(fn,dbaseinfo,true,csum,0,41,false);
                   delete(out,1,2);
+                  country:=copy(out,66,3);
+                  if (csort=true) and (showall=true) then
+                    begin
+                      delete(out,66,3);
+                      out:=country+out;
+                    end;
+                  if showall=false then
+                    begin
+                      if country='J E' then country:='JE ';
+                      out:=fn+' ('+removespaces(country,true)+') - '+csum;
+                    end;
+                  if (csort=true) and (showall=false) then out:=country+out;
                   for counter:=1 to length(out) do charout[counter-1]:=out[counter];
                   charout[counter]:=#0;
                   dbasearray[acount]:=strnew(charout);
@@ -1107,8 +1171,15 @@ begin
       quicksort(dbasearray,1,acount);
       for c:=1 to acount do
         begin
+          out2:='';
           out:=strpas(dbasearray[c]);
-          checksplit(out,out2);
+          if csort=true then
+            begin
+              country:=copy(out,1,3);
+              delete(out,1,3);
+              if showall=true then insert(country,out,66);
+            end;
+          if showall=true then checksplit(out,out2);
           writeln(f2,out);
           if out2<>'' then writeln(f2,out2);
         end;
@@ -1122,9 +1193,7 @@ begin
   if io2>0 then
     begin
       writeln;
-      write('Error: Cannot create ');
-      if volinfo.FSName='CDFS' then writeln(progpath,missingfile)
-                               else writeln(cpath,missingfile);
+      write('Error: Cannot create ',missingpath);
     end;
 end;
 
@@ -1160,10 +1229,12 @@ if t=1 then
     writeln('-hc            Calculate Checksums with header');
     writeln('-i             Outputs extended info if header or name are not correct');
     writeln('-o[file]       Sends output to file (DOS 8.3 filenames for now)');
-    writeln('-ren[usc]      Renames roms to names stored in database (enables -c)');
+    writeln('-ren[uscl]     Renames roms to names stored in database (enables -c)');
     writeln('                  u- Replace spaces with underscores');
     writeln('                  s- Remove spaces completely from filename');
     writeln('                  c- Attach country codes to end of filenames');
+    writeln('                  l- Convert roms to all lowercase names');
+    writeln('-sn            Use shorter names for some game titles');
     writeln('-rep,-repair   Repairs rom headers with those found in database (enables -c)');
     writeln('-res,-resize   Automatically resizes roms if they contain duplicate banks');
     writeln('               of data.');
@@ -1173,9 +1244,11 @@ if t=1 then
     writeln('                  h- Horizontal Mirroring     t- Trainer Present');
     writeln('                  v- Vertical Mirroring       4- 4 Screen Buffer');
     writeln('                  b- Contains SRAM (Battery backup)');
-    writeln('-u             Only display unknown roms (enables -c)');
-    writeln('-missing       Creates a list of missing roms in ',missingfile);
     pause;
+    writeln('-u             Only display unknown roms (enables -c)');
+    writeln('-missing[cb]   Creates a list of missing roms in ',missingfile);
+    writeln('                  c- Sort missing list by country');
+    writeln('                  b- Bare listing (Name, country codes, and checksum only)');
     writeln('-doall         Enables -c,-i,-ren,-repair,-resize,-sort, and -missing');
     writeln('-h,-?,-help    Displays this screen');
     writeln;
@@ -1210,7 +1283,7 @@ var
   docsum,show,show_h,show_v,show_b,show_4,show_t,view_bl,outfile,extout,unknown:boolean;
   rname,namematch,dbase,repair,cmp,abort,dbasemissing,garbage,sort:boolean;
   uscore,ccode,remspace,notrenamed,notrepaired,cropped,resize,sorted:boolean;
-  booltemp,badrom,dupe,shortname:boolean;
+  booltemp,badrom,dupe,shortname,allmissing,missingsort,lowcasename:boolean;
   result,rtmp:string;
   key:char;
   out,out2:string;
@@ -1225,11 +1298,13 @@ var
 begin
   checkbreak:=false;
   if IsDOS70=false then usage(3);
+  cfgparam:='';
   progpath:=paramstr(0);
   while copy(progpath,length(progpath),1)<>'\' do
     delete(progpath,length(progpath),1);
   loaddbase;
   loadcfgfile;
+  extparamst:=paramstrparse;
   cpath:=getfullpathname('.\',false);
   pathname:='';
   out2:='';
@@ -1262,6 +1337,9 @@ begin
   sort:=false;
   dupe:=false;
   shortname:=false;
+  allmissing:=true;
+  missingsort:=false;
+  lowcasename:=false;
   msearch:=-1;
   if extparamcount=0 then usage(0);
   searchps('-h',sps,result);
@@ -1311,6 +1389,7 @@ begin
       if pos('U',result)>0 then uscore:=true;
       if pos('S',result)>0 then remspace:=true;
       if pos('C',result)>0 then ccode:=true;
+      if pos('L',result)>0 then lowcasename:=true;
     end;
   searchps('-sn',sps,result);
   if sps>0 then shortname:=true;
@@ -1351,8 +1430,14 @@ begin
   if sps>0 then begin extout:=true; docsum:=true; end;
   searchps('-u',sps,result);
   if sps>0 then begin unknown:=true; docsum:=true; end;
-  searchps('-missing',sps,result);
-  if sps>0 then begin dbasemissing:=true; docsum:=true; end;
+  searchps('-missing*',sps,result);
+  if sps>0 then
+    begin
+      dbasemissing:=true;
+      docsum:=true;
+      if pos('C',result)>0 then missingsort:=true;
+      if pos('B',result)>0 then allmissing:=false;
+    end;
   searchps('-sort',sps,result);
   if sps>0 then begin sort:=true; docsum:=true; end;
   searchps('-doall',sps,result);
@@ -1485,18 +1570,25 @@ begin
                     nes.country:=resulthdr.country;
                     nes.company:=resulthdr.company;
                     if ccode=true then result:=result+countryi2s(nes.country);
+                    if lowcasename=true then result:=lowcasestr(result);
                     if remspace=true then result:=spcvt(result,2);
                     if uscore=true then result:=spcvt(result,1);
                     cmp:=comparehdrs(nes,resulthdr);
                     if result+'.nes'<>name then namematch:=false else namematch:=true;
                     if (namematch=false) and (rname=false) then
                       begin
-                        rtmp:=result+countryi2s(nes.country);
-                        if spcvt(result,1)+'.nes'=name then namematch:=true else
-                        if spcvt(result,2)+'.nes'=name then namematch:=true else
+                        rtmp:=result;
+                        if name=lowcasestr(name) then rtmp:=lowcasestr(rtmp);
                         if rtmp+'.nes'=name then namematch:=true else
                         if spcvt(rtmp,1)+'.nes'=name then namematch:=true else
-                        if spcvt(rtmp,2)+'.nes'=name then namematch:=true;
+                        if spcvt(rtmp,2)+'.nes'=name then namematch:=true else
+                          begin
+                            rtmp:=result+countryi2s(nes.country);
+                            if name=lowcasestr(name) then rtmp:=lowcasestr(rtmp);
+                            if rtmp+'.nes'=name then namematch:=true else
+                            if spcvt(rtmp,1)+'.nes'=name then namematch:=true else
+                            if spcvt(rtmp,2)+'.nes'=name then namematch:=true
+                          end;
                       end;
                     if badrom=true then rflag:=6;
                     if namematch=false then rflag:=4;
@@ -1644,5 +1736,5 @@ begin
       if rscount>0 then writeln(ofile,rscount, ' roms resized');
     end;
   if outfile=true then close(ofile);
-  if dbasemissing=true then listmissing;
+  if dbasemissing=true then listmissing(allmissing,missingsort);
 end.
