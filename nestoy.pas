@@ -23,7 +23,7 @@ type
   updown   = (ascending,descending);
   dataType = array[0..255] of char;     { the Type of data to be sorted }
   dataptr  = ^dataType;
-  ptrArray = Array[1..3000] of dataptr;
+  ptrArray = Array[1..4000] of dataptr;
   Arrayptr = ^ptrArray;
 
 const
@@ -32,8 +32,8 @@ const
   dbasefile='ROMDBASE.DAT';
   cfgfile='NESTOY.CFG';
   missingfile='MISSING.TXT';
-  version='1.9b';
-  maxsize:Word = 3000;
+  version='2.1b';
+  maxsize:Word = 4000;
   SortType:updown = ascending;
   extparamst:string='';
   dir_bad:string='Bad\';
@@ -54,6 +54,10 @@ const
   move_bad:boolean=true;
   move_hacked:boolean=true;
   move_pirate:boolean=true;
+  missing_bad:boolean=false;
+  missing_hacked:boolean=true;
+  missing_pirate:boolean=true;
+  missing_trans:boolean=false;
 
 var
   hdcsum:boolean;
@@ -62,13 +66,14 @@ var
                                 flag:boolean;
                                 resize:integer;
                               end;
-  dirarray:array[1..3000] of pchar;
+  dirarray:array[1..4000] of pchar;
   FCPrg,FCChr:array[1..100] of byte;
   path:array[1..12] of string;
   clf:array[1..12] of string;
   dbasecount,FCCount,numpaths:integer;
   cpath,progpath:string;
   cfgparam:string;
+  overwritemissing:boolean;
 
 Procedure swap(Var a,b : dataptr);  { Swap the Pointers }
 Var  t:dataptr;
@@ -157,6 +162,11 @@ var
 begin
   str(i,s);
   I2S:=s;
+end;
+
+function romstr(i:integer):string;
+begin
+  if i=1 then romstr:=' ROM' else romstr:=' ROMs';
 end;
 
 function justify(s:string;i:integer;jtype:char;trflag:boolean):string;
@@ -328,7 +338,7 @@ begin
     6: temp:=' (UE)';
     7: temp:=' (JUE)';
     8: temp:=' (S)';
-    9: temp:=' (C)';
+    16: temp:=' (C)';
     97: temp:=' (UNL)';
     98: temp:=' (VS)';
     99: temp:=' (PC10)';
@@ -435,7 +445,9 @@ begin
   g:=0;
   crc:=crcseed;
   f:=LFNOpenFile(fname,FA_NORMAL,OPEN_RDONLY,1);
-  if hdcsum=false then result:=lfnblockread(f,buf,16);
+  result:=lfnblockread(f,buf,16);
+  if hdcsum=true then
+    for ctr:=1 to 16 do crc:=crc32(buf[ctr],crc);
   repeat
     result:=lfnblockread(f,buf,sizeof(buf));
     g:=result mod 8192;
@@ -738,7 +750,12 @@ var
   tstr:string[16];
   c:integer;
   rfname:string;
+  revprg,revchr:boolean;
 begin
+  revprg:=false;
+  revchr:=false;
+  if newprg>127 then begin newprg:=256-newprg; revprg:=true; end;
+  if newchr>127 then begin newchr:=256-newchr; revchr:=true; end;
   rfname:=fname;
   if copy(rfname,length(rfname)-3,1)='.' then rfname:=copy(rfname,1,length(rfname)-4);
   rfname:=rfname+'.ba~';
@@ -757,12 +774,14 @@ begin
       for c:=1 to prg do
         begin
           result2:=lfnblockread(f2,buf,sizeof(buf));
-          if c<=newprg then result:=lfnblockwrite(f,buf,result2);
+          if (c<=newprg) and (revprg=false) then result:=lfnblockwrite(f,buf,result2);
+          if (c>newprg) and (revprg=true) then result:=lfnblockwrite(f,buf,result2);
         end;
       for c:=1 to chr do
         begin
           result2:=lfnblockread(f2,buf2,sizeof(buf2));
-          if c<=newchr then result:=lfnblockwrite(f,buf2,result2);
+          if (c<=newchr) and (revchr=false) then result:=lfnblockwrite(f,buf2,result2);
+          if (c>newchr) and (revchr=true) then result:=lfnblockwrite(f,buf2,result2);
         end;
       LFNCloseFile(f);
       LFNCloseFile(f2);
@@ -781,7 +800,7 @@ var
 begin
   count:=0;
   f:=lfnfindfirst(pathname,FA_NORMAL,FA_NORMAL,dirinfo);
-  while (dos7error=0) and (count<3000) do
+  while (dos7error=0) and (count<4000) do
     begin
       count:=count+1;
       strtemp:=dirinfo.name;
@@ -836,6 +855,10 @@ begin
       writeln(f,'MOVE_BAD = ',move_bad);
       writeln(f,'MOVE_HACKED = ',move_hacked);
       writeln(f,'MOVE_PIRATE = ',move_pirate);
+      writeln(f,'MISSING_BAD = ',missing_bad);
+      writeln(f,'MISSING_HACKED = ',missing_hacked);
+      writeln(f,'MISSING_PIRATE = ',missing_pirate);
+      writeln(f,'MISSING_TRANS = ',missing_trans);
       writeln(f);
       writeln(f,'CMDLINE =');
       close(f);
@@ -873,9 +896,20 @@ begin
               if s='DIR_UNLICENSED' then dir_unlicensed:=s2;
               if s='DIR_USA' then dir_usa:=s2;
               if s='DIR_VS' then dir_vs:=s2;
-              if s='MOVE_BAD' then if upcasestr(s2)='FALSE' then move_bad:=false;
-              if s='MOVE_HACKED' then if upcasestr(s2)='FALSE' then move_hacked:=false;
-              if s='MOVE_PIRATE' then if upcasestr(s2)='FALSE' then move_pirate:=false;
+              if s='MOVE_BAD' then if upcasestr(s2)='FALSE' then move_bad:=false else
+                if upcasestr(s2)='TRUE' then move_bad:=true;
+              if s='MOVE_HACKED' then if upcasestr(s2)='FALSE' then move_hacked:=false else
+                if upcasestr(s2)='TRUE' then move_hacked:=true;
+              if s='MOVE_PIRATE' then if upcasestr(s2)='FALSE' then move_pirate:=false else
+                if upcasestr(s2)='TRUE' then move_pirate:=true;
+              if s='MISSING_BAD' then if upcasestr(s2)='FALSE' then missing_bad:=false else
+                if upcasestr(s2)='TRUE' then missing_bad:=true;
+              if s='MISSING_HACKED' then if upcasestr(s2)='FALSE' then missing_hacked:=false else
+                if upcasestr(s2)='TRUE' then missing_hacked:=true;
+              if s='MISSING_PIRATE' then if upcasestr(s2)='FALSE' then missing_pirate:=false else
+                if upcasestr(s2)='TRUE' then missing_pirate:=true;
+              if s='MISSING_TRANS' then if upcasestr(s2)='FALSE' then missing_trans:=false else
+                if upcasestr(s2)='TRUE' then missing_trans:=true;
               if s='CMDLINE' then cfgparam:=s2;
             end;
         end;
@@ -1120,13 +1154,16 @@ begin
   missingpath:=missingpath+missingfile;
   assign(f2,missingpath);
   {$I-}
-  reset(f2);
-  io:=ioresult;
-  if io>0 then rewrite(f2) else
+  if overwritemissing=true then rewrite(f2) else
     begin
-      close(f2);
-      parsemissing(missingpath);
-      rewrite(f2);
+      reset(f2);
+      io:=ioresult;
+      if io>0 then rewrite(f2) else
+        begin
+          close(f2);
+          parsemissing(missingpath);
+          rewrite(f2);
+        end;
     end;
   io2:=ioresult;
   {$I+}
@@ -1137,59 +1174,58 @@ begin
       for c:=1 to dbasecount do
         begin
           readln(f,ts);
-          if csumdbase[c].resize>0 then badcount:=badcount+1;
-          if (csumdbase[c].flag=false) and (csumdbase[c].resize=0) then
+          p:=pos(';',ts); csum:=copy(ts,1,p-1); delete(ts,1,p);
+          p:=pos(';',ts);
+          if p=0 then fn:=ts else
             begin
-              p:=pos(';',ts); csum:=copy(ts,1,p-1); delete(ts,1,p);
-              p:=pos(';',ts);
-              if p=0 then fn:=ts else
+              fn:=copy(ts,1,p-1);
+              delete(ts,1,p);
+            end;
+          fn:=shortparse(fn,false);
+          skipflag:=false;
+          if (pos('(Bad Dump',fn)>0) and (missing_bad=false) then skipflag:=true;
+          if ((pos('(Translated',fn)>0) or (pos('Translated)',fn)>0)) and (missing_trans=false) then skipflag:=true;
+          if ((pos('(Hack',fn)>0) or (pos('Hack)',fn)>0)) and (missing_hacked=false) then skipflag:=true;
+          if ((pos('(Pirate',fn)>0) or (pos('Pirate)',fn)>0)) and (missing_pirate=false) then skipflag:=true;
+          if csumdbase[c].resize>0 then skipflag:=true;
+          if skipflag=true then badcount:=badcount+1;
+          if (csumdbase[c].flag=false) and (skipflag=false) then
+            begin
+              acount:=acount+1;
+              p:=pos(';',ts); ts2:=copy(ts,1,p-1); delete(ts,1,p); val(ts2,x,code); byte7:=x;
+              p:=pos(';',ts); ts2:=copy(ts,1,p-1); delete(ts,1,p); val(ts2,x,code); byte8:=x;
+              p:=pos(';',ts); ts2:=copy(ts,1,p-1); delete(ts,1,p); val(ts2,x,code); dbaseinfo.prg:=x;
+              p:=pos(';',ts); ts2:=copy(ts,1,p-1); delete(ts,1,p); val(ts2,x,code); dbaseinfo.chr:=x;
+              p:=pos(';',ts); if p=0 then ts2:=ts else begin ts2:=copy(ts,1,p-1); delete(ts,1,p); end;
+              dbaseinfo.country:=countrys2i(ts2);
+              p:=pos(';',ts); if p=0 then ts2:=ts else begin ts2:=copy(ts,1,p-1); delete(ts,1,p); end;
+              dbaseinfo.company:=ts2;
+              dbaseinfo.mirror:=byte7 mod 2;
+              dbaseinfo.sram:=byte7 div 2 mod 2;
+              dbaseinfo.trainer:=byte7 div 4 mod 2;
+              dbaseinfo.fourscr:=byte7 div 8 mod 2;
+              dbaseinfo.mapper:=byte7 div 16+byte8 div 16*16;
+              dbaseinfo.vs:=byte8 mod 2;
+              dbaseinfo.pc10:=byte8 div 2 mod 2;
+              dbaseinfo.hdr:=hdrstring;
+              dbaseinfo.other:=null8;
+              out:=formatoutput(fn,dbaseinfo,true,csum,0,41,false);
+              delete(out,1,2);
+              country:=copy(out,66,3);
+              if (csort=true) and (showall=true) then
                 begin
-                  fn:=copy(ts,1,p-1);
-                  delete(ts,1,p);
+                  delete(out,66,3);
+                  out:=country+out;
                 end;
-              fn:=shortparse(fn,false);
-              skipflag:=false;
-              if pos('(Bad Dump',fn)>0 then skipflag:=true;
-              if (pos('(Translated',fn)>0) or (pos('Translated)',fn)>0) then skipflag:=true;
-              if skipflag=true then badcount:=badcount+1;
-              if skipflag=false then
+              if showall=false then
                 begin
-                  acount:=acount+1;
-                  p:=pos(';',ts); ts2:=copy(ts,1,p-1); delete(ts,1,p); val(ts2,x,code); byte7:=x;
-                  p:=pos(';',ts); ts2:=copy(ts,1,p-1); delete(ts,1,p); val(ts2,x,code); byte8:=x;
-                  p:=pos(';',ts); ts2:=copy(ts,1,p-1); delete(ts,1,p); val(ts2,x,code); dbaseinfo.prg:=x;
-                  p:=pos(';',ts); ts2:=copy(ts,1,p-1); delete(ts,1,p); val(ts2,x,code); dbaseinfo.chr:=x;
-                  p:=pos(';',ts); if p=0 then ts2:=ts else begin ts2:=copy(ts,1,p-1); delete(ts,1,p); end;
-                  dbaseinfo.country:=countrys2i(ts2);
-                  p:=pos(';',ts); if p=0 then ts2:=ts else begin ts2:=copy(ts,1,p-1); delete(ts,1,p); end;
-                  dbaseinfo.company:=ts2;
-                  dbaseinfo.mirror:=byte7 mod 2;
-                  dbaseinfo.sram:=byte7 div 2 mod 2;
-                  dbaseinfo.trainer:=byte7 div 4 mod 2;
-                  dbaseinfo.fourscr:=byte7 div 8 mod 2;
-                  dbaseinfo.mapper:=byte7 div 16+byte8 div 16*16;
-                  dbaseinfo.vs:=byte8 mod 2;
-                  dbaseinfo.pc10:=byte8 div 2 mod 2;
-                  dbaseinfo.hdr:=hdrstring;
-                  dbaseinfo.other:=null8;
-                  out:=formatoutput(fn,dbaseinfo,true,csum,0,41,false);
-                  delete(out,1,2);
-                  country:=copy(out,66,3);
-                  if (csort=true) and (showall=true) then
-                    begin
-                      delete(out,66,3);
-                      out:=country+out;
-                    end;
-                  if showall=false then
-                    begin
-                      if country='J E' then country:='JE ';
-                      out:=fn+' ('+removespaces(country,true)+') - '+csum;
-                    end;
-                  if (csort=true) and (showall=false) then out:=country+out;
-                  for counter:=1 to length(out) do charout[counter-1]:=out[counter];
-                  charout[counter]:=#0;
-                  dbasearray[acount]:=strnew(charout);
+                  if country='J E' then country:='JE ';
+                  out:=fn+' ('+removespaces(country,true)+') - '+csum;
                 end;
+              if (csort=true) and (showall=false) then out:=country+out;
+              for counter:=1 to length(out) do charout[counter-1]:=out[counter];
+              charout[counter]:=#0;
+              dbasearray[acount]:=strnew(charout);
             end;
         end;
       quicksort(dbasearray,1,acount);
@@ -1208,7 +1244,7 @@ begin
           if out2<>'' then writeln(f2,out2);
         end;
       writeln(f2);
-      writeln(f2,acount,' missing roms out of ',dbasecount-badcount);
+      writeln(f2,acount,' missing',romstr(acount),' out of ',dbasecount-badcount);
       close(f);
       close(f2);
       for c:=acount downto 1 do
@@ -1253,26 +1289,28 @@ if t=1 then
     writeln('-hc            Calculate Checksums with header');
     writeln('-i             Outputs extended info if header or name are not correct');
     writeln('-o[file]       Sends output to file (DOS 8.3 filenames for now)');
-    writeln('-ren[uscl]     Renames roms to names stored in database (enables -c)');
+    writeln('-ren[uscl]     Renames ROMs to names stored in database (enables -c)');
     writeln('                  u- Replace spaces with underscores');
     writeln('                  s- Remove spaces completely from filename');
     writeln('                  c- Attach country codes to end of filenames');
-    writeln('                  l- Convert roms to all lowercase names');
+    writeln('                  l- Convert ROMs to all lowercase names');
     writeln('-sn            Use shorter names for some game titles');
-    writeln('-rep,-repair   Repairs rom headers with those found in database (enables -c)');
-    writeln('-res,-resize   Automatically resizes roms if they contain duplicate banks');
+    writeln('-rep,-repair   Repairs ROM headers with those found in database (enables -c)');
+    writeln('-res,-resize   Automatically resizes ROMs if they contain duplicate banks');
     writeln('               of data.');
-    writeln('-sort          Sorts ROMS into directories by country or type');
+    writeln('-sort          Sorts ROMs into directories by country or type');
     writeln('-m#            Filter listing by mapper #');
     writeln('-f[hvbt4]      Filter listing by mapper data');
     writeln('                  h- Horizontal Mirroring     t- Trainer Present');
     writeln('                  v- Vertical Mirroring       4- 4 Screen Buffer');
     writeln('                  b- Contains SRAM (Battery backup)');
     pause;
-    writeln('-u             Only display unknown roms (enables -c)');
-    writeln('-missing[cb]   Creates a list of missing roms in ',missingfile);
+    writeln('-u             Only display unknown ROMs (enables -c)');
+    writeln('-missing[cbn]  Creates a list of missing ROMs in ',missingfile);
     writeln('                  c- Sort missing list by country');
     writeln('                  b- Bare listing (Name, country codes, and checksum only)');
+    writeln('                  n- Force NesToy to create a new MISSING.TXT, even if one');
+    writeln('                     already exists (It will be overwritten.)');
     writeln('-doall         Enables -c,-i,-ren,-repair,-resize,-sort, and -missing');
     writeln('-h,-?,-help    Displays this screen');
     writeln;
@@ -1365,6 +1403,7 @@ begin
   allmissing:=true;
   missingsort:=false;
   lowcasename:=false;
+  overwritemissing:=false;
   msearch:=-1;
   if extparamcount=0 then usage(0);
   searchps('-h',sps,result);
@@ -1461,6 +1500,7 @@ begin
       docsum:=true;
       if pos('C',result)>0 then missingsort:=true;
       if pos('B',result)>0 then allmissing:=false;
+      if pos('N',result)>0 then overwritemissing:=true;
     end;
   searchps('-sort',sps,result);
   if sps>0 then begin sort:=true; docsum:=true; end;
@@ -1707,17 +1747,17 @@ begin
                         out:=formatoutput(result,resulthdr,false,'',0,l,view_bl);
                         checksplit(out,out2);
                         outm:='   Bad [----]';
+                        if (rname=true) and (namematch=false) then outm:='   Ren [----]';
+                        if (repair=true) and (cmp=false) then outm:='   Rep [----]';
                         if namematch=false then outm[9]:='N';
                         if cmp=false then outm[10]:='H';
                         if nes.other<>null8 then outm[11]:='G';
                         if (nes.vs=1) and (nes.pc10=1) then outm[11]:='G';
                         if garbage=true then outm[12]:='T';
                         if (rname=true) and (namematch=false) then
-                          if notrenamed=false then outm:='      Renamed'
-                                              else outm:=' Can''t Rename';
+                          if notrenamed=true then outm:=' Can''t Rename';
                         if (repair=true) and (cmp=false) then
-                          if notrepaired=false then outm:='     Repaired'
-                                               else outm:=' Can''t Repair';
+                          if notrepaired=true then outm:=' Can''t Repair';
                         out:=out+outm;
                         writeln(out);
                         if out2<>'' then writeln(out2);
@@ -1748,19 +1788,19 @@ begin
       end;
       readdirclose(f);
     end;
-  if romcount=0 then writeln('No roms found') else begin writeln; writeln(romcount,' roms found'); end;
-  if matchcount>0 then writeln(matchcount,' roms found in database');
-  if rpcount>0 then writeln(rpcount, ' roms repaired');
-  if rncount>0 then writeln(rncount, ' roms renamed');
-  if rscount>0 then writeln(rscount, ' roms resized');
+  if romcount=0 then writeln('No ROMs found') else begin writeln; writeln(romcount,romstr(romcount),' found'); end;
+  if matchcount>0 then writeln(matchcount,romstr(matchcount),' found in database');
+  if rpcount>0 then writeln(rpcount,romstr(rpcount),' repaired');
+  if rncount>0 then writeln(rncount,romstr(rncount),' renamed');
+  if rscount>0 then writeln(rscount,romstr(rscount),' resized');
   if (outfile=true) and (dbase=false) then
     begin
-      if romcount=0 then writeln(ofile,'No roms found')
-      else begin writeln(ofile); writeln(ofile,romcount,' roms found'); end;
-      if matchcount>0 then writeln(ofile,matchcount,' roms found in database');
-      if rpcount>0 then writeln(ofile,rpcount, ' roms repaired');
-      if rncount>0 then writeln(ofile,rncount, ' roms renamed');
-      if rscount>0 then writeln(ofile,rscount, ' roms resized');
+      if romcount=0 then writeln(ofile,'No ROMs found')
+      else begin writeln(ofile); writeln(ofile,romcount,romstr(romcount),' found'); end;
+      if matchcount>0 then writeln(ofile,matchcount,romstr(matchcount),' found in database');
+      if rpcount>0 then writeln(ofile,rpcount,romstr(rpcount),' repaired');
+      if rncount>0 then writeln(ofile,rncount,romstr(rncount),' renamed');
+      if rscount>0 then writeln(ofile,rscount,romstr(rscount),' resized');
     end;
   if outfile=true then close(ofile);
   if dbasemissing=true then listmissing(allmissing,missingsort);
