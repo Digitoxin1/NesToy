@@ -5,8 +5,8 @@ program NesToy;
 uses
   dos,dos70,crc32new,crt,strings;
 const
-  maxdbasesize=3000;
-  maxdirsize=4000;
+  maxdbasesize=3500;
+  maxdirsize=3000;
   maxpathnames=100;
 type
   neshdr=record
@@ -37,7 +37,7 @@ const
   cfgfile='NESTOY.CFG';
   outputfile='OUTPUT.TXT';
   logfile='NESTOY.LOG';
-  version='2.5b';
+  version='2.6b';
   SortType:updown = ascending;
   missingfile:string='MISSING.TXT';
   extparamst:string='';
@@ -68,6 +68,7 @@ const
   missing_hacked:boolean=true;
   missing_pirate:boolean=true;
   missing_trans:boolean=false;
+  badchr:string=' (Bad CHR';
 
 var
   hdcsum:boolean;
@@ -76,6 +77,7 @@ var
                                         flag:boolean;
                                         resize:integer;
                                       end;
+  prgdbase:array[1..maxdbasesize] of pchar;
   dirarray:array[1..maxdirsize] of pchar;
   FCPrg,FCChr:array[1..200] of byte;
   path:array[1..maxpathnames] of pchar;
@@ -83,6 +85,7 @@ var
   dbasecount,FCCount,numpaths:integer;
   cpath,progpath:string;
   cfgparam:string;
+  flagrom:boolean;
   overwritemissing:boolean;
   logging,wrotelog:boolean;
   lfile:text;
@@ -212,6 +215,14 @@ var
 begin
   str(i,s);
   I2S:=s;
+end;
+
+function S2I(s:string):integer;
+var
+  i,code:integer;
+begin
+  val(s,i,code);
+  s2i:=i;
 end;
 
 procedure str2chr(strtemp:string;var result:charstr);
@@ -514,30 +525,34 @@ begin
   getsortdir:=tempdir;
 end;
 
-procedure getcrc(fname:string;var retcrc:string;var garbage:boolean);
+procedure getcrc(fname:string;var retcrc,retprgcrc:string;var garbage:boolean;prg:byte);
 var
-  crc:longint;
+  crc,prgcrc:longint;
   f,result:word;
   buf:CRCBuf;
-  ctr,g:integer;
+  ctr,g,prgctr:integer;
 begin
   garbage:=false;
   g:=0;
+  prgctr:=prg*2;
   crc:=crcseed;
   f:=LFNOpenFile(fname,FA_NORMAL,OPEN_RDONLY,1);
   result:=lfnblockread(f,buf,16);
   if hdcsum=true then
     crc:=crc32(buf,crc,16);
   repeat
+    if prgctr<>-1 then prgctr:=prgctr-1;
     result:=lfnblockread(f,buf,sizeof(buf));
     g:=result mod 8192;
-    if g=512 then g:=0;
+    if g>=512 then g:=g-512;
     if g>0 then garbage:=true;
     crc:=crc32(buf,crc,result-g);
+    if prgctr=0 then prgcrc:=crcend(crc);
   until result=0;
   LFNCloseFile(f);
   crc:=crcend(crc);
   retcrc:=crchex(crc);
+  retprgcrc:=crchex(prgcrc);
 end;
 
 procedure logoutput(str:string);
@@ -601,7 +616,7 @@ var
   sp,sn,dp,dn,sptemp,dptemp:string;
   existb,garbage:boolean;
   ctr,p:integer;
-  newcrc,dnc:string;
+  newcrc,dnc,dummy:string;
 
 begin
   errcode:=0;
@@ -631,9 +646,10 @@ begin
                 end;
               if exist(destpath) then
                 begin
-                  getcrc(destpath,newcrc,garbage);
+                  getcrc(destpath,newcrc,dummy,garbage,0);
                   if newcrc=crc then
                     begin
+                      flagrom:=false;
                       dp:=dir_dupes;
                       destpath:=dp+dn;
                       errcode:=LFNMD(copy(dp,1,length(dp)-1));
@@ -645,9 +661,10 @@ begin
                           begin
                             if exist(destpath) then
                               begin
-                                getcrc(destpath,newcrc,garbage);
+                                getcrc(destpath,newcrc,dummy,garbage,0);
                                 if newcrc=crc then
                                   begin
+                                    flagrom:=false;
                                     dp:=dir_dupes;
                                     destpath:=dp+dn;
                                     errcode:=LFNMD(copy(dp,1,length(dp)-1));
@@ -749,6 +766,7 @@ begin
   for counter:=1 to count do
     readln(f,ts);
   p:=pos(';',ts); delete(ts,1,p);
+  p:=pos(';',ts); delete(ts,1,p);
   if csumdbase[count].resize>0 then
     begin
       p:=pos(';',ts); delete(ts,1,p);
@@ -763,7 +781,8 @@ begin
   p:=pos(';',ts); ts2:=copy(ts,1,p-1); delete(ts,1,p); val(ts2,x,code); byte7:=x;
   p:=pos(';',ts); ts2:=copy(ts,1,p-1); delete(ts,1,p); val(ts2,x,code); byte8:=x;
   p:=pos(';',ts); ts2:=copy(ts,1,p-1); delete(ts,1,p); val(ts2,x,code); dbaseinfo.prg:=x;
-  p:=pos(';',ts); ts2:=copy(ts,1,p-1); delete(ts,1,p); val(ts2,x,code); dbaseinfo.chr:=x;
+  p:=pos(';',ts); if p=0 then ts2:=ts else begin ts2:=copy(ts,1,p-1); delete(ts,1,p); end;
+  val(ts2,x,code); dbaseinfo.chr:=x;
   p:=pos(';',ts); if p=0 then ts2:=ts else begin ts2:=copy(ts,1,p-1); delete(ts,1,p); end;
   dbaseinfo.country:=countrys2i(ts2);
   p:=pos(';',ts); if p=0 then ts2:=ts else begin ts2:=copy(ts,1,p-1); delete(ts,1,p); end;
@@ -801,6 +820,34 @@ begin
     end;
   if found=true then fnd:=mid;
 end;
+
+procedure SearchPRGDbase(cs:string;var fnd:integer);
+var
+  low,low2,high,mid:integer;
+  found:boolean;
+  dbstr:string[13];
+  dbpos:integer;
+begin
+  fnd:=0;
+  low:=0;
+  low2:=0;
+  high:=dbasecount+1;
+  mid:=high;
+  found:=false;
+  while (found<>true) and (low2<mid) do
+    begin
+      low2:=low;
+      mid:=(high-low) div 2+low;
+      dbstr:=strpas(prgdbase[mid]);
+      dbpos:=s2i(copy(dbstr,9,length(dbstr)-8));
+      dbstr:=copy(dbstr,1,8);
+      if dbstr=cs then found:=true
+        else if dbstr>cs then high:=mid
+          else low:=mid;
+    end;
+  if found=true then fnd:=dbpos;
+end;
+
 
 procedure checkbanks(fname:string;prg:integer;chr:integer;var newprg:byte;var newchr:byte);
 var
@@ -911,7 +958,7 @@ begin
       repeat
         result2:=lfnblockread(f2,buf,sizeof(buf));
         g:=result2 mod 8192;
-        if g=512 then g:=0;
+        if (g>=512) and (nhdr.trainer=1) then g:=g-512;
         if g>0 then result2:=result2-g;
         result:=lfnblockwrite(f,buf,result2);
       until (result2=0) or (result<>result2);
@@ -1172,6 +1219,7 @@ var
   f:text;
   s:string;
   cs:array[0..8] of char;
+  csprg:array[0..13] of char;
   p,code:integer;
 begin
   dbasecount:=0;
@@ -1193,16 +1241,20 @@ begin
       csumdbase[dbasecount].str:=strnew(cs);
       csumdbase[dbasecount].flag:=false;
       csumdbase[dbasecount].resize:=0;
-      if s[9]='*' then
+      strpcopy(csprg,copy(s,10,8)+i2s(dbasecount));
+      prgdbase[dbasecount]:=strnew(csprg);
+      if s[18]='*' then
         begin
           fccount:=fccount+1;
           csumdbase[dbasecount].resize:=fccount;
+          p:=pos(';',s); delete(s,1,p);
           p:=pos(';',s); delete(s,1,p);
           p:=pos(';',s); val(copy(s,1,p-1),FCPrg[fccount],code); delete(s,1,p);
           p:=pos(';',s); val(copy(s,1,p-1),FCChr[fccount],code); delete(s,1,p);
         end;
     end;
   close(f);
+  quicksort(prgdbase,1,dbasecount);
 end;
 
 procedure dbaseclose;
@@ -1210,7 +1262,10 @@ var
   counter:integer;
 begin
   for counter:=dbasecount downto 1 do
-    strdispose(csumdbase[counter].str);
+    begin
+      strdispose(prgdbase[counter]);
+      strdispose(csumdbase[counter].str);
+    end;
 end;
 
 
@@ -1421,6 +1476,7 @@ begin
         begin
           readln(f,ts);
           p:=pos(';',ts); csum:=copy(ts,1,p-1); delete(ts,1,p);
+          p:=pos(';',ts); delete(ts,1,p);
           p:=pos(';',ts);
           if p=0 then fn:=ts else
             begin
@@ -1476,27 +1532,29 @@ begin
               dbasearray[acount]:=strnew(charout);
             end;
         end;
-      quicksort(dbasearray,1,acount);
-      for c:=1 to acount do
-        begin
-          out2:='';
-          out:=strpas(dbasearray[c]);
-          if csort=true then
-            begin
-              country:=copy(out,1,3);
-              delete(out,1,3);
-              if showall=true then insert(country,out,66);
-            end;
-          if showall=true then checksplit(out,out2);
-          writeln(f2,out);
-          if out2<>'' then writeln(f2,out2);
-        end;
+      if acount>0 then quicksort(dbasearray,1,acount);
+      if acount>0 then
+        for c:=1 to acount do
+          begin
+            out2:='';
+            out:=strpas(dbasearray[c]);
+            if csort=true then
+              begin
+                country:=copy(out,1,3);
+                delete(out,1,3);
+                if showall=true then insert(country,out,66);
+              end;
+            if showall=true then checksplit(out,out2);
+            writeln(f2,out);
+            if out2<>'' then writeln(f2,out2);
+          end;
       writeln(f2);
       writeln(f2,acount,' missing',sstr(' ROM',acount),' out of ',dbasecount-badcount);
       close(f);
       close(f2);
-      for c:=acount downto 1 do
-         strdispose(dbasearray[c]);
+      if acount>0 then
+        for c:=acount downto 1 do
+           strdispose(dbasearray[c]);
       LFNRename(missingtemp,missingpath);
     end;
   if io2>0 then
@@ -1587,21 +1645,21 @@ end;
 var
   f,f2:word;
   dirinfo:tfinddata;
-  h,ns,csum:string;
+  h,ns,csum,prgcsum:string;
   clfname,pathname,sortdir:string;
   arraytemp:charstr;
   nes,oldnes,resulthdr:NesHdr;
   byte7,byte8:byte;
   l,ctr,csumpos,sps,err:integer;
   msearch,rflag,counter:integer;
-  romcount,matchcount,rncount,rpcount,rscount,nomove:integer;
+  romcount,matchcount,rncount,rpcount,rscount,nomove,prgcount:integer;
   dbpos,io,pc:integer;
   fcpos:integer;
   docsum,show,show_h,show_v,show_b,show_4,show_t,view_bl,outfile,extout,unknown:boolean;
   rname,namematch,dbase,extdbase,repair,cmp,abort,dbasemissing,garbage,sort:boolean;
   mthe,uscore,ccode,remspace,notrenamed,notrepaired,cropped,resize,sorted:boolean;
   booltemp,dupe,shortname,allmissing,missingsort,lowcasename,subdir:boolean;
-  nobackup,badrom,mhackedrom,ghackedrom,hackedrom,piraterom:boolean;
+  nobackup,badrom,mhackedrom,ghackedrom,hackedrom,piraterom,prgfound:boolean;
   result,rtmp:string;
   key:char;
   out,out2:string;
@@ -1611,8 +1669,10 @@ var
   name:string;
   newprg,newchr:byte;
   sortcode:integer;
+  filedt:NewDateTime;
   hour,min,sec,hund:word;
-  fullstarttime,fullendtime,difftime:longint;
+  Year,Month,Day,DOW:word;
+  fullstarttime,fullendtime,difftime,temptime:longint;
 
 begin
   checkbreak:=false;
@@ -1642,6 +1702,7 @@ begin
   rpcount:=0;
   rscount:=0;
   nomove:=0;
+  prgcount:=0;
   docsum:=false;
   hdcsum:=false;
   rname:=false;
@@ -1835,6 +1896,7 @@ begin
                 end;
   if docsum=false then l:=55 else l:=40;
   gettime(hour,min,sec,hund);
+  getdate(Year,Month,Day,DOW);
   fullstarttime:=sec+min*60+hour*3600;
   for pc:=1 to numpaths do
     if abort=false then
@@ -1878,6 +1940,8 @@ begin
             hackedrom:=false;
             piraterom:=false;
             sorted:=false;
+            flagrom:=true;
+            prgfound:=false;
             fcpos:=0;
             h:=ReadNesHdr(Name);
             getneshdr(nes,h);
@@ -1890,7 +1954,7 @@ begin
             if (show_4=true) and (nes.fourscr=0) then show:=false;
             if (docsum=true) and (show=true) then
               begin
-                getcrc(Name,csum,garbage);
+                getcrc(Name,csum,prgcsum,garbage,nes.prg);
                 searchdbase(csum,dbpos);
                 if resize=true then
                   begin
@@ -1915,7 +1979,7 @@ begin
                                   LFNMove(rtmp+'.ba~',dir_backup+rtmp+'.bak','','',errcode);
                                 rscount:=rscount+1;
                                 cropped:=true;
-                                getcrc(Name,csum,garbage);
+                                getcrc(Name,csum,prgcsum,garbage,nes.prg);
                                 searchdbase(csum,dbpos);
                               end else notrepaired:=true;
                           end;
@@ -1930,10 +1994,26 @@ begin
                        (nes.chr<>8) and (nes.chr<>16) and (nes.chr<>32) and (nes.chr<>64) and
                        (nes.chr<>128) then badrom:=true;
                   end;
-                if dbpos>0 then
+                if dbpos=0 then
                   begin
-                    if csumdbase[dbpos].flag=true then dupe:=true;
-                    csumdbase[dbpos].flag:=true;
+                    searchprgdbase(prgcsum,dbpos);
+                    if dbpos>0 then begin prgfound:=true; badrom:=true; prgcount:=prgcount+1; end;
+                  end;
+                if (dbpos>0) and (prgfound=false) then
+                  begin
+                    if csumdbase[dbpos].flag=true then
+                      begin
+                        if sort=true then
+                          begin
+                            LFNGetModifTime(Name,FileDT);
+                            temptime:=FileDT.second+FileDT.minute*60+FileDT.hour*3600;
+                            if FileDT.year<year then dupe:=true;
+                            if (FileDT.year=year) and (FileDT.month<month) then dupe:=true;
+                            if (FileDT.year=year) and (FileDT.month=month) and (FileDT.day<day) then dupe:=true;
+                            if (FileDT.year=year) and (FileDT.month=month) and (FileDT.day=day)
+                              then if temptime<fullstarttime then dupe:=true;
+                          end else dupe:=true;
+                      end;
                   end;
                 if unknown=true then show:=false;
                 if (unknown=true) and (dbpos=0) then show:=true;
@@ -1946,9 +2026,14 @@ begin
                 if (dbpos>0) and (dbase=false) then
                   begin
                     rflag:=2;
-                    matchcount:=matchcount+1;
+                    if prgfound=false then matchcount:=matchcount+1;
                     getdbaseinfo(dbpos,result,resulthdr);
                     result:=shortparse(result,shortname);
+                    if prgfound=true then
+                      begin
+                        result:=result+badchr+' '+csum+')';
+                        resulthdr.chr:=nes.chr;
+                      end;
                     if (resulthdr.vs=1) and (resulthdr.pc10=1) then
                       begin
                         writeln('ERROR IN DATABASE 01 -- ',strpas(csumdbase[dbpos].str),' ',result);
@@ -2011,7 +2096,7 @@ begin
                   else
                     if extdbase=false then
                       begin
-                        out:=out+csum+';'+name;
+                        out:=out+csum+';'+prgcsum+';'+name;
                         if copy(out,length(out)-3,1)='.' then out:=copy(out,1,length(out)-4);
                         byte7:=nes.mirror+nes.sram*2+nes.trainer*4+nes.fourscr*8+nes.mapper mod 16*16;
                         byte8:=nes.vs+nes.pc10*2+nes.mapper div 16*16;
@@ -2116,6 +2201,8 @@ begin
                       LFNMove(name,dir_dupes+result+'.nes','','',errcode);
                       if errcode=0 then rncount:=rncount+1;
                     end else LFNMove(name,dir_dupes,'','',errcode);
+                if (dbpos>0) and (flagrom=true) and (prgfound=false)
+                  then csumdbase[dbpos].flag:=true;
               end;
           end;
         LFNChDir(cpath);
@@ -2132,6 +2219,7 @@ begin
   sec:=difftime mod 60;
   if romcount=0 then writeln('No ROMs found') else begin writeln; writeln(romcount,sstr(' ROM',romcount),' found'); end;
   if matchcount>0 then writeln(matchcount,sstr(' ROM',matchcount),' found in database');
+  if prgcount>0 then writeln(prgcount,sstr(' ROM',prgcount),' found with bad CHR banks');
   if rpcount>0 then writeln(rpcount,sstr(' ROM',rpcount),' repaired');
   if rncount>0 then writeln(rncount,sstr(' ROM',rncount),' renamed');
   if rscount>0 then writeln(rscount,sstr(' ROM',rscount),' resized');
@@ -2146,6 +2234,7 @@ begin
       if romcount=0 then writeln(ofile,'No ROMs found')
       else begin writeln(ofile); writeln(ofile,romcount,sstr(' ROM',romcount),' found'); end;
       if matchcount>0 then writeln(ofile,matchcount,sstr(' ROM',matchcount),' found in database');
+      if prgcount>0 then writeln(ofile,prgcount,sstr(' ROM',prgcount),' found with bad CHR banks');
       if rpcount>0 then writeln(ofile,rpcount,sstr(' ROM',rpcount),' repaired');
       if rncount>0 then writeln(ofile,rncount,sstr(' ROM',rncount),' renamed');
       if rscount>0 then writeln(ofile,rscount,sstr(' ROM',rscount),' resized');
