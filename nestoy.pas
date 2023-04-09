@@ -37,7 +37,7 @@ const
   cfgfile='NESTOY.CFG';
   outputfile='OUTPUT.TXT';
   logfile='NESTOY.LOG';
-  version='3.02';
+  version='3.1';
   SortType:updown = ascending;
   missingfile:string='MISSING.TXT';
   extparamst:string='';
@@ -110,6 +110,24 @@ begin
   for i:=1 to length(s) do
     if (ord(s[i])>64) and (ord(s[i])<91) then s[i]:=chr(ord(s[i])+32);
   lowcasestr:=s;
+end;
+
+procedure setlfntime(fname:string);
+var
+  h,m,s,ms:word;
+  y,mo,d,dow:word;
+  stime:newdatetime;
+begin
+  gettime(h,m,s,ms);
+  getdate(y,mo,d,dow);
+  stime.hour:=h;
+  stime.minute:=m;
+  stime.second:=s;
+  stime.millisecond:=ms;
+  stime.year:=y;
+  stime.month:=mo;
+  stime.day:=d;
+  lfnsetmodiftime(fname,stime);
 end;
 
 function compare(str1,str2:pchar):integer;
@@ -450,6 +468,22 @@ begin
   lfnfindclose(f);
 end;
 
+function transdir(str:string):string;
+var
+  tempstr:string;
+begin
+  tempstr:='';
+  str:=upcasestr(str);
+  if pos('(BRAZIL',str)>0 then tempstr:='Portuguese';
+  if pos('(ENGLISH',str)>0 then tempstr:='English';
+  if pos('(GERMAN',str)>0 then tempstr:='German';
+  if pos('(PORTUGUESE',str)>0 then tempstr:='Portuguese';
+  if pos('(SPANISH',str)>0 then tempstr:='Spanish';
+  if pos('(SWEDISH',str)>0 then tempstr:='Swedish';
+  if tempstr='' then tempstr:='Unknown';
+  transdir:=tempstr;
+end;
+
 procedure searchps(s:string;var p:integer;var value:string);
 var
   found,count:integer;
@@ -764,7 +798,7 @@ begin
       if (sptemp=dptemp) and (sn<>dn) then logoutput('Unable to rename '+sn+' to '+dn+' in '+sp+'.');
       if (sptemp<>dptemp) and (sn=dn) then logoutput('Unable to move '+sn+' from '+sp+' to '+dp+'.');
       if (sptemp<>dptemp) and (sn<>dn) then logoutput('Unable to move '+sp+sn+' to '+dp+dn+'.');
-    end;
+    end else setlfntime(destpath);
 end;
 
 procedure renamesaves(result,name:string);
@@ -1707,10 +1741,11 @@ if t=1 then
     writeln('-rep,-repair   Repairs ROM headers with those found in database (enables -c)');
     writeln('-res,-resize   Automatically resizes ROMs if they contain duplicate or');
     writeln('               unused banks of data.');
-    writeln('-sort[m]       Sorts ROMs into directories by country or type');
+    writeln('-sort[mt]       Sorts ROMs into directories by country or type');
     writeln('                  m- Sorts ROMs by mapper # as well');
-    writeln('-m#            Filter listing by mapper #');
+    writeln('                  t- Sort Translations by country');
     pause;
+    writeln('-m#            Filter listing by mapper #');
     writeln('-f[hvbt4]      Filter listing by mapper data');
     writeln('                  h- Horizontal Mirroring     t- Trainer Present');
     writeln('                  v- Vertical Mirroring       4- 4 Screen Buffer');
@@ -1734,6 +1769,7 @@ if t=1 then
     writeln;
     writeln('Filename can include wildcards (*,?) anywhere inside the filename.  Long');
     writeln('file names are allowed.  If no filename is given, (*.nes) is assumed.');
+    pause;
   end;
 if t=2 then
   begin
@@ -1764,7 +1800,7 @@ var
   dbpos,io,pc,wy:integer;
   fcpos:integer;
   docsum,show,show_h,show_v,show_b,show_4,show_t,view_bl,outfile,extout,unknown:boolean;
-  rname,namematch,dbase,extdbase,repair,cmp,abort,dbasemissing,garbage,sort,sortmapper:boolean;
+  rname,namematch,dbase,extdbase,repair,cmp,abort,dbasemissing,garbage,sort,sortmapper,sorttrans:boolean;
   mthe,uscore,ccode,remspace,notrenamed,notrepaired,cropped,resize,sorted:boolean;
   booltemp,dupe,allmissing,missingsort,lowcasename,subdir:boolean;
   nobackup,badrom,mhackedrom,ghackedrom,hackedrom,piraterom,prgfound,remperiod:boolean;
@@ -1829,6 +1865,7 @@ begin
   dbasemissing:=false;
   sort:=false;
   sortmapper:=false;
+  sorttrans:=false;
   dupe:=false;
   allmissing:=true;
   missingsort:=false;
@@ -1985,6 +2022,7 @@ begin
     begin
       sort:=true; docsum:=true;
       if pos('M',result)>0 then sortmapper:=true;
+      if pos('T',result)>0 then sorttrans:=true;
     end;
   searchps('-doall',sps,result);
   if sps>0 then begin
@@ -2138,7 +2176,7 @@ begin
                             if (FileDT.year=year) and (FileDT.month<month) then dupe:=true;
                             if (FileDT.year=year) and (FileDT.month=month) and (FileDT.day<day) then dupe:=true;
                             if (FileDT.year=year) and (FileDT.month=month) and (FileDT.day=day)
-                              then if temptime<fullstarttime then dupe:=true;
+                              then if temptime<fullstarttime-5 then dupe:=true;
                           end else dupe:=true;
                       end;
                   end;
@@ -2315,6 +2353,7 @@ begin
                             begin
                               sorted:=true;
                               sortdir:=getsortdir(sortcode);
+                              if (sorttrans=true) and (nes.country=512) then sortdir:=sortdir+transdir(result)+'\';
                               if sortmapper=true then sortdir:=sortdir+i2s(resulthdr.mapper,3)+'\';
                               if notrepaired=true then sortdir:=dir_repair;
                             end else sortdir:='.\';
@@ -2366,6 +2405,8 @@ begin
                 if (sort=true) and (dupe=false) and (sorted=false) then
                   begin
                     sortdir:=getsortdir(sortcode);
+                    if (sorttrans=true) and (dbpos>0) and (nes.country=512)
+                      then sortdir:=sortdir+transdir(result)+'\';
                     if sortmapper=true then
                       begin
                         if dbpos>0 then sortdir:=sortdir+i2s(resulthdr.mapper,3)+'\'
