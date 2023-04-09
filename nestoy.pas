@@ -37,7 +37,7 @@ const
   cfgfile='NESTOY.CFG';
   outputfile='OUTPUT.TXT';
   logfile='NESTOY.LOG';
-  version='2.7';
+  version='2.82';
   SortType:updown = ascending;
   missingfile:string='MISSING.TXT';
   extparamst:string='';
@@ -87,7 +87,7 @@ var
   cfgparam:string;
   flagrom:boolean;
   overwritemissing:boolean;
-  logging,wrotelog:boolean;
+  logging,wrotelog,quiet:boolean;
   lfile:text;
 
 function upcasestr(s:string):string;
@@ -174,11 +174,11 @@ end;  { QuickSort }
 
 procedure pause;
 var
-  y:integer;
+  dummy:char;
 begin
-  y:=wherey;
   write('Press any key to continue');
   repeat until keypressed=true;
+  dummy:=readkey;
   gotoxy(1,wherey);
   clreol;
 end;
@@ -1629,7 +1629,7 @@ end;
 
 procedure usage(t:byte);
 begin
-  writeln('NesToy ',version,' - (c)1999, D-Tox Software  (BETA Software, Use At Own Risk)');
+  writeln('NesToy ',version,' - (c)2000, D-Tox Software  (BETA Software, Use At Own Risk)');
   writeln;
 if (t=0) or (t=1) then
   begin
@@ -1678,11 +1678,14 @@ if t=1 then
     writeln('-nobackup      Don''t make backups before repairing or resizing ROMs');
     writeln('-log           Log to ',logfile,' any problems NesToy encounters while sorting,');
     writeln('               renaming, or repairing ROMs.');
+    writeln('-q,-quiet      Suppresses output to the screen (for those of you who would');
+    writeln('               prefer not to see what NesToy is up to.)');
     writeln('-doall         Enables -c,-i,-ren,-repair,-resize,-sort, and -missing');
     writeln('-h,-?,-help    Displays this screen');
     writeln;
     writeln('Filename can include wildcards (*,?) anywhere inside the filename.  Long');
     writeln('file names are allowed.  If no filename is given, (*.nes) is assumed.');
+    pause;
   end;
 if t=2 then
   begin
@@ -1703,8 +1706,8 @@ var
   byte7,byte8:byte;
   l,ctr,csumpos,sps,err:integer;
   msearch,rflag,counter:integer;
-  romcount,matchcount,rncount,rpcount,rscount,nomove,prgcount:integer;
-  dbpos,io,pc:integer;
+  romcount,matchcount,rncount,rpcount,rscount,nomove,prgcount,dirromcount:integer;
+  dbpos,io,pc,wy:integer;
   fcpos:integer;
   docsum,show,show_h,show_v,show_b,show_4,show_t,view_bl,outfile,extout,unknown:boolean;
   rname,namematch,dbase,extdbase,repair,cmp,abort,dbasemissing,garbage,sort,sortmapper:boolean;
@@ -1781,6 +1784,7 @@ begin
   subdir:=false;
   nobackup:=false;
   logging:=false;
+  quiet:=false;
   msearch:=-1;
   if extparamcount=0 then usage(0);
   searchps('-h',sps,result);
@@ -1932,6 +1936,10 @@ begin
       sort:=true; docsum:=true;
       if pos('M',result)>0 then sortmapper:=true;
     end;
+  searchps('-q',sps,result);
+  if sps>0 then quiet:=true;
+  searchps('-quiet',sps,result);
+  if sps>0 then quiet:=true;
   searchps('-doall',sps,result);
   if sps>0 then begin
                   docsum:=true; rname:=true; repair:=true; resize:=true; extout:=true;
@@ -1955,6 +1963,7 @@ begin
   for pc:=1 to numpaths do
     if abort=false then
     begin
+      dirromcount:=0;
       pathname:=strpas(path[pc]);
       clfname:=strpas(clf[pc]);
       writeln;
@@ -1971,6 +1980,7 @@ begin
       begin
         writeln;
         if outfile=true then writeln(ofile);
+        if quiet=true then begin writeln; wy:=wherey-1; end;
         f:=readdir(clfname);
         for counter:=1 to f do
           if abort=false then
@@ -2077,6 +2087,7 @@ begin
               begin
                 if docsum=true then rflag:=1 else rflag:=-1;
                 romcount:=romcount+1;
+                dirromcount:=dirromcount+1;
                 if (dbpos=0) and (badrom=true) then rflag:=6;
                 if (dbpos>0) and (dbase=false) then
                   begin
@@ -2197,8 +2208,15 @@ begin
                 if ghackedrom=true then sortcode:=-3;
                 if (hackedrom=true) and (move_hacked=true) then sortcode:=-2;
                 if (badrom=true) and (move_bad=true) then sortcode:=-1;
-                writeln(out);
-                if out2<>'' then writeln(out2);
+                if (quiet=true) and (dbase=false) then
+                  begin
+                    gotoxy(1,wy);
+                    writeln(dirromcount,' ROMs scanned.');
+                  end else
+                  begin
+                    writeln(out);
+                    if out2<>'' then writeln(out2);
+                  end;
                 if outfile=true then
                   begin
                     writeln(ofile,out);
@@ -2251,9 +2269,12 @@ begin
                         if notrenamed=true then outm:=' Can''t Rename';
                         if notrepaired=true then outm:=' Can''t Repair';
                         out:=out+outm;
-                        writeln(out);
-                        if out2<>'' then writeln(out2);
-                        writeln;
+                        if quiet=false then
+                          begin
+                            writeln(out);
+                            if out2<>'' then writeln(out2);
+                            writeln;
+                          end;
                         if outfile=true then
                           begin
                             writeln(ofile,out);
