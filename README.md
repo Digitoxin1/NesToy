@@ -1,4 +1,4 @@
-NesToy is a program I developed between October of 1999 and April of 2000.  As of today, it is over 23 years old.  It is written in Turbo Pascal and is a MS-DOS application.
+NesToy is a program I developed between October of 1999 and April of 2000.  As of today, it is over 23 years old.  It is written in Turbo Pascal and is an MS-DOS application.
 
 I recently discovered the source code for NesToy on an old floppy disk and decided to upload it here for preservation.  I kept every revision of NesToy so I committed each revision as I would have if Github was a thing back then.
 
