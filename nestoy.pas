@@ -8,6 +8,7 @@ const
   maxdbasesize=3200;
   maxdirsize=3500;
   maxpathnames=100;
+  empty='000000000000000';
 type
   neshdr=record
            hdr:string[4];      {4 byte header string (NES^Z)}
@@ -37,10 +38,13 @@ const
   cfgfile='NESTOY.CFG';
   outputfile='OUTPUT.TXT';
   logfile='NESTOY.LOG';
-  version='3.1';
+  version='3.2';
   SortType:updown = ascending;
   missingfile:string='MISSING.TXT';
   extparamst:string='';
+  param_ren:string[10]='';
+  param_missing:string[10]='';
+  param_sort:string[10]='';
   dir_base:string='';
   dir_backup:string='Backup\';
   dir_bad:string='Bad\';
@@ -62,9 +66,11 @@ const
   dir_usa:string='USA\';
   dir_vs:string='VS Unisystem\';
   dir_savestates:string='';
+  dir_patches:string='';
   move_bad:boolean=true;
   move_hacked:boolean=true;
   move_pirate:boolean=true;
+  sort_trans:boolean=true;
   missing_bad:boolean=false;
   missing_gamehacks:boolean=false;
   missing_hacked:boolean=true;
@@ -75,7 +81,6 @@ const
   badchr:string=' (Bad CHR';
 
 var
-  hdcsum:boolean;
   csumdbase:array[1..maxdbasesize] of record
                                         str:pchar;
                                         flag:boolean;
@@ -307,7 +312,6 @@ begin
   movethe:=instr;
 end;
 
-
 function paramstrparse:string;
 var
   s1,s2:string;
@@ -468,6 +472,16 @@ begin
   lfnfindclose(f);
 end;
 
+function checkhidden(str:string):byte;
+var
+  tbyte:byte;
+begin
+  tbyte:=0;
+  if str='SMGH' then tbyte:=1;
+  if str='SMTR' then tbyte:=2;
+  checkhidden:=tbyte;
+end;
+
 function transdir(str:string):string;
 var
   tempstr:string;
@@ -476,8 +490,12 @@ begin
   str:=upcasestr(str);
   if pos('(BRAZIL',str)>0 then tempstr:='Portuguese';
   if pos('(ENGLISH',str)>0 then tempstr:='English';
+  if pos('(FRENCH',str)>0 then tempstr:='French';
   if pos('(GERMAN',str)>0 then tempstr:='German';
+  if pos('(ITALIAN',str)>0 then tempstr:='Italian';
+  if pos('(POLISH',str)>0 then tempstr:='Polish';
   if pos('(PORTUGUESE',str)>0 then tempstr:='Portuguese';
+  if pos('(RUSSIAN',str)>0 then tempstr:='Russian';
   if pos('(SPANISH',str)>0 then tempstr:='Spanish';
   if pos('(SWEDISH',str)>0 then tempstr:='Swedish';
   if tempstr='' then tempstr:='Unknown';
@@ -590,8 +608,6 @@ begin
   crc:=crcseed;
   f:=LFNOpenFile(fname,FA_NORMAL,OPEN_RDONLY,1);
   result:=lfnblockread(f,buf,16);
-  if hdcsum=true then
-    crc:=crc32(buf,crc,16);
   repeat
     if prgctr<>-1 then prgctr:=prgctr-1;
     result:=lfnblockread(f,buf,sizeof(buf));
@@ -818,6 +834,29 @@ begin
         begin
           tempres:=result+tempstr;
           lfnrename(dir_savestates+dirinfo.name,dir_savestates+tempres);
+        end;
+      LFNFindNext(f,dirinfo);
+    end;
+  LFNFindClose(f);
+end;
+
+procedure renamepats(result,name:string);
+var
+  f:word;
+  dirinfo:tfinddata;
+  tempstr,tempres:string;
+begin
+  if copy(name,length(name)-3,1)='.' then
+    name:=copy(name,1,length(name)-4);
+  f:=LFNFindFirst(dir_patches+name+'.*',FA_NORMAL,FA_NORMAL,dirinfo);
+  while dos7error=0 do
+    begin
+      tempstr:=dirinfo.name;
+      tempstr:=copy(tempstr,length(tempstr)-3,4);
+      if upcasestr(tempstr)='.PAT' then
+        begin
+          tempres:=result+tempstr;
+          lfnrename(dir_patches+dirinfo.name,dir_patches+tempres);
         end;
       LFNFindNext(f,dirinfo);
     end;
@@ -1210,6 +1249,7 @@ begin
   dir_usa:=expandwork(dir_usa,true);
   dir_vs:=expandwork(dir_vs,true);
   if dir_savestates<>'' then dir_savestates:=expandwork(dir_savestates,true);
+  if dir_patches<>'' then dir_patches:=expandwork(dir_patches,true);
 end;
 
 procedure loadcfgfile;
@@ -1247,16 +1287,19 @@ begin
       writeln(f,'DIR_USA = ',dir_usa);
       writeln(f,'DIR_VS = ',dir_vs);
       writeln(f,'DIR_SAVESTATES = ',dir_savestates);
+      writeln(f,'DIR_PATCHES = ',dir_patches);
       writeln(f);
       writeln(f,'MOVE_BAD = ',move_bad);
       writeln(f,'MOVE_HACKED = ',move_hacked);
       writeln(f,'MOVE_PIRATE = ',move_pirate);
+      writeln(f,'SORT_TRANS = ',sort_trans);
       writeln(f);
       writeln(f,'MISSING_BAD = ',missing_bad);
-      writeln(f,'MISSING_GAMEHACKS = ',missing_gamehacks);
       writeln(f,'MISSING_HACKED = ',missing_hacked);
       writeln(f,'MISSING_PIRATE = ',missing_pirate);
-      writeln(f,'MISSING_TRANS = ',missing_trans);
+      writeln(f);
+      writeln(f,'PARAM_MISSING = ',param_missing);
+      writeln(f,'PARAM_REN = ',param_ren);
       writeln(f);
       writeln(f,'FILE_MISSING = ',missingfile);
       writeln(f,'SHORT_NAMES = ',shortname);
@@ -1301,7 +1344,10 @@ begin
               if s='DIR_USA' then dir_usa:=s2;
               if s='DIR_VS' then dir_vs:=s2;
               if s='DIR_SAVESTATES' then dir_savestates:=s2;
+              if s='DIR_PATCHES' then dir_patches:=s2;
               if s='FILE_MISSING' then missingfile:=s2;
+              if s='PARAM_MISSING' then param_missing:=upcasestr(s2);
+              if s='PARAM_REN' then param_ren:=upcasestr(s2);
               if s='SHORT_NAMES' then if upcasestr(s2)='FALSE' then shortname:=false else
                 if upcasestr(s2)='TRUE' then shortname:=true;
               if s='WIN2000' then if upcasestr(s2)='FALSE' then win2000:=false else
@@ -1312,15 +1358,17 @@ begin
                 if upcasestr(s2)='TRUE' then move_hacked:=true;
               if s='MOVE_PIRATE' then if upcasestr(s2)='FALSE' then move_pirate:=false else
                 if upcasestr(s2)='TRUE' then move_pirate:=true;
+              if s='SORT_TRANS' then if upcasestr(s2)='FALSE' then sort_trans:=false else
+                if upcasestr(s2)='TRUE' then sort_trans:=true;
               if s='MISSING_BAD' then if upcasestr(s2)='FALSE' then missing_bad:=false else
                 if upcasestr(s2)='TRUE' then missing_bad:=true;
-              if s='MISSING_GAMEHACKS' then if upcasestr(s2)='FALSE' then missing_gamehacks:=false else
-                if upcasestr(s2)='TRUE' then missing_gamehacks:=true;
               if s='MISSING_HACKED' then if upcasestr(s2)='FALSE' then missing_hacked:=false else
                 if upcasestr(s2)='TRUE' then missing_hacked:=true;
               if s='MISSING_PIRATE' then if upcasestr(s2)='FALSE' then missing_pirate:=false else
                 if upcasestr(s2)='TRUE' then missing_pirate:=true;
-              if s='MISSING_TRANS' then if upcasestr(s2)='FALSE' then missing_trans:=false else
+              if checkhidden(s)=1 then if upcasestr(s2)='FALSE' then missing_gamehacks:=false else
+                if upcasestr(s2)='TRUE' then missing_gamehacks:=true;
+              if checkhidden(s)=2 then if upcasestr(s2)='FALSE' then missing_trans:=false else
                 if upcasestr(s2)='TRUE' then missing_trans:=true;
               if s='CMDLINE' then cfgparam:=s2;
             end;
@@ -1618,7 +1666,8 @@ begin
           p:=pos(';',ts); ts2:=copy(ts,1,p-1); delete(ts,1,p); val(ts2,x,code); byte7:=x;
           p:=pos(';',ts); ts2:=copy(ts,1,p-1); delete(ts,1,p); val(ts2,x,code); byte8:=x;
           p:=pos(';',ts); ts2:=copy(ts,1,p-1); delete(ts,1,p); val(ts2,x,code); dbaseinfo.prg:=x;
-          p:=pos(';',ts); ts2:=copy(ts,1,p-1); delete(ts,1,p); val(ts2,x,code); dbaseinfo.chr:=x;
+          p:=pos(';',ts); if p=0 then ts2:=ts else begin ts2:=copy(ts,1,p-1); delete(ts,1,p); end;
+          val(ts2,x,code); dbaseinfo.chr:=x;
           p:=pos(';',ts); if p=0 then ts2:=ts else begin ts2:=copy(ts,1,p-1); delete(ts,1,p); end;
           dbaseinfo.country:=countrys2i(ts2);
           p:=pos(';',ts); if p=0 then ts2:=ts else begin ts2:=copy(ts,1,p-1); delete(ts,1,p); end;
@@ -1726,7 +1775,6 @@ if t=1 then
     writeln('Parameters:');
     writeln('-b             Display PRG and CHR banks by # of blocks instead of kB');
     writeln('-c             Calculate Checksums (CRC 32)');
-    writeln('-hc            Calculate Checksums with header');
     writeln('-i             Outputs extended info if header or name are not correct');
     writeln('-o[file]       Sends output to file (DOS 8.3 filenames for now)');
     writeln('-ren[uscltp]   Renames ROMs to names stored in database (enables -c)');
@@ -1741,12 +1789,11 @@ if t=1 then
     writeln('-rep,-repair   Repairs ROM headers with those found in database (enables -c)');
     writeln('-res,-resize   Automatically resizes ROMs if they contain duplicate or');
     writeln('               unused banks of data.');
-    writeln('-sort[mt]       Sorts ROMs into directories by country or type');
+    writeln('-sort[m]       Sorts ROMs into directories by country or type');
     writeln('                  m- Sorts ROMs by mapper # as well');
-    writeln('                  t- Sort Translations by country');
-    pause;
     writeln('-m#            Filter listing by mapper #');
     writeln('-f[hvbt4]      Filter listing by mapper data');
+    pause;
     writeln('                  h- Horizontal Mirroring     t- Trainer Present');
     writeln('                  v- Vertical Mirroring       4- 4 Screen Buffer');
     writeln('                  b- Contains SRAM (Battery backup)');
@@ -1769,7 +1816,6 @@ if t=1 then
     writeln;
     writeln('Filename can include wildcards (*,?) anywhere inside the filename.  Long');
     writeln('file names are allowed.  If no filename is given, (*.nes) is assumed.');
-    pause;
   end;
 if t=2 then
   begin
@@ -1800,7 +1846,7 @@ var
   dbpos,io,pc,wy:integer;
   fcpos:integer;
   docsum,show,show_h,show_v,show_b,show_4,show_t,view_bl,outfile,extout,unknown:boolean;
-  rname,namematch,dbase,extdbase,repair,cmp,abort,dbasemissing,garbage,sort,sortmapper,sorttrans:boolean;
+  rname,namematch,dbase,extdbase,repair,cmp,abort,dbasemissing,garbage,sort,sortmapper:boolean;
   mthe,uscore,ccode,remspace,notrenamed,notrepaired,cropped,resize,sorted:boolean;
   booltemp,dupe,allmissing,missingsort,lowcasename,subdir:boolean;
   nobackup,badrom,mhackedrom,ghackedrom,hackedrom,piraterom,prgfound,remperiod:boolean;
@@ -1849,7 +1895,6 @@ begin
   nomove:=0;
   prgcount:=0;
   docsum:=false;
-  hdcsum:=false;
   rname:=false;
   mthe:=false;
   uscore:=false;
@@ -1865,7 +1910,6 @@ begin
   dbasemissing:=false;
   sort:=false;
   sortmapper:=false;
-  sorttrans:=false;
   dupe:=false;
   allmissing:=true;
   missingsort:=false;
@@ -1925,8 +1969,6 @@ begin
     end;
   searchps('-c',sps,result);
   if sps>0 then docsum:=true;
-  searchps('-hc',sps,result);
-  if sps>0 then begin docsum:=true; hdcsum:=true; end;
   searchps('-m#',sps,result);
   if sps>0 then
     begin
@@ -1948,6 +1990,7 @@ begin
   if sps>0 then
     begin
       rname:=true; docsum:=true;
+      result:=result+param_ren;
       if pos('U',result)>0 then uscore:=true;
       if pos('S',result)>0 then remspace:=true;
       if pos('C',result)>0 then ccode:=true;
@@ -2013,6 +2056,7 @@ begin
     begin
       dbasemissing:=true;
       docsum:=true;
+      result:=result+param_missing;
       if pos('C',result)>0 then missingsort:=true;
       if pos('B',result)>0 then allmissing:=false;
       if pos('N',result)>0 then overwritemissing:=true;
@@ -2021,8 +2065,8 @@ begin
   if sps>0 then
     begin
       sort:=true; docsum:=true;
+      result:=result+param_sort;
       if pos('M',result)>0 then sortmapper:=true;
-      if pos('T',result)>0 then sorttrans:=true;
     end;
   searchps('-doall',sps,result);
   if sps>0 then begin
@@ -2353,7 +2397,7 @@ begin
                             begin
                               sorted:=true;
                               sortdir:=getsortdir(sortcode);
-                              if (sorttrans=true) and (nes.country=512) then sortdir:=sortdir+transdir(result)+'\';
+                              if (sort_trans=true) and (nes.country=512) then sortdir:=sortdir+transdir(result)+'\';
                               if sortmapper=true then sortdir:=sortdir+i2s(resulthdr.mapper,3)+'\';
                               if notrepaired=true then sortdir:=dir_repair;
                             end else sortdir:='.\';
@@ -2405,7 +2449,7 @@ begin
                 if (sort=true) and (dupe=false) and (sorted=false) then
                   begin
                     sortdir:=getsortdir(sortcode);
-                    if (sorttrans=true) and (dbpos>0) and (nes.country=512)
+                    if (sort_trans=true) and (dbpos>0) and (nes.country=512)
                       then sortdir:=sortdir+transdir(result)+'\';
                     if sortmapper=true then
                       begin
@@ -2424,8 +2468,11 @@ begin
                     end else LFNMove(name,dir_dupes,'','',errcode);
                 if (dbpos>0) and (flagrom=true) and (prgfound=false)
                   then csumdbase[dbpos].flag:=true;
-                if (dir_savestates<>'') and (rname=true) and (notrenamed=false) then
-                  if result+'.nes'<>name then renamesaves(result,name);
+                if (rname=true) and (notrenamed=false) then
+                  begin
+                    if dir_savestates<>'' then if result+'.nes'<>name then renamesaves(result,name);
+                    if dir_patches<>''then if result+'.nes'<>name then renamepats(result,name);
+                  end;
               end;
           end;
         LFNChDir(cpath);
